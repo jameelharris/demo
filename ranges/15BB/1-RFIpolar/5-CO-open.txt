@@ -1,0 +1,1 @@
+AA,KK,QQ,JJ,TT,A3o:0.2,A2o:0.1,K9o,K8o:0.1,K7s,K6s,K5s:0.2,QTo,87s,76s:0.5,65s:0.25

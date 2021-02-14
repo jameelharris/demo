@@ -1,0 +1,1 @@
+AA,KK,QQ,JJ:0.8,TT:0.1,88:0.4,AKs,AKo:0.2,AQo:0.5,AJo:0.5,ATs:0.2,A9s:0.6,A8s:0.6,KQo:0.5

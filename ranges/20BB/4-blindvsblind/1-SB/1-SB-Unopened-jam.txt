@@ -1,0 +1,1 @@
+44:0.95,33,AQo,AJo,ATo,A9s:0.2,A9o,A8o,A7o,A6o,A5o,A4o,A3o,A2o,KQo:0.6,KJo:0.3,KTo,K7o:0.25,K6o:0.9,QJo:0.2,QTo,Q5s:0.25,J5s,T9o:0.2,T7s,76s,75s,65s,64s:0.05,54s

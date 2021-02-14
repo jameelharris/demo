@@ -1,0 +1,1 @@
+77:0.9,66,55,44,33,22,AKo:0.7,AQo,AJo,ATo,A9,A8s:0.5,A8o,A7s:0.3,A7o,A6s:0.7,A6o,A5s:0.5,A5o,A4,A3,A2s,A2o:0.5,KQs:0.4,KQo,KJo,KTo,K9s,K7s:0.7,K6s:0.7,QTs,QTo:0.4,Q9s,JTo:0.8,J9s,J8s:0.4,T9s,T8s,98s,87s
