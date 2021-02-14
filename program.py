@@ -12,196 +12,94 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 
-app = dash.Dash(__name__)
-app.layout = html.Div([
 
-    html.Div([
+useCase = 'sqz'
+config = ''
 
-        dcc.Dropdown(
-            id='usecase',
-            options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
-            value='RFI-linear', 
+files = functions.getFiles(definitions.preFlopUseCases[useCase]['fileDirPattern'])
+print('\n')
 
-        ),
+useCaseInventory = {}   
 
-        html.Br(),
+for absoluteFileName in files:
 
-    ], style={'width': '12%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+    hands = functions.getHands(absoluteFileName)
+    print('\n')
+    filePath = functions.getFileAttribute(absoluteFileName, 'path')
+    fileName = functions.getFileAttribute(absoluteFileName, 'name')
+    
+    hero = {
+        'heroStackDepth': functions.getHeroAttribute(filePath, useCase, 'heroStackDepth'),
+        'heroPosition': functions.getHeroAttribute(fileName, useCase, 'heroPosition'),
+        'heroAction': functions.getHeroAttribute(fileName, useCase, 'heroAction'),
+        'heroUseCaseVariant': functions.getHeroAttribute(fileName, useCase, 'heroUseCaseVariant'),
+        }
 
-
-    html.Div([
-        html.Div([
-            html.P('Hand Classes: ')
-        ], style={'display': 'inline-block'}),
-
-        html.Div([
-            dcc.Checklist(
-                id='class',
-                options=[{'label': handclass, 'value': handclass} for handclass in definitions.handClasses.keys()],
-                value=list(definitions.handClasses.keys()),
-            ),
-        ], style={'display': 'inline-block'}),
-
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
-
-    html.Div([
-        html.Div([
-            html.P(id='variable')
-        ], style={'display': 'inline-block'}),
-
-        html.Div([
-            dcc.Checklist(
-                id='vertical_filter',
-                value=[]
-            ),
-        ], style={'display': 'inline-block'}),
-
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}), 
-
-    dcc.Graph(
-        id='graph',
-        config={'displayModeBar': False, 'showTips': False},
-        #figure=fig
-    ), 
-
-    html.Span('test', id='tooltip-target'),
-    dbc.Tooltip('hover text', target='tooltip-target')
-])
-
-
-@app.callback(
-    Output('vertical_filter', 'options'),
-    Output('variable', 'children'),
-    Input('usecase', 'value'))
-def setverticalfilter(selected_usecase):
-    variable_list = []
-    print('selected_usecase= ', selected_usecase)
-    last_element = list(definitions.verticalfilter[selected_usecase].keys())[-1] 
-
-    for key in definitions.preFlopUseCases.keys():
-        #print('substring =', key, ' string =', selected_usecase)
-        
-        if key in selected_usecase:
-            print('substring condition passed')
-            variable_list = list(definitions.preFlopUseCases[key][last_element])
-
-    #print('variable_list= ', variable_list)    
-    #print('last_element = ', last_element)
-    if 'StackDepth' in last_element:  
-        return [{'label': element.replace('BB', 'bb'), 'value': element} for element in variable_list], definitions.variableUINames[last_element] + ': '
-    else:
-        return [{'label': element, 'value': element} for element in variable_list], definitions.variableUINames[last_element] + ': '
-
-
-@app.callback(
-    Output('vertical_filter', 'value'), 
-    Input('vertical_filter', 'options'))
-def set_variable_value(variable_dict):
-    variable_list = []
-    for variable in variable_dict:
-        print('for testing...= ', variable)
-        variable_list.append(variable['value'])
-    return variable_list
-
-
-@app.callback(
-    Output('graph', 'figure'), 
-    [Input('class', 'value')])
-def updateheatmap(filteredlist): 
-
-    useCase = 'sqz'
-    config = ''
-
-    files = functions.getFiles(definitions.preFlopUseCases[useCase]['fileDirPattern'])
+    hero['heroBetSize'] = functions.getBetSize(hero, useCase, 'heroBetSize')
+    
+    if hero['heroBetSize'] == None and hero['heroAction'] == 'open':
+        hero['heroBetSize'] = definitions.preFlopUseCases[useCase]['defaultOpenSize']
+    
+    hero['counteredSize'] = functions.getBetSize(hero, useCase, 'counteredSize')
+    
     print('\n')
 
-    useCaseInventory = {}   
+    
+    hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands))
+    for (key, value) in hero['handVariantMatrix'].items():
+        print('program() - after getNewNatrix() executed:', key,':', value)
 
-    for absoluteFileName in files:
+    print('\n')
 
-        hands = functions.getHands(absoluteFileName)
-        print('\n')
-        filePath = functions.getFileAttribute(absoluteFileName, 'path')
-        fileName = functions.getFileAttribute(absoluteFileName, 'name')
-        
-        hero = {
-            'heroStackDepth': functions.getHeroAttribute(filePath, useCase, 'heroStackDepth'),
-            'heroPosition': functions.getHeroAttribute(fileName, useCase, 'heroPosition'),
-            'heroAction': functions.getHeroAttribute(fileName, useCase, 'heroAction'),
-            'heroUseCaseVariant': functions.getHeroAttribute(fileName, useCase, 'heroUseCaseVariant'),
-            }
+    #must pass filter to getNewMatrix for horizontal filtering
+    hero['handVariantMatrix'], filterlist = functions.getFrequency('handVariant', hero['handVariantMatrix'], definitions.horizontalfilter)
+    for (key, value) in hero['handVariantMatrix'].items():
+        print('program() - after getFrequency() executed:', key,':', value)
 
-        hero['heroBetSize'] = functions.getBetSize(hero, useCase, 'heroBetSize')
-        
-        if hero['heroBetSize'] == None and hero['heroAction'] == 'open':
-            hero['heroBetSize'] = definitions.preFlopUseCases[useCase]['defaultOpenSize']
-        
-        hero['counteredSize'] = functions.getBetSize(hero, useCase, 'counteredSize')
-        
-        print('\n')
+    print('\n')
 
-        
-        hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands))
-        for (key, value) in hero['handVariantMatrix'].items():
-            print('program() - after getNewNatrix() executed:', key,':', value)
+    hero['overallFrequency'] = format(float(functions.getTotalCombos(hero['handVariantMatrix'])) / float(functions.getTotalCombos(functions.getBaseMatrix('handVariant'))), definitions.formats['frequencyFormat'])
+    print('program()-overall frequency:', hero['overallFrequency'])
 
-        print('\n')
+    print('\n')
 
-        #must pass filter to getNewMatrix for horizontal filtering
-        hero['handVariantMatrix'], filterlist = functions.getFrequency('handVariant', hero['handVariantMatrix'], definitions.horizontalfilter)
-        for (key, value) in hero['handVariantMatrix'].items():
-            print('program() - after getFrequency() executed:', key,':', value)
+    functions.modifyMatrix(hero['handVariantMatrix'])
 
-        print('\n')
+    print('\n')
+    
+    useCaseInventory.update({ absoluteFileName : hero })
 
-        hero['overallFrequency'] = format(float(functions.getTotalCombos(hero['handVariantMatrix'])) / float(functions.getTotalCombos(functions.getBaseMatrix('handVariant'))), definitions.formats['frequencyFormat'])
-        print('program()-overall frequency:', hero['overallFrequency'])
+#useCaseInventory.update(functions.mutecolumns(useCaseInventory))
 
-        print('\n')
+for (key, value) in useCaseInventory.items():
+    print('program():', key,':', value)
+    print('\n')
 
-        functions.modifyMatrix(hero['handVariantMatrix'])
 
-        print('\n')
-        
-        useCaseInventory.update({ absoluteFileName : hero })
 
-    #useCaseInventory.update(functions.mutecolumns(useCaseInventory))
+'''
+orderedUseCaseInventory = functions.reorderUseCases(useCaseInventory)
 
-    for (key, value) in useCaseInventory.items():
-        print('program():', key,':', value)
-        print('\n')
+
+print('\n THE ORDERED USE CASE INVENTORY \n')
+
+for (key, value) in orderedUseCaseInventory.items():
+    print('program():', key,':', value)
+    print('\n')
+'''
+if config == '':
+    usecaseconfig = useCase 
+else: 
+    usecaseconfig = useCase + '-' + config
+dfList, xtickDict, mostOuterVariable = functions.getdatavizcontent(definitions.verticalfilter[usecaseconfig], useCase, useCaseInventory) 
+
+for df in dfList:
+    #df['frequency'] = np.where(df['class'] != 'The Ringer', 0.0, df['frequency'])
+    print(df)
+    print('\n')
+
+functions.visualizedata(dfList, useCase, mostOuterVariable, xtickDict, filterlist, config)
+
+
 
     
-
-    '''
-    orderedUseCaseInventory = functions.reorderUseCases(useCaseInventory)
-
-
-    print('\n THE ORDERED USE CASE INVENTORY \n')
-
-    for (key, value) in orderedUseCaseInventory.items():
-        print('program():', key,':', value)
-        print('\n')
-    '''
-    if config == '':
-        usecaseconfig = useCase 
-    else: 
-        usecaseconfig = useCase + '-' + config
-    dfList, xtickDict, mostOuterVariable = functions.getdatavizcontent(definitions.verticalfilter[usecaseconfig], useCase, useCaseInventory) 
-
-    for df in dfList:
-        #df['frequency'] = np.where(df['class'] != 'The Ringer', 0.0, df['frequency'])
-        print(df)
-        print('\n')
-
-    #functions.visualizedata(dfList, useCase, mostOuterVariable, xtickDict, filterlist, config)
-    #functions.visualizedatatemp(dfList, useCase, mostOuterVariable, xtickDict, config)
-        # visualizedatatemp does not use 'filterlist' (only visualize data)
-    #functions.visualizelegend()
-
-
-        
-    return functions.visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlist, config)
-
-if __name__ == "__main__":
-    app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
