@@ -7,8 +7,7 @@ variableUINames = {
 
 horizontalfilter = { 
 
-    'classes' : (), 
-    'variants' : () 
+
 
     }
 
