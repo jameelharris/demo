@@ -10,7 +10,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 
 app = dash.Dash(__name__)
 app.layout = html.Div([
@@ -18,7 +18,7 @@ app.layout = html.Div([
     html.Div([
 
         dcc.Dropdown(
-            id='usecase',
+            id='usecases',
             options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
             value='RFI-linear', 
 
@@ -36,7 +36,7 @@ app.layout = html.Div([
 
         html.Div([
             dcc.Checklist(
-                id='class',
+                id='handclasses',
                 options=[{'label': handclass, 'value': handclass} for handclass in definitions.handClasses.keys()],
                 value=list(definitions.handClasses.keys()),
             ),
@@ -46,17 +46,21 @@ app.layout = html.Div([
 
     html.Div([
         html.Div([
-            html.P(id='variable')
+            html.P(id='variable_name')
         ], style={'display': 'inline-block'}),
 
         html.Div([
             dcc.Checklist(
-                id='vertical_filter',
-                value=[]
+                id='xaxis_variables',
+                #value=[]
             ),
         ], style={'display': 'inline-block'}),
 
     ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}), 
+
+    html.Br(),
+
+    html.Button(id='submit-button-state', n_clicks=0, children='Filter'),
 
     dcc.Graph(
         id='graph',
@@ -70,10 +74,10 @@ app.layout = html.Div([
 
 
 @app.callback(
-    Output('vertical_filter', 'options'),
-    Output('variable', 'children'),
-    Input('usecase', 'value'))
-def setverticalfilter(selected_usecase):
+    Output('xaxis_variables', 'options'),
+    Output('variable_name', 'children'),
+    Input('usecases', 'value'))
+def set_variable_options(selected_usecase):
     variable_list = []
     print('selected_usecase= ', selected_usecase)
     last_element = list(definitions.verticalfilter[selected_usecase].keys())[-1] 
@@ -94,20 +98,27 @@ def setverticalfilter(selected_usecase):
 
 
 @app.callback(
-    Output('vertical_filter', 'value'), 
-    Input('vertical_filter', 'options'))
+    Output('xaxis_variables', 'value'), 
+    Input('xaxis_variables', 'options'))
 def set_variable_value(variable_dict):
     variable_list = []
     for variable in variable_dict:
-        print('for testing...= ', variable)
+        #print('for testing...= ', variable)
         variable_list.append(variable['value'])
     return variable_list
-
-
+'''
+@app.callback(
+    Output('graph', 'figure'),
+    Input('submit-button-state', 'n_clicks'),
+    State('usecases', 'value'),
+    State('handclasses', 'value'),
+    State('xaxis_variables', 'value'))
+def update_output(n_clicks, handclass, )
+'''
 @app.callback(
     Output('graph', 'figure'), 
-    [Input('class', 'value')])
-def updateheatmap(filteredlist): 
+    [Input('handclasses', 'value')])
+def render_heatmap(filteredlist): 
 
     useCase = 'BBdefends'
     config = ''
@@ -196,14 +207,12 @@ def updateheatmap(filteredlist):
         print(df)
         print('\n')
 
-    #functions.visualizedata(dfList, useCase, mostOuterVariable, xtickDict, filterlist, config)
-    #functions.visualizedatatemp(dfList, useCase, mostOuterVariable, xtickDict, config)
-        # visualizedatatemp does not use 'filterlist' (only visualize data)
+
     #functions.visualizelegend()
 
 
         
-    return functions.visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlist, usecaseconfig)
+    return functions.visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconfig)
 
 if __name__ == "__main__":
     app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter

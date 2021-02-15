@@ -509,7 +509,7 @@ def visualizelegend():
 
 
 
-def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlist, usecaseconfig): 
+def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconfig): 
     subplottitle = ''
     subplottitlelist = []
     specialformattingusecases = ('blindvsblind', 'vsOpen')
@@ -553,8 +553,8 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlis
         #group = df['heroAction'].values[0]
 
         ##### dropping rows 
-        rowstodrop = set(list(definitions.handClasses.keys())).symmetric_difference(filteredlist)
-        rowstodrop = list(rowstodrop)
+        #rowstodrop = set(list(definitions.handClasses.keys())).symmetric_difference(filteredlist)
+        #rowstodrop = list(rowstodrop)
         #df = df[~df['class'].isin([item])]
 
 
