@@ -17,41 +17,41 @@ verticalfilter = {
     'RFI-polar': { 
         'heroActions': (),
         'heroStackDepths': (),
-        'heroPositions': (),
+        'heroPositions': ('EP', 'MP', 'LJ', 'HJ', 'CO', 'BTN'),
         },
 
     'RFI-altStrat': { 
         'heroActions': (),
         'heroStackDepths': (),
-        'heroPositions': (),
+        'heroPositions': ('LJ', 'HJ', 'CO', 'BTN'),
         },
 
 
     'RFI-linear': { 
         'heroActions': (),
         'heroPositions': (),
-        'heroStackDepths': (),
+        'heroStackDepths': ('20BB', '25BB', '30BB', '40-50BB', '60-100BB'),
         },
 
 
     'RFI-linear-alternative': { 
         'heroActions': (),
         'heroStackDepths': (),
-        'heroPositions': (),
+        'heroPositions': ('EP', 'MP', 'LJ', 'HJ', 'CO', 'BTN'),
         },
 
 
     'BBdefends': { 
         'heroActions': (),
         'heroStackDepths': (),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
         
         },
 
     'BBdefends-alternative': { 
         'heroActions': (),
         'heroUseCaseVariants': (),
-        'heroStackDepths': (),
+        'heroStackDepths': ('15BB', '20BB', '25BB', '30BB', '50BB', '100BB'),
         
         },
         
@@ -61,7 +61,7 @@ verticalfilter = {
         'heroUseCaseVariants': (),
         'heroActions': (),
         'heroPositions': ('SB',),
-        'heroStackDepths': (),
+        'heroStackDepths': ('20BB', '25BB', '30BB', '50BB', '100BB'),
         },
 
     'blindvsblind-BB': { 
@@ -69,7 +69,7 @@ verticalfilter = {
         'heroUseCaseVariants': (),
         'heroActions': (),
         'heroPositions': ('BB',),
-        'heroStackDepths': (),
+        'heroStackDepths': ('20BB', '25BB', '30BB', '50BB', '100BB'),
         },
 
     'vsOpen-EP': { 
@@ -77,7 +77,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
         'heroPositions': ('EP',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsEP',),
         
         },
 
@@ -86,7 +86,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
         'heroPositions': ('MP',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsEP', 'vsMP'),
         
         },
 
@@ -95,16 +95,16 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
         'heroPositions': ('HJ',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsEP', 'vsMP'),
         
         },
 
-    'vsOpen-HJ': { 
+    'vsOpen-CO': { 
         'heroActions': (),
         'heroStackDepths': (),
         #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
         'heroPositions': ('CO',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ'),
         
         },
 
@@ -113,7 +113,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
         'heroPositions': ('BTN',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO'),
         
         },
 
@@ -122,7 +122,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
         'heroPositions': ('BTN',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
         
         },
 
@@ -131,7 +131,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
         'heroUseCaseVariants': ('vsEP',),
-        'heroPositions': (),
+        'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
 
         },
 
@@ -140,7 +140,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
         'heroUseCaseVariants': ('vsMP',),
-        'heroPositions': (),
+        'heroPositions': ('MP', 'HJ', 'CO', 'BTN', 'SB'),
 
         },
 
@@ -149,7 +149,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
         'heroUseCaseVariants': ('vsHJ',),
-        'heroPositions': (),
+        'heroPositions': ('CO', 'BTN', 'SB'),
 
         },
 
@@ -158,7 +158,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
         'heroUseCaseVariants': ('vsCO',),
-        'heroPositions': (),
+        'heroPositions': ('BTN', 'SB'),
 
         },
 
@@ -167,7 +167,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
         'heroUseCaseVariants': ('vsBTN',),
-        'heroPositions': (),
+        'heroPositions': ('SB',),
 
         },
     
@@ -176,7 +176,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
         'heroPositions': ('MP',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsSB', 'vsBB', 'vsHJ', 'vsCO', 'vsBTN'),
         
         },
 
@@ -185,7 +185,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
         'heroPositions': ('HJ',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsSB', 'vsBB', 'vsHJ', 'vsCO'),
         
         },
 
@@ -194,7 +194,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
         'heroPositions': ('CO',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsSB', 'vsBB', 'vsHJ'),
         
         },
 
@@ -203,7 +203,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
         'heroPositions': ('BTN',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsSB', 'vsBB'),
         
         },
 
@@ -212,7 +212,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
         'heroUseCaseVariants': ('vsHJ',),
-        'heroPositions': (),
+        'heroPositions': ('MP',),
         
         },
 
@@ -221,7 +221,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
         'heroUseCaseVariants': ('vsCO',),
-        'heroPositions': (),
+        'heroPositions': ('MP', 'HJ'),
         
         },
 
@@ -230,8 +230,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
         'heroUseCaseVariants': ('vsBTN',),
-        'heroPositions': (),
-        
+        'heroPositions': ('MP', 'HJ', 'CO'), 
         },
 
     'vs3bet-alternative (vsSB)': { 
@@ -239,7 +238,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
         'heroUseCaseVariants': ('vsSB',),
-        'heroPositions': (),
+        'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
         
         },
 
@@ -248,7 +247,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
         'heroUseCaseVariants': ('vsBB',),
-        'heroPositions': (),
+        'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
         
         },
 
@@ -257,7 +256,7 @@ verticalfilter = {
         #'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
         'heroStackDepths': (),
         'heroPositions': ('CO',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsMPandHJ',),
         
         },
 
@@ -266,7 +265,7 @@ verticalfilter = {
         #'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
         'heroStackDepths': (),
         'heroPositions': ('BTN',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsMPandHJ', 'vsMPandCO', 'vsHJandCO'),
         
         },
 
@@ -275,8 +274,7 @@ verticalfilter = {
         #'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
         'heroStackDepths': (),
         'heroPositions': ('SB',),
-        'heroUseCaseVariants': (),
-        
+        'heroUseCaseVariants': ('vsMPandHJ', 'vsMPandCO', 'vsMPandBTN', 'vsHJandCO', 'vsHJandBTN', 'vsCOandBTN'),        
         },
 
     'sqz-BB': { 
@@ -284,7 +282,7 @@ verticalfilter = {
         #'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
         'heroStackDepths': (),
         'heroPositions': ('BB',),
-        'heroUseCaseVariants': (),
+        'heroUseCaseVariants': ('vsMPandHJ', 'vsMPandCO', 'vsMPandBTN', 'vsMPandSB', 'vsHJandCO', 'vsHJandBTN', 'vsHJandSB', 'vsCOandBTN', 'vsCOandSB', 'vsBTNandSB'),
         
         },
 
@@ -403,18 +401,7 @@ preFlopUseCases = {
         'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
         'heroStackDepths': ('30BB', '50BB', '100BB'),
         'heroActions': ('jam', 'sqz', 'call'),
-        'heroUseCaseVariants': ('vsMPandHJ', 
-                            'vsMPandCO', 
-                            'vsMPandBTN', 
-                            'vsMPandSB', 
-                            'vsHJandCO', 
-                            'vsHJandBTN', 
-                            'vsHJandSB', 
-                            'vsCOandBTN', 
-                            'vsCOandSB',
-                            'vsBTNandSB'
-                            ),
-
+        'heroUseCaseVariants': ('vsMPandHJ', 'vsMPandCO', 'vsMPandBTN', 'vsMPandSB', 'vsHJandCO', 'vsHJandBTN', 'vsHJandSB', 'vsCOandBTN', 'vsCOandSB', 'vsBTNandSB'),
         'subplotcolors': {'jam': 'Reds', 'sqz': 'Greens', 'call': 'Greys'},
         'viztitle': 'SQUEEZE',
         'mixedstrategyflag': 'true',

@@ -83,7 +83,7 @@ def setverticalfilter(selected_usecase):
         
         if key in selected_usecase:
             print('substring condition passed')
-            variable_list = list(definitions.preFlopUseCases[key][last_element])
+            variable_list = list(definitions.verticalfilter[selected_usecase].values())[-1]
 
     #print('variable_list= ', variable_list)    
     #print('last_element = ', last_element)
@@ -109,8 +109,8 @@ def set_variable_value(variable_dict):
     [Input('class', 'value')])
 def updateheatmap(filteredlist): 
 
-    useCase = 'blindvsblind'
-    config = 'SB'
+    useCase = 'BBdefends'
+    config = ''
 
     if config == '':
         usecaseconfig = useCase 
