@@ -26,7 +26,7 @@ app.layout = html.Div([
 
         html.Br(),
 
-    ], style={'width': '12%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+    ], style={'width': '15%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
 
 
     html.Div([
@@ -109,8 +109,13 @@ def set_variable_value(variable_dict):
     [Input('class', 'value')])
 def updateheatmap(filteredlist): 
 
-    useCase = 'sqz'
-    config = ''
+    useCase = 'blindvsblind'
+    config = 'SB'
+
+    if config == '':
+        usecaseconfig = useCase 
+    else: 
+        usecaseconfig = useCase + '-' + config
 
     files = functions.getFiles(definitions.preFlopUseCases[useCase]['fileDirPattern'])
     print('\n')
@@ -183,10 +188,7 @@ def updateheatmap(filteredlist):
         print('program():', key,':', value)
         print('\n')
     '''
-    if config == '':
-        usecaseconfig = useCase 
-    else: 
-        usecaseconfig = useCase + '-' + config
+    
     dfList, xtickDict, mostOuterVariable = functions.getdatavizcontent(definitions.verticalfilter[usecaseconfig], useCase, useCaseInventory) 
 
     for df in dfList:
@@ -201,7 +203,7 @@ def updateheatmap(filteredlist):
 
 
         
-    return functions.visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlist, config)
+    return functions.visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlist, usecaseconfig)
 
 if __name__ == "__main__":
     app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter

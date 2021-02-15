@@ -72,16 +72,61 @@ verticalfilter = {
         'heroStackDepths': (),
         },
 
-    'vsOpen': { 
+    'vsOpen-EP': { 
         'heroActions': (),
         'heroStackDepths': (),
         #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
-        'heroPositions': ('SB',),
+        'heroPositions': ('EP',),
         'heroUseCaseVariants': (),
         
         },
 
-    'vsOpen-alternative': { 
+    'vsOpen-MP': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
+        'heroPositions': ('MP',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'vsOpen-HJ': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
+        'heroPositions': ('HJ',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'vsOpen-HJ': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
+        'heroPositions': ('CO',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'vsOpen-BTN': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
+        'heroPositions': ('BTN',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'vsOpen-SB': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
+        'heroPositions': ('BTN',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'vsOpen-alternative (vsEP)': { 
         'heroActions': (),
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
@@ -89,8 +134,44 @@ verticalfilter = {
         'heroPositions': (),
 
         },
+
+    'vsOpen-alternative (vsMP)': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
+        'heroUseCaseVariants': ('vsMP',),
+        'heroPositions': (),
+
+        },
+
+    'vsOpen-alternative (vsHJ)': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
+        'heroUseCaseVariants': ('vsHJ',),
+        'heroPositions': (),
+
+        },
+
+    'vsOpen-alternative (vsCO)': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
+        'heroUseCaseVariants': ('vsCO',),
+        'heroPositions': (),
+
+        },
+
+    'vsOpen-alternative (vsBTN)': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
+        'heroUseCaseVariants': ('vsBTN',),
+        'heroPositions': (),
+
+        },
     
-    'vs3bet': { 
+    'vs3bet-MP': { 
         'heroActions': (),
         'heroStackDepths': (),
         #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
@@ -99,7 +180,70 @@ verticalfilter = {
         
         },
 
-    'vs3bet-alternative': { 
+    'vs3bet-HJ': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
+        'heroPositions': ('HJ',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'vs3bet-CO': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
+        'heroPositions': ('CO',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'vs3bet-BTN': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
+        'heroPositions': ('BTN',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'vs3bet-alternative (vsHJ)': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
+        'heroUseCaseVariants': ('vsHJ',),
+        'heroPositions': (),
+        
+        },
+
+    'vs3bet-alternative (vsCO)': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
+        'heroUseCaseVariants': ('vsCO',),
+        'heroPositions': (),
+        
+        },
+
+    'vs3bet-alternative (vsBTN)': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
+        'heroUseCaseVariants': ('vsBTN',),
+        'heroPositions': (),
+        
+        },
+
+    'vs3bet-alternative (vsSB)': { 
+        'heroActions': (),
+        'heroStackDepths': (),
+        #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
+        'heroUseCaseVariants': ('vsSB',),
+        'heroPositions': (),
+        
+        },
+
+    'vs3bet-alternative (vsBB)': { 
         'heroActions': (),
         'heroStackDepths': (),
         #'heroUseCaseVariants': ('vsHJ', 'vsCO', 'vsBTN', 'vsSB', 'vsBB'),
@@ -108,7 +252,34 @@ verticalfilter = {
         
         },
 
-    'sqz': { 
+    'sqz-CO': { 
+        'heroActions': (),
+        #'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
+        'heroStackDepths': (),
+        'heroPositions': ('CO',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'sqz-BTN': { 
+        'heroActions': (),
+        #'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
+        'heroStackDepths': (),
+        'heroPositions': ('BTN',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'sqz-SB': { 
+        'heroActions': (),
+        #'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
+        'heroStackDepths': (),
+        'heroPositions': ('SB',),
+        'heroUseCaseVariants': (),
+        
+        },
+
+    'sqz-BB': { 
         'heroActions': (),
         #'heroPositions': ('CO', 'BTN', 'SB', 'BB'),
         'heroStackDepths': (),

@@ -602,7 +602,7 @@ def visualizedatatemp(dfList, useCase, mostOuterVariable, xtickDict, config):
     app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
 
 
-def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlist, config): 
+def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlist, usecaseconfig): 
     subplottitle = ''
     subplottitlelist = []
     specialformattingusecases = ('blindvsblind', 'vsOpen')
@@ -666,7 +666,7 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, filteredlis
 
     ##### displaying the map 
 
-    factors = get_vertical_segments(definitions.verticalfilter[useCase+config], useCase)
+    factors = get_vertical_segments(definitions.verticalfilter[usecaseconfig], useCase)
     classes, variants = get_horizontal_segments(definitions.horizontalfilter)
     title = definitions.preFlopUseCases[useCase]['viztitle']
 
