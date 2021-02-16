@@ -36,6 +36,8 @@ app.layout = html.Div([
             html.P('Hand Classes: ')
         ], style={'display': 'inline-block'}),
 
+        html.Span(id='class_error_message', style={'color' : 'red'}),
+
         html.Div([
             dcc.Checklist(
                 id='handclasses',
@@ -51,6 +53,8 @@ app.layout = html.Div([
             html.P(id='variable_name')
         ], style={'display': 'inline-block'}),
 
+        html.Span(id='variable_error_message', style={'color' : 'red'}),
+
         html.Div([
             dcc.Checklist(
                 id='xaxis_variables',
@@ -62,7 +66,7 @@ app.layout = html.Div([
 
     html.Br(),
 
-    html.Button(id='submit-button-state', n_clicks=0, children='Filter'),
+    html.Button(id='submit-button-state', n_clicks=0, children='View Chart'),
 
     dcc.Graph(
         id='graph',
@@ -74,6 +78,36 @@ app.layout = html.Div([
     dbc.Tooltip('hover text', target='tooltip-target')
 ])
 
+@app.callback(
+    Output('class_error_message', 'children'),
+    Input('handclasses', 'value'))   
+def send_error_message(handclasses):
+    if len(handclasses) == 0: 
+        return ' ...Select at least one Hand Class... '
+    else: 
+        return ''
+    
+
+@app.callback(
+    Output('variable_error_message', 'children'),
+    Input('xaxis_variables', 'value'),
+    Input('variable_name', 'children'))   
+def send_error_message(xaxis_variables, variable_name):
+    if len(xaxis_variables) == 0: 
+        return ' ...Select at least one of the' + variable_name + ' ... '
+        raise PreventUpdate
+    else: 
+        return ''
+
+@app.callback(
+    Output('submit-button-state', 'disabled'),
+    Input('handclasses', 'value'),
+    Input('xaxis_variables', 'value'))
+def set_button_enabled_state(handclasses, xaxis_variables):
+    if len(handclasses) == 0 or len(xaxis_variables) == 0:
+        return True 
+    else:
+        return False
 
 @app.callback(
     Output('xaxis_variables', 'options'),
@@ -116,9 +150,9 @@ def set_variable_value(variable_dict):
     State('handclasses', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
 def render_heatmap(n_clicks, usecaseconfig, handclasses, xaxis_variables): 
-    if len(handclasses) == 0:
+    if len(handclasses) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
-
+   
     #print('xaxis_variables = ', xaxis_variables)
     useCase = ''
 
@@ -212,6 +246,7 @@ def render_heatmap(n_clicks, usecaseconfig, handclasses, xaxis_variables):
 
         
     return functions.visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconfig)
+
 
 if __name__ == "__main__":
     app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
