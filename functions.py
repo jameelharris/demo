@@ -260,25 +260,23 @@ def getFrequency(matrixType, matrix, horizontalfilter):
     filterlist = []
     filterflag = False
 
-    if len(horizontalfilter['classes']) > 0:
-        for classKey in horizontalfilter['classes']: 
+    print('horizontalfilter test #1 = ', horizontalfilter)
+
+    if len(horizontalfilter) > 0:
+        for classKey in horizontalfilter:
             for var in list(definitions.handClasses[classKey]['variants']):
                 filterlist.append(var)
                 filterflag = True
 
-    if len(horizontalfilter['variants']) > 0:
-        for variantKey in horizontalfilter['variants']:
-            filterlist.append(variantKey)
-            filterflag = True
-
-    for key in matrix.keys(): 
-        if filterflag == True and key not in filterlist: 
-            matrix[key]['combos'] = 0.0
-            matrix[key]['hands'] = ''
-            matrix[key]['name'] = ''
-            matrix[key]['property'] = ''
-        frequency = format(float(matrix[key]['combos']) / float(baseMatrix[key]['combos']), definitions.formats['frequencyFormat'])
-        matrix.update(addFrequency(frequency, key, matrix))
+    if filterflag == True:
+        for key in matrix.keys(): 
+            if key not in filterlist: 
+                matrix[key]['combos'] = 0.0
+                matrix[key]['hands'] = ''
+                matrix[key]['name'] = ''
+                matrix[key]['property'] = ''
+            frequency = format(float(matrix[key]['combos']) / float(baseMatrix[key]['combos']), definitions.formats['frequencyFormat'])
+            matrix.update(addFrequency(frequency, key, matrix))
 
 
     return matrix, filterlist
@@ -525,7 +523,6 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
     #print('from visualizedatatemp()...xtickDict keys: ', xtickDict.keys())
 
     fig = make_subplots(rows=1, cols=len(dfList), shared_yaxes='rows', subplot_titles=subplottitlelist)
-    
 
     fontsize = 0
     layoutfontsize = 10
@@ -551,11 +548,6 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
 
         ##### getting the action before pivoting df
         #group = df['heroAction'].values[0]
-
-        ##### dropping rows 
-        #rowstodrop = set(list(definitions.handClasses.keys())).symmetric_difference(filteredlist)
-        #rowstodrop = list(rowstodrop)
-        #df = df[~df['class'].isin([item])]
 
 
         ##### creating the heatmap
@@ -843,15 +835,23 @@ def buildbyattribute(currAttribute, attributes, currFilter, vizParams, useCase, 
     return inventory
 
 
-def mutecolumns(useCaseInventory):
-    lookup = '20BB'
-    for (useCaseKey, useCaseNestedDicts) in useCaseInventory.items():
-        for (useCaseNestedDictKey, useCaseNestedDictValue) in useCaseNestedDicts.items():
-            if lookup == useCaseNestedDictValue:
-                print('mutecolumns condition passed')
-                for value in useCaseNestedDicts['handVariantMatrix'].values():
-                    value['frequency'] = '0.00' 
-                    value['hands'] = ''
-                    value['property'] = ''
-                useCaseNestedDicts['overallFrequency'] = '0.00'
+def mutecolumns(useCaseInventory, vertical_filter, usecaseconfig):
+    #print('mutecolumns test #1 ', list(definitions.verticalfilter[usecaseconfig].values())[-1])
+    #print('\n')
+    #print('mutecolumns test #2 ', tuple(vertical_filter))
+
+    s = set(list(definitions.verticalfilter[usecaseconfig].values())[-1]).symmetric_difference(vertical_filter)
+    #print ('mute columns test #3 = ', s)
+    if len(s) > 0:
+        #print('mute columns test #4 passed')
+        for (useCaseKey, useCaseNestedDicts) in useCaseInventory.items():
+            for (useCaseNestedDictKey, useCaseNestedDictValue) in useCaseNestedDicts.items():
+                for var in s: 
+                    if var == useCaseNestedDictValue:
+                        #print('mutecolumns condition passed')
+                        for value in useCaseNestedDicts['handVariantMatrix'].values():
+                            value['frequency'] = '0.00' 
+                            value['hands'] = ''
+                            value['property'] = ''
+                        useCaseNestedDicts['overallFrequency'] = '0.00'
     return useCaseInventory

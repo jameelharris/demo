@@ -11,6 +11,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
 
 app = dash.Dash(__name__)
 app.layout = html.Div([
@@ -20,7 +21,8 @@ app.layout = html.Div([
         dcc.Dropdown(
             id='usecases',
             options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
-            value='RFI-linear', 
+            value='RFI-polar',
+            clearable=False 
 
         ),
 
@@ -52,7 +54,7 @@ app.layout = html.Div([
         html.Div([
             dcc.Checklist(
                 id='xaxis_variables',
-                #value=[]
+                value=[]
             ),
         ], style={'display': 'inline-block'}),
 
@@ -106,27 +108,24 @@ def set_variable_value(variable_dict):
         #print('for testing...= ', variable)
         variable_list.append(variable['value'])
     return variable_list
-'''
+
 @app.callback(
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
     State('usecases', 'value'),
     State('handclasses', 'value'),
-    State('xaxis_variables', 'value'))
-def update_output(n_clicks, handclass, )
-'''
-@app.callback(
-    Output('graph', 'figure'), 
-    [Input('handclasses', 'value')])
-def render_heatmap(filteredlist): 
+    State('xaxis_variables', 'value'), prevent_initial_call=True)
+def render_heatmap(n_clicks, usecaseconfig, handclasses, xaxis_variables): 
+    if len(handclasses) == 0:
+        raise PreventUpdate
 
-    useCase = 'BBdefends'
-    config = ''
+    #print('xaxis_variables = ', xaxis_variables)
+    useCase = ''
 
-    if config == '':
-        usecaseconfig = useCase 
-    else: 
-        usecaseconfig = useCase + '-' + config
+    ##### derive abstract use case from specific use case
+    for key in definitions.preFlopUseCases.keys():
+        if key in usecaseconfig:
+            useCase = key 
 
     files = functions.getFiles(definitions.preFlopUseCases[useCase]['fileDirPattern'])
     print('\n')
@@ -164,7 +163,7 @@ def render_heatmap(filteredlist):
         print('\n')
 
         #must pass filter to getNewMatrix for horizontal filtering
-        hero['handVariantMatrix'], filterlist = functions.getFrequency('handVariant', hero['handVariantMatrix'], definitions.horizontalfilter)
+        hero['handVariantMatrix'], filterlist = functions.getFrequency('handVariant', hero['handVariantMatrix'], handclasses)
         for (key, value) in hero['handVariantMatrix'].items():
             print('program() - after getFrequency() executed:', key,':', value)
 
@@ -181,7 +180,7 @@ def render_heatmap(filteredlist):
         
         useCaseInventory.update({ absoluteFileName : hero })
 
-    #useCaseInventory.update(functions.mutecolumns(useCaseInventory))
+    useCaseInventory.update(functions.mutecolumns(useCaseInventory, xaxis_variables, usecaseconfig))
 
     for (key, value) in useCaseInventory.items():
         print('program():', key,':', value)
