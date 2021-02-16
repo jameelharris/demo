@@ -66,7 +66,7 @@ app.layout = html.Div([
 
     html.Br(),
 
-    html.Button(id='submit-button-state', n_clicks=0, children='View Chart'),
+    html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart'),
 
     dcc.Graph(
         id='graph',

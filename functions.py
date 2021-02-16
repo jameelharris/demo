@@ -569,15 +569,6 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
     #classes, variants = get_horizontal_segments(definitions.horizontalfilter)
     title = definitions.preFlopUseCases[useCase]['viztitle']
 
-    '''
-    if len(classes) > 0:
-        title = title + '; class segment: ' + classes 
-    if len(variants) > 0: 
-        title = title + '; subclass segment: ' + variants 
-    if len(factors) > 0:
-        title = title + '; variable segment: ' + factors
-    '''
-    
     #fig.update_layout(hovermode='x', autosize=True, title_text=title, plot_bgcolor='white', font_color='black', font_size=10, yaxis={'title': ''}, xaxis={'title': ''})
     fig.update_layout(hoverlabel=modifyhoverlabel(), title_x=0.5, hovermode='x',autosize=False, height=650, width=1500, title_text= '<b>' + title + '</b>', plot_bgcolor='white', font_color='black', font_size=layoutfontsize, yaxis={'title': ''}, xaxis={'title': ''})
     fig.update_yaxes(autorange='reversed', automargin=True, showspikes=True, spikemode='toaxis', spikethickness=.5, spikedash='dot', spikecolor='black')
