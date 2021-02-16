@@ -74,8 +74,8 @@ app.layout = html.Div([
         #figure=fig
     ), 
 
-    html.Span('test', id='tooltip-target'),
-    dbc.Tooltip('hover text', target='tooltip-target')
+    #html.Span('test', id='tooltip-target'),
+    #dbc.Tooltip('hover text', target='tooltip-target')
 ])
 
 @app.callback(
