@@ -17,56 +17,60 @@ app = dash.Dash(__name__)
 app.layout = html.Div([
 
     html.Div([
-
-        dcc.Dropdown(
-            id='usecases',
-            options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
-            value='RFI-polar',
-            clearable=False 
-
-        ),
-
-        html.Br(),
-
-    ], style={'width': '15%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+        html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart'),
+    ], style={'width': '8%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
 
 
     html.Div([
         html.Div([
-            html.P('Hand Classes: ')
-        ], style={'display': 'inline-block'}),
-
-        html.Span(id='class_error_message', style={'color' : 'red'}),
-
-        html.Div([
-            dcc.Checklist(
-                id='handclasses',
-                options=[{'label': handclass, 'value': handclass} for handclass in definitions.handClasses.keys()],
-                value=list(definitions.handClasses.keys()),
+            dcc.Dropdown(
+                id='usecases',
+                options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
+                value='RFI-polar',
+                clearable=False 
             ),
-        ], style={'display': 'inline-block'}),
+            
+        ], style={'width': '80%'}),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+    ], style={'width': '16%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
+
 
     html.Div([
-        html.Div([
-            html.P(id='variable_name')
-        ], style={'display': 'inline-block'}),
-
-        html.Span(id='variable_error_message', style={'color' : 'red'}),
 
         html.Div([
-            dcc.Checklist(
-                id='xaxis_variables',
-                value=[]
-            ),
-        ], style={'display': 'inline-block'}),
+            html.Div([
+                html.P('Hand Classes: ')
+            ], style={'display': 'inline-block'}),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}), 
+            html.Span(id='class_error_message', style={'color' : 'red'}),
 
-    html.Br(),
+            html.Div([
+                dcc.Checklist(
+                    id='handclasses',
+                    options=[{'label': handclass, 'value': handclass} for handclass in definitions.handClasses.keys()],
+                    value=list(definitions.handClasses.keys()),
+                ),
+            ], style={'display': 'inline-block'}),
+        ]),
 
-    html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart'),
+        html.Div([
+            html.Div([
+                html.P(id='variable_name')
+            ], style={'display': 'inline-block'}),
+
+            html.Span(id='variable_error_message', style={'color' : 'red'}),
+
+            html.Div([
+                dcc.Checklist(
+                    id='xaxis_variables',
+                    value=[]
+                ),
+            ], style={'display': 'inline-block'}),
+        ]),
+
+    ], style={'width': '76%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block','vertical-align': 'top'}), 
+
+
 
     dcc.Graph(
         id='graph',
@@ -95,7 +99,6 @@ def send_error_message(handclasses):
 def send_error_message(xaxis_variables, variable_name):
     if len(xaxis_variables) == 0: 
         return ' ...Select at least one of the' + variable_name + ' ... '
-        raise PreventUpdate
     else: 
         return ''
 
