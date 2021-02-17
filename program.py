@@ -39,16 +39,16 @@ app.layout = html.Div([
 
         html.Div([
             html.Div([
-                html.P('Hand Classes: ')
+                html.P('Classes: ')
             ], style={'display': 'inline-block'}),
 
             html.Span(id='class_error_message', style={'color' : 'red'}),
 
             html.Div([
                 dcc.Checklist(
-                    id='handclasses',
-                    options=[{'label': handclass, 'value': handclass} for handclass in definitions.handClasses.keys()],
-                    value=list(definitions.handClasses.keys()),
+                    id='handsubclasses',
+                    options=[{'label': handsubclass, 'value': handsubclass} for handsubclass in definitions.handVariants.keys()],
+                    value=list(definitions.handVariants.keys()),
                 ),
             ], style={'display': 'inline-block'}),
         ]),
@@ -84,9 +84,9 @@ app.layout = html.Div([
 
 @app.callback(
     Output('class_error_message', 'children'),
-    Input('handclasses', 'value'))   
-def send_error_message(handclasses):
-    if len(handclasses) == 0: 
+    Input('handsubclasses', 'value'))   
+def send_error_message(handsubclasses):
+    if len(handsubclasses) == 0: 
         return ' ...Select at least one Hand Class... '
     else: 
         return ''
@@ -104,10 +104,10 @@ def send_error_message(xaxis_variables, variable_name):
 
 @app.callback(
     Output('submit-button-state', 'disabled'),
-    Input('handclasses', 'value'),
+    Input('handsubclasses', 'value'),
     Input('xaxis_variables', 'value'))
-def set_button_enabled_state(handclasses, xaxis_variables):
-    if len(handclasses) == 0 or len(xaxis_variables) == 0:
+def set_button_enabled_state(handsubclasses, xaxis_variables):
+    if len(handsubclasses) == 0 or len(xaxis_variables) == 0:
         return True 
     else:
         return False
@@ -150,10 +150,10 @@ def set_variable_value(variable_dict):
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
     State('usecases', 'value'),
-    State('handclasses', 'value'),
+    State('handsubclasses', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(n_clicks, usecaseconfig, handclasses, xaxis_variables): 
-    if len(handclasses) == 0 or len(xaxis_variables) == 0:
+def render_heatmap(n_clicks, usecaseconfig, handsubclasses, xaxis_variables): 
+    if len(handsubclasses) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
    
     #print('xaxis_variables = ', xaxis_variables)
@@ -200,7 +200,7 @@ def render_heatmap(n_clicks, usecaseconfig, handclasses, xaxis_variables):
         print('\n')
 
         #must pass filter to getNewMatrix for horizontal filtering
-        hero['handVariantMatrix'], filterlist = functions.getFrequency('handVariant', hero['handVariantMatrix'], handclasses)
+        hero['handVariantMatrix'], filterlist = functions.getFrequency('handVariant', hero['handVariantMatrix'], handsubclasses)
         for (key, value) in hero['handVariantMatrix'].items():
             print('program() - after getFrequency() executed:', key,':', value)
 

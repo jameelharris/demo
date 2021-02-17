@@ -260,13 +260,23 @@ def getFrequency(matrixType, matrix, horizontalfilter):
     filterlist = []
     filterflag = False
 
-    print('horizontalfilter test #1 = ', horizontalfilter)
+    #print('horizontalfilter test #1 = ', horizontalfilter)
 
+
+    # logic for when checklist is based on class
+    '''
     if len(horizontalfilter) > 0:
         for classKey in horizontalfilter:
             for var in list(definitions.handClasses[classKey]['variants']):
                 filterlist.append(var)
                 filterflag = True
+    '''
+
+    # logic for when checklist is based on subclass
+    if len(horizontalfilter) > 0:
+        filterlist = horizontalfilter
+        filterflag = True
+
 
     if filterflag == True:
         for key in matrix.keys(): 
