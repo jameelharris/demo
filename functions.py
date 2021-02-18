@@ -546,6 +546,12 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
 
     i = 0
     for df in dfList:
+        opacity = 0 
+        for col_data in df['frequency'].iteritems():
+            if col_data[1] > 0.0:
+                opacity = 1 
+        
+        #print('from visualizedatadash() \n', df)
         
         ##### coloring the heatmap
         subplotcolor = ''
@@ -567,7 +573,7 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
         #print('from visualizedatatemp()...', dfsecondary)
     
         tracename = '<b>' + str(list(xtickDict.keys())[i]).replace('BB', 'bb', 1) + '</b>'
-        fig.add_trace(go.Heatmap(df_to_plotly(df, dfsecondary, list(xtickDict.values())[i]), colorscale=subplotcolor, name=tracename), row=1, col = i + 1)        
+        fig.add_trace(go.Heatmap(df_to_plotly(df, dfsecondary, list(xtickDict.values())[i]), colorscale=subplotcolor, name=tracename, opacity=opacity), row=1, col = i + 1)        
         
         
         ##### iterating through each data frame
