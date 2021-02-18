@@ -185,7 +185,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
         'heroPositions': ('HJ',),
-        'heroUseCaseVariants': ('vsSB', 'vsBB', 'vsHJ', 'vsCO'),
+        'heroUseCaseVariants': ('vsSB', 'vsBB', 'vsCO', 'vsBTN'),
         
         },
 
@@ -194,7 +194,7 @@ verticalfilter = {
         'heroStackDepths': (),
         #'heroPositions': ('MP', 'HJ', 'CO', 'BTN'),
         'heroPositions': ('CO',),
-        'heroUseCaseVariants': ('vsSB', 'vsBB', 'vsHJ'),
+        'heroUseCaseVariants': ('vsSB', 'vsBB', 'vsBTN'),
         
         },
 
