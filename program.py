@@ -25,10 +25,18 @@ app.layout = html.Div([
                 clearable=False 
             ),
             
-        ], style={'width': '80%'}),
+        ], style={'width': '95%'}),
 
 
     ], style={'width': '16%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
+
+    html.Div([
+        html.Div([
+            html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '90%'}),
+        ]),
+
+
+    ], style={'width': '8%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
 
 
     html.Div([
@@ -85,14 +93,6 @@ app.layout = html.Div([
         ]),
 
     ], style={'width': '76%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block','vertical-align': 'top'}), 
-
-     html.Div([
-        html.Div([
-            html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '100%'}),
-        ]),
-
-
-    ], style={'width': '8%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
 
     dcc.Graph(
         id='graph',
