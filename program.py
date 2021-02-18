@@ -45,31 +45,27 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='deselect_xaxis', n_clicks=0, children= 'deselect x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'14.2%'}),
+            ], style={'display':'inline-block', 'width':'16.6%'}),
 
             html.Div([
                 html.Button(id='select_xaxis', n_clicks=0, children= 'select x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'14.2%'}),
+            ], style={'display':'inline-block', 'width':'16.6%'}),
 
             html.Div([
                 html.Button(id='deselect_yaxis', n_clicks=0, children= 'deselect y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'14.2%'}),
+            ], style={'display':'inline-block', 'width':'16.6%'}),
 
             html.Div([
                 html.Button(id='select_yaxis', n_clicks=0, children= 'select y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'14.2%'}),
+            ], style={'display':'inline-block', 'width':'16.6%'}),
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'14.2%'}),
+            ], style={'display':'inline-block', 'width':'16.6%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'14.2%'}),
-
-            html.Div([
-                html.Button(id='show_legend', n_clicks=0, children= 'show y-legend', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'14.2%'}),
+            ], style={'display':'inline-block', 'width':'16.6%'}),
 
        
         ], style={'width':'65%'}),
@@ -170,13 +166,12 @@ def set_variable_value(variable_dict, select, deselect, usecase):
 
 @app.callback(
     Output('yaxis_variables', 'value'),
-    Input('show_legend', 'n_clicks'),
     Input('select_yaxis', 'n_clicks'),
     Input('deselect_yaxis', 'n_clicks'), 
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
     State('yaxis_variables', 'value'))
-def set_checklist_config(show_legend, select_all, select_none, suited, offsuit, yaxis_variables):
+def set_checklist_config(deselect_yaxis, select_yaxis, suited, offsuit, yaxis_variables):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
@@ -204,16 +199,10 @@ def set_checklist_config(show_legend, select_all, select_none, suited, offsuit, 
 @app.callback(
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
-    Input('show_legend', 'n_clicks'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(update_chart, show_legend, usecaseconfig, yaxis_variables, xaxis_variables): 
-    ctx = dash.callback_context
-    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    if button_id == 'show_legend':
-        return functions.visualizelegend()
-
+def render_heatmap(update_chart, usecaseconfig, yaxis_variables, xaxis_variables): 
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
    
