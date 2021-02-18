@@ -44,20 +44,24 @@ app.layout = html.Div([
         html.Div([
 
             html.Div([
+                html.Button(id='legend-submit-button', n_clicks=0, children= 'show legend', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'20%'}),
+
+            html.Div([
                 html.Button(id='selectall-submit-button', n_clicks=0, children= 'select all', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'25%'}), 
+            ], style={'display':'inline-block', 'width':'20%'}), 
 
             html.Div([
                 html.Button(id='selectnone-submit-button', n_clicks=0, children= 'deselect all', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='suited-submit-button', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='offsuit-submit-button', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
        
         ], style={'width':'50%'}),
 
