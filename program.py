@@ -55,7 +55,7 @@ app.layout = html.Div([
 
         html.Div([
             html.Div([
-                html.P('Classes: ')
+                html.P('y-axis: ')
             ], style={'display': 'inline-block'}),
 
             #html.Span(id='class_error_message', style={'color' : 'red'}),
@@ -71,7 +71,7 @@ app.layout = html.Div([
 
         html.Div([
             html.Div([
-                html.P(id='variable_name')
+                html.P('x-axis: ')
             ], style={'display': 'inline-block'}),
 
             #html.Span(id='variable_error_message', style={'color' : 'red'}),
@@ -138,11 +138,10 @@ def set_button_enabled_state(handsubclasses, xaxis_variables):
 
 @app.callback(
     Output('xaxis_variables', 'options'),
-    Output('variable_name', 'children'),
     Input('usecases', 'value'))
 def set_variable_options(selected_usecase):
     variable_list = []
-    print('selected_usecase= ', selected_usecase)
+    #print('selected_usecase= ', selected_usecase)
     last_element = list(definitions.verticalfilter[selected_usecase].keys())[-1] 
 
     for key in definitions.preFlopUseCases.keys():
@@ -155,9 +154,9 @@ def set_variable_options(selected_usecase):
     #print('variable_list= ', variable_list)    
     #print('last_element = ', last_element)
     if 'StackDepth' in last_element:  
-        return [{'label': element.replace('BB', 'bb'), 'value': element} for element in variable_list], definitions.variableUINames[last_element] + ': '
+        return [{'label': element.replace('BB', 'bb'), 'value': element} for element in variable_list]
     else:
-        return [{'label': element, 'value': element} for element in variable_list], definitions.variableUINames[last_element] + ': '
+        return [{'label': element, 'value': element} for element in variable_list]
 
 
 @app.callback(
