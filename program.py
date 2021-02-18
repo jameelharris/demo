@@ -228,13 +228,20 @@ def set_checklist_config(show_legend, select_all, select_none, suited, offsuit, 
 
     return yaxis_variables
 
+
 @app.callback(
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
+    Input('show_legend', 'n_clicks'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(n_clicks, usecaseconfig, yaxis_variables, xaxis_variables): 
+def render_heatmap(update_chart, show_legend, usecaseconfig, yaxis_variables, xaxis_variables): 
+    ctx = dash.callback_context
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    if button_id == 'show_legend':
+        return functions.visualizelegend()
+
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
    

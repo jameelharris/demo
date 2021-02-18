@@ -506,14 +506,13 @@ def visualizelegend():
   
 
     z, annotation_text = getlegenddata()
-    fig1 = ff.create_annotated_heatmap(z, annotation_text=annotation_text, zmin=0, zmax=20, colorscale='greys')
+    fig = ff.create_annotated_heatmap(z, annotation_text=annotation_text, zmin=0, zmax=20, colorscale='greys')
 
-    for i in range(len(fig1.layout.annotations)):
-        fig1.layout.annotations[i].font.size = 10
+    for i in range(len(fig.layout.annotations)):
+        fig.layout.annotations[i].font.size = 10
 
-    fig1.layout.width = 275
-    fig1.show()
-    
+    fig.layout.width = 275
+    return fig
 
 
 
