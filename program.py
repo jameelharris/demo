@@ -44,23 +44,23 @@ app.layout = html.Div([
         html.Div([
 
             html.Div([
-                html.Button(id='legend-submit-button', n_clicks=0, children= 'show legend', style={'width':'99%'})
+                html.Button(id='show_legend', n_clicks=0, children= 'show legend', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
-                html.Button(id='selectall-submit-button', n_clicks=0, children= 'select all', style={'width':'99%'})
+                html.Button(id='select_all', n_clicks=0, children= 'select y-axis', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'20%'}), 
 
             html.Div([
-                html.Button(id='selectnone-submit-button', n_clicks=0, children= 'deselect all', style={'width':'99%'})
+                html.Button(id='select_none', n_clicks=0, children= 'deselect y-axis', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
-                html.Button(id='suited-submit-button', n_clicks=0, children= 'suited', style={'width':'99%'})
+                html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
-                html.Button(id='offsuit-submit-button', n_clicks=0, children= 'offsuit', style={'width':'99%'})
+                html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'20%'}),
        
         ], style={'width':'50%'}),
@@ -74,7 +74,7 @@ app.layout = html.Div([
 
             html.Div([
                 dcc.Checklist(
-                    id='handsubclasses',
+                    id='yaxis_variables',
                     options=[{'label': handsubclass, 'value': handsubclass} for handsubclass in definitions.handVariants.keys()],
                     value=list(definitions.handVariants.keys()),
                 ),
@@ -111,9 +111,9 @@ app.layout = html.Div([
 '''
 @app.callback(
     Output('class_error_message', 'children'),
-    Input('handsubclasses', 'value'))   
-def send_error_message(handsubclasses):
-    if len(handsubclasses) == 0: 
+    Input('yaxis_variables', 'value'))   
+def send_error_message(yaxis_variables):
+    if len(yaxis_variables) == 0: 
         return ' ...Select at least one Hand Class... '
     else: 
         return ''
@@ -129,13 +129,15 @@ def send_error_message(xaxis_variables, variable_name):
     else: 
         return ''
 '''
+    
+
 
 @app.callback(
     Output('submit-button-state', 'disabled'),
-    Input('handsubclasses', 'value'),
+    Input('yaxis_variables', 'value'),
     Input('xaxis_variables', 'value'))
-def set_button_enabled_state(handsubclasses, xaxis_variables):
-    if len(handsubclasses) == 0 or len(xaxis_variables) == 0:
+def set_button_enabled_state(yaxis_variables, xaxis_variables):
+    if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         return True 
     else:
         return False
@@ -152,7 +154,7 @@ def set_variable_options(selected_usecase):
         #print('substring =', key, ' string =', selected_usecase)
         
         if key in selected_usecase:
-            print('substring condition passed')
+            #print('substring condition passed')
             variable_list = list(definitions.verticalfilter[selected_usecase].values())[-1]
 
     #print('variable_list= ', variable_list)    
@@ -173,14 +175,47 @@ def set_variable_value(variable_dict):
         variable_list.append(variable['value'])
     return variable_list
 
+
+@app.callback(
+    Output('yaxis_variables', 'value'),
+    Input('show_legend', 'n_clicks'),
+    Input('select_all', 'n_clicks'),
+    Input('select_none', 'n_clicks'), 
+    Input('suited', 'n_clicks'),
+    Input('offsuit', 'n_clicks'), 
+    State('yaxis_variables', 'value'))
+def set_checklist_config(show_legend, select_all, select_none, suited, offsuit, yaxis_variables):
+    ctx = dash.callback_context
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if button_id == 'select_none':
+        yaxis_variables = []
+
+    if button_id == 'select_all':
+        yaxis_variables = list(definitions.handVariants.keys())
+
+    if button_id == 'suited':
+        yaxis_variables = []
+        for key in definitions.handVariants.keys():
+            if key[-1] == 's':
+                yaxis_variables.append(key)
+    
+    if button_id == 'offsuit':
+        yaxis_variables = []
+        for key in definitions.handVariants.keys():
+            if key[-1] == 'o':
+                yaxis_variables.append(key)
+
+    return yaxis_variables
+
 @app.callback(
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
     State('usecases', 'value'),
-    State('handsubclasses', 'value'),
+    State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(n_clicks, usecaseconfig, handsubclasses, xaxis_variables): 
-    if len(handsubclasses) == 0 or len(xaxis_variables) == 0:
+def render_heatmap(n_clicks, usecaseconfig, yaxis_variables, xaxis_variables): 
+    if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
    
     #print('xaxis_variables = ', xaxis_variables)
@@ -227,7 +262,7 @@ def render_heatmap(n_clicks, usecaseconfig, handsubclasses, xaxis_variables):
         print('\n')
 
         #must pass filter to getNewMatrix for horizontal filtering
-        hero['handVariantMatrix'], filterlist = functions.getFrequency('handVariant', hero['handVariantMatrix'], handsubclasses)
+        hero['handVariantMatrix'], filterlist = functions.getFrequency('handVariant', hero['handVariantMatrix'], yaxis_variables)
         for (key, value) in hero['handVariantMatrix'].items():
             print('program() - after getFrequency() executed:', key,':', value)
 
