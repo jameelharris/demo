@@ -44,26 +44,35 @@ app.layout = html.Div([
         html.Div([
 
             html.Div([
-                html.Button(id='show_legend', n_clicks=0, children= 'show legend', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+                html.Button(id='deselect_xaxis', n_clicks=0, children= 'deselect x-axis', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'14.2%'}),
 
             html.Div([
-                html.Button(id='select_all', n_clicks=0, children= 'select y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}), 
+                html.Button(id='select_xaxis', n_clicks=0, children= 'select x-axis', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'14.2%'}),
 
             html.Div([
-                html.Button(id='select_none', n_clicks=0, children= 'deselect y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+                html.Button(id='deselect_yaxis', n_clicks=0, children= 'deselect y-axis', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'14.2%'}),
+
+            html.Div([
+                html.Button(id='select_yaxis', n_clicks=0, children= 'select y-axis', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'14.2%'}),
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'14.2%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'14.2%'}),
+
+            html.Div([
+                html.Button(id='show_legend', n_clicks=0, children= 'show y-legend', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'14.2%'}),
+
        
-        ], style={'width':'50%'}),
+        ], style={'width':'65%'}),
 
         html.Div([
             html.Div([
@@ -167,20 +176,31 @@ def set_variable_options(selected_usecase):
 
 @app.callback(
     Output('xaxis_variables', 'value'), 
-    Input('xaxis_variables', 'options'))
-def set_variable_value(variable_dict):
+    Input('xaxis_variables', 'options'), 
+    Input('select_xaxis', 'n_clicks'), 
+    Input('deselect_xaxis', 'n_clicks'), 
+    Input('usecases', 'value'))
+def set_variable_value(variable_dict, select, deselect, usecase):
     variable_list = []
-    for variable in variable_dict:
-        #print('for testing...= ', variable)
-        variable_list.append(variable['value'])
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if select == 0 and deselect == 0 or component_id == 'select_xaxis' or component_id == 'usecases' :
+        for variable in variable_dict:
+            #print('for testing...= ', variable)
+            variable_list.append(variable['value'])
+    
+    if component_id == 'deselect_xaxis':
+        variable_list = []
+
     return variable_list
 
 
 @app.callback(
     Output('yaxis_variables', 'value'),
     Input('show_legend', 'n_clicks'),
-    Input('select_all', 'n_clicks'),
-    Input('select_none', 'n_clicks'), 
+    Input('select_yaxis', 'n_clicks'),
+    Input('deselect_yaxis', 'n_clicks'), 
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
     State('yaxis_variables', 'value'))
@@ -188,10 +208,10 @@ def set_checklist_config(show_legend, select_all, select_none, suited, offsuit, 
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    if button_id == 'select_none':
+    if button_id == 'deselect_yaxis':
         yaxis_variables = []
 
-    if button_id == 'select_all':
+    if button_id == 'select_yaxis':
         yaxis_variables = list(definitions.handVariants.keys())
 
     if button_id == 'suited':
