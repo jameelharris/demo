@@ -16,15 +16,6 @@ from dash.exceptions import PreventUpdate
 app = dash.Dash(__name__)
 app.layout = html.Div([
 
-    html.Div([
-        html.Div([
-            html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart'),
-        ], style={'width': '100%'}),
-
-
-    ], style={'width': '8%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
-
-
     html.Div([        
         html.Div([
             dcc.Dropdown(
@@ -45,29 +36,29 @@ app.layout = html.Div([
         html.Div([
 
             html.Div([
-                html.Button(id='selectall-submit-button', n_clicks=0, children= 'all')
-            ], style={'display':'inline-block'}), 
+                html.Button(id='selectall-submit-button', n_clicks=0, children= 'select all', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'25%'}), 
 
             html.Div([
-                html.Button(id='selectnone-submit-button', n_clicks=0, children= 'none')
-            ], style={'display':'inline-block'}),
+                html.Button(id='selectnone-submit-button', n_clicks=0, children= 'deselect all', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'25%'}),
 
             html.Div([
-                html.Button(id='suited-submit-button', n_clicks=0, children= 'suited')
-            ], style={'display':'inline-block'}),
+                html.Button(id='suited-submit-button', n_clicks=0, children= 'suited', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'25%'}),
 
             html.Div([
-                html.Button(id='offsuit-submit-button', n_clicks=0, children= 'offsuit')
-            ], style={'display':'inline-block'}),
+                html.Button(id='offsuit-submit-button', n_clicks=0, children= 'offsuit', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'25%'}),
        
-        ]),
+        ], style={'width':'50%'}),
 
         html.Div([
             html.Div([
                 html.P('Classes: ')
             ], style={'display': 'inline-block'}),
 
-            html.Span(id='class_error_message', style={'color' : 'red'}),
+            #html.Span(id='class_error_message', style={'color' : 'red'}),
 
             html.Div([
                 dcc.Checklist(
@@ -83,7 +74,7 @@ app.layout = html.Div([
                 html.P(id='variable_name')
             ], style={'display': 'inline-block'}),
 
-            html.Span(id='variable_error_message', style={'color' : 'red'}),
+            #html.Span(id='variable_error_message', style={'color' : 'red'}),
 
             html.Div([
                 dcc.Checklist(
@@ -95,7 +86,13 @@ app.layout = html.Div([
 
     ], style={'width': '76%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block','vertical-align': 'top'}), 
 
+     html.Div([
+        html.Div([
+            html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '100%'}),
+        ]),
 
+
+    ], style={'width': '8%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
 
     dcc.Graph(
         id='graph',
@@ -107,6 +104,7 @@ app.layout = html.Div([
     #dbc.Tooltip('hover text', target='tooltip-target')
 ])
 
+'''
 @app.callback(
     Output('class_error_message', 'children'),
     Input('handsubclasses', 'value'))   
@@ -126,6 +124,7 @@ def send_error_message(xaxis_variables, variable_name):
         return ' ...Select at least one of the' + variable_name + ' ... '
     else: 
         return ''
+'''
 
 @app.callback(
     Output('submit-button-state', 'disabled'),
