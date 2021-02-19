@@ -12,7 +12,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-
+usecaselog = ['',]
 app = dash.Dash(__name__)
 app.layout = html.Div([
 
@@ -44,28 +44,24 @@ app.layout = html.Div([
         html.Div([
 
             html.Div([
-                html.Button(id='deselect_xaxis', n_clicks=0, children= 'deselect x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'16.6%'}),
-
-            html.Div([
                 html.Button(id='select_xaxis', n_clicks=0, children= 'select x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'16.6%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='deselect_yaxis', n_clicks=0, children= 'deselect y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'16.6%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='select_yaxis', n_clicks=0, children= 'select y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'16.6%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'16.6%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'16.6%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
        
         ], style={'width':'65%'}),
@@ -146,21 +142,33 @@ def set_variable_options(selected_usecase):
     Output('xaxis_variables', 'value'), 
     Input('xaxis_variables', 'options'), 
     Input('select_xaxis', 'n_clicks'), 
-    Input('deselect_xaxis', 'n_clicks'), 
-    Input('usecases', 'value'))
-def set_variable_value(variable_dict, select, deselect, usecase):
+    Input('usecases', 'value'), 
+    State('xaxis_variables', 'value'))
+def set_variable_value(variable_dict, select, usecase, xaxis_variables):
+    #print('usecaselog = ', usecaselog)
     variable_list = []
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    if select == 0 and deselect == 0 or component_id == 'select_xaxis' or component_id == 'usecases' :
+    difference = len(xaxis_variables) - len(list(variable_dict))
+
+    '''
+    print(variable_dict)
+    print('component_id = ', component_id)
+    print('select = ', select)
+    print('difference = ', difference)
+    print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
+    '''
+    
+    if usecaselog[-1] == usecase and difference == 0:
+        variable_list = []
+    
+    if usecaselog[-1] == usecase and difference != 0 or component_id == 'xaxis_variables' or usecaselog[-1] != usecase: 
         for variable in variable_dict:
             #print('for testing...= ', variable)
             variable_list.append(variable['value'])
-    
-    if component_id == 'deselect_xaxis':
-        variable_list = []
 
+    usecaselog.append(usecase)
     return variable_list
 
 
