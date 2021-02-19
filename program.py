@@ -45,23 +45,19 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='select_xaxis', n_clicks=0, children= 'select x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
-
-            html.Div([
-                html.Button(id='deselect_yaxis', n_clicks=0, children= 'deselect y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'25%'}),
 
             html.Div([
                 html.Button(id='select_yaxis', n_clicks=0, children= 'select y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'25%'}),
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'25%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'25%'}),
 
        
         ], style={'width':'65%'}),
@@ -159,7 +155,7 @@ def set_variable_value(variable_dict, select, usecase, xaxis_variables):
     print('difference = ', difference)
     print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
     '''
-    
+
     if usecaselog[-1] == usecase and difference == 0:
         variable_list = []
     
@@ -169,25 +165,28 @@ def set_variable_value(variable_dict, select, usecase, xaxis_variables):
             variable_list.append(variable['value'])
 
     usecaselog.append(usecase)
+    usecaselog.pop(0)
     return variable_list
 
 
 @app.callback(
     Output('yaxis_variables', 'value'),
+    Input('yaxis_variables', 'options'),
     Input('select_yaxis', 'n_clicks'),
-    Input('deselect_yaxis', 'n_clicks'), 
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
     State('yaxis_variables', 'value'))
-def set_checklist_config(deselect_yaxis, select_yaxis, suited, offsuit, yaxis_variables):
+def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, yaxis_variables):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    if button_id == 'deselect_yaxis':
-        yaxis_variables = []
+    difference = len(yaxis_variables) - len(list(variable_dict))
 
     if button_id == 'select_yaxis':
-        yaxis_variables = list(definitions.handVariants.keys())
+        if difference == 0: 
+            yaxis_variables = []
+        else:
+            yaxis_variables = list(definitions.handVariants.keys())
 
     if button_id == 'suited':
         yaxis_variables = []
