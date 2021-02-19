@@ -12,7 +12,13 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
+
+import base64
+
+
 usecaselog = ['',]
+imagedisplayed = [False,]
+
 app = dash.Dash(__name__)
 app.layout = html.Div([
 
@@ -45,20 +51,23 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='select_xaxis', n_clicks=0, children= 'select x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='select_yaxis', n_clicks=0, children= 'select y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'20%'}),
 
+            html.Div([
+                html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'20%'}),
        
         ], style={'width':'65%'}),
 
@@ -91,6 +100,8 @@ app.layout = html.Div([
 
     ], style={'width': '76%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block','vertical-align': 'top'}), 
 
+    html.Span(id='legend_container'),
+
     dcc.Graph(
         id='graph',
         config={'displayModeBar': False, 'showTips': False},
@@ -100,6 +111,20 @@ app.layout = html.Div([
     #html.Span('test', id='tooltip-target'),
     #dbc.Tooltip('hover text', target='tooltip-target')
 ])
+
+@app.callback(
+    Output('legend_container', 'children'),
+    Input('show_legend', 'n_clicks'))
+def show_legend(legend):
+    image_filename = 'legend.PNG' # replace with your own image
+    encoded_image = base64.b64encode(open(image_filename, 'rb').read())
+    
+    if imagedisplayed[0] == False and legend > 0:
+        imagedisplayed[0] = True
+        return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'})
+    else:
+        imagedisplayed[0] = False
+        return ''
 
 @app.callback(
     Output('submit-button-state', 'disabled'),
