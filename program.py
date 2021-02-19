@@ -50,11 +50,11 @@ app.layout = html.Div([
         html.Div([
 
             html.Div([
-                html.Button(id='select_xaxis', n_clicks=0, children= 'select x-axis', style={'width':'99%'})
+                html.Button(id='select_xaxis', n_clicks=0, children= 'x-axis', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
-                html.Button(id='select_yaxis', n_clicks=0, children= 'select y-axis', style={'width':'99%'})
+                html.Button(id='select_yaxis', n_clicks=0, children= 'y-axis', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'20%'}),
 
             html.Div([
