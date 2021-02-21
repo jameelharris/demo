@@ -266,7 +266,7 @@ def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, yaxis_var
 @app.callback(
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
-    State('user_hand', 'value'),
+    State('sniper_container', 'children'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
@@ -275,8 +275,8 @@ def render_heatmap(update_chart, user_hand, usecaseconfig, yaxis_variables, xaxi
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
     
-    if sniperdisplayed[0] == True and user_hand != '': 
-        print('user hand = ', user_hand)
+    if sniperdisplayed[0] == True: 
+        print('user hand = ', user_hand[0]['props']['value'])
     else: 
         print('false test passed') 
     #print('xaxis_variables = ', xaxis_variables)
