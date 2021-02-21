@@ -21,6 +21,7 @@ imagedisplayed = [False,]
 sniperdisplayed = [False,]
 
 app = dash.Dash(__name__)
+app.config.suppress_callback_exceptions = True
 app.layout = html.Div([
 
     html.Div([        
@@ -32,7 +33,11 @@ app.layout = html.Div([
                 clearable=False 
             ),
             
-        ], style={'width': '95%'}),
+            html.Br(),
+
+            html.Span(id='sniper_container', style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'50%'})
+
+        ], style={'width': '95%'}),     
 
     ], style={'width': '16%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
 
@@ -66,19 +71,16 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'12.5%'}),
 
             html.Div([
-                html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
+                html.Button(id='sniper_mode', n_clicks=0, children= 'sniper mode', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'12.5%'}),
 
             html.Div([
                 html.Button(id='test_mode', n_clicks=0, children= 'test mode', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'12.5%'}),
-
-            html.Div([
-                html.Button(id='sniper_mode', n_clicks=0, children= 'sniper mode', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
-
-            html.Span(id='sniper_container')
      
+            html.Div([
+                html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'12.5%'}),
 
         ], style={'width':'100%'}),
 
@@ -132,7 +134,7 @@ def allow_hand_input(sniper, test):
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if sniperdisplayed[0] == False and sniper > 0 and component_id == 'sniper_mode':
         sniperdisplayed[0] = True
-        return [' Enter hand: ', dcc.Input(id='my-input', value='', type='text', style={'width':'2.5%'})]
+        return ['Enter hand: ', dcc.Input(id='user_hand', value='', type='text', style={'width':'25%'})]
     else: 
         sniperdisplayed[0] = False
         return''
@@ -260,13 +262,19 @@ def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, yaxis_var
 @app.callback(
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
+    State('user_hand', 'value'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(update_chart, usecaseconfig, yaxis_variables, xaxis_variables): 
+def render_heatmap(update_chart, user_hand, usecaseconfig, yaxis_variables, xaxis_variables): 
+    suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
-   
+    
+    if sniperdisplayed[0] == True and user_hand != '': 
+        print('user hand = ', user_hand)
+    else: 
+        print('false test passed') 
     #print('xaxis_variables = ', xaxis_variables)
     useCase = ''
 
