@@ -125,12 +125,19 @@ app.layout = html.Div([
 
 @app.callback(
     Output('sniper_container', 'children'),
-    Input('sniper_mode', 'n_clicks'))
-def allow_hand_input(sniper):
-    if sniperdisplayed[0] == False and sniper > 0:
+    Input('sniper_mode', 'n_clicks'),
+    Input('test_mode', 'n_clicks'))
+def allow_hand_input(sniper, test):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    if sniperdisplayed[0] == False and sniper > 0 and component_id == 'sniper_mode':
         sniperdisplayed[0] = True
-        return [' Hand: ', dcc.Input(id='my-input', value='', type='text', style={'width':'2.5%'})]
-    else:
+        return [' Enter hand: ', dcc.Input(id='my-input', value='', type='text', style={'width':'2.5%'})]
+    else: 
+        sniperdisplayed[0] = False
+        return''
+
+    if component_id == 'test_mode' and test > 0:
         sniperdisplayed[0] = False
         return''
 
