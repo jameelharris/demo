@@ -18,6 +18,7 @@ import base64
 
 usecaselog = ['',]
 imagedisplayed = [False,]
+sniperdisplayed = [False,]
 
 app = dash.Dash(__name__)
 app.layout = html.Div([
@@ -32,7 +33,6 @@ app.layout = html.Div([
             ),
             
         ], style={'width': '95%'}),
-
 
     ], style={'width': '16%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
 
@@ -51,25 +51,36 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='select_xaxis', n_clicks=0, children= 'x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'12.5%'}),
 
             html.Div([
                 html.Button(id='select_yaxis', n_clicks=0, children= 'y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'12.5%'}),
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'12.5%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
+            ], style={'display':'inline-block', 'width':'12.5%'}),
 
             html.Div([
                 html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%'}),
-       
-        ], style={'width':'65%'}),
+            ], style={'display':'inline-block', 'width':'12.5%'}),
+
+            html.Div([
+                html.Button(id='test_mode', n_clicks=0, children= 'test mode', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'12.5%'}),
+
+            html.Div([
+                html.Button(id='sniper_mode', n_clicks=0, children= 'sniper mode', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'12.5%'}),
+
+            html.Span(id='sniper_container')
+     
+
+        ], style={'width':'100%'}),
 
         html.Div([
             html.Div([
@@ -111,6 +122,17 @@ app.layout = html.Div([
     #html.Span('test', id='tooltip-target'),
     #dbc.Tooltip('hover text', target='tooltip-target')
 ])
+
+@app.callback(
+    Output('sniper_container', 'children'),
+    Input('sniper_mode', 'n_clicks'))
+def allow_hand_input(sniper):
+    if sniperdisplayed[0] == False and sniper > 0:
+        sniperdisplayed[0] = True
+        return [' Hand: ', dcc.Input(id='my-input', value='', type='text', style={'width':'2.5%'})]
+    else:
+        sniperdisplayed[0] = False
+        return''
 
 @app.callback(
     Output('legend_container', 'children'),
