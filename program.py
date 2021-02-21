@@ -35,7 +35,7 @@ app.layout = html.Div([
             
             html.Br(),
 
-            html.Span(id='sniper_container', style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'50%'})
+            html.Span(id='sniper_container')
 
         ], style={'width': '95%'}),     
 
@@ -134,7 +134,11 @@ def allow_hand_input(sniper, test):
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if sniperdisplayed[0] == False and sniper > 0 and component_id == 'sniper_mode':
         sniperdisplayed[0] = True
-        return ['Enter hand: ', dcc.Input(id='user_hand', value='', type='text', style={'width':'25%'})]
+        return [dcc.Dropdown(id='user_hand', 
+                            options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
+                            value=list(definitions.handMatrix.keys())[0],
+                            clearable=False,  
+                            style={'width':'50%'})]
     else: 
         sniperdisplayed[0] = False
         return''
