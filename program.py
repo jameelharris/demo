@@ -296,15 +296,14 @@ def set_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
 def render_heatmap(update_chart, user_hand_disabled, user_hand, usecaseconfig, yaxis_variables, xaxis_variables): 
-    sniper_hand = ''
     #suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
     
-    if user_hand_disabled == True: 
+    if user_hand_disabled == False: 
         print('user hand = ', user_hand)
     else: 
-        print('false test passed') 
+        print('user hand disabled is True') 
     #print('xaxis_variables = ', xaxis_variables)
     useCase = ''
 
@@ -342,7 +341,7 @@ def render_heatmap(update_chart, user_hand_disabled, user_hand, usecaseconfig, y
         print('\n')
 
         
-        hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands))
+        hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands, user_hand, user_hand_disabled))
         for (key, value) in hero['handVariantMatrix'].items():
             print('program() - after getNewNatrix() executed:', key,':', value)
 

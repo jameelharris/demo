@@ -326,21 +326,39 @@ def addFrequency(frequency, key, matrix):
     return matrix
     
     
-def getHandMatrix(hands):
+def getHandMatrix(hands, user_hand, user_hand_disabled):
     #creates and returns dictionary comprised of discounted and undiscounted hands, whose frequencies are calculated and combos are assigned 
     handMatrix = {}
-    for hand in hands:
-        if isHandDiscounted(hand):
-            if(getDiscountedHandRank(hand) in definitions.handMatrix):
-                handMatrix.update(buildSpecifiedHandMatrix(getDiscountedHandRank(hand), getDiscount(hand)))
-            else: 
-                handMatrix.update(buildUnspecifiedHandMatrix(getDiscountedHandRank(hand), getDiscount(hand)))
+    
 
-        if (isHandDiscounted(hand) is False):
-            if(hand in definitions.handMatrix):
-                handMatrix.update(buildSpecifiedHandMatrix(hand))
-            else: 
-                handMatrix.update(buildUnspecifiedHandMatrix(hand))
+    if user_hand_disabled == True: 
+        for hand in hands:
+            if isHandDiscounted(hand):
+                if(getDiscountedHandRank(hand) in definitions.handMatrix):
+                    handMatrix.update(buildSpecifiedHandMatrix(getDiscountedHandRank(hand), getDiscount(hand)))
+                else: 
+                    handMatrix.update(buildUnspecifiedHandMatrix(getDiscountedHandRank(hand), getDiscount(hand)))
+
+            if (isHandDiscounted(hand) is False):
+                if(hand in definitions.handMatrix):
+                    handMatrix.update(buildSpecifiedHandMatrix(hand))
+                else: 
+                    handMatrix.update(buildUnspecifiedHandMatrix(hand))
+
+    if user_hand_disabled == False: 
+        for hand in hands:
+            if user_hand in hand: 
+                if isHandDiscounted(hand):
+                    if(getDiscountedHandRank(hand) in definitions.handMatrix):
+                        handMatrix.update(buildSpecifiedHandMatrix(getDiscountedHandRank(hand), getDiscount(hand)))
+                    else: 
+                        handMatrix.update(buildUnspecifiedHandMatrix(getDiscountedHandRank(hand), getDiscount(hand)))
+
+                if (isHandDiscounted(hand) is False):
+                    if(hand in definitions.handMatrix):
+                        handMatrix.update(buildSpecifiedHandMatrix(hand))
+                    else: 
+                        handMatrix.update(buildUnspecifiedHandMatrix(hand))
 
     return handMatrix
 
@@ -572,7 +590,7 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
         #print('from visualizedatatemp()...', dfsecondary)
     
         tracename = '<b>' + str(list(xtickDict.keys())[i]).replace('BB', 'bb', 1) + '</b>'
-        fig.add_trace(go.Heatmap(df_to_plotly(df, dfsecondary, list(xtickDict.values())[i]), colorscale=subplotcolor, name=tracename, opacity=opacity), row=1, col = i + 1)        
+        fig.add_trace(go.Heatmap(df_to_plotly(df, dfsecondary, list(xtickDict.values())[i]), zmin=0, zmax=1, colorscale=subplotcolor, name=tracename, opacity=opacity), row=1, col = i + 1)        
         
         
         ##### iterating through each data frame
