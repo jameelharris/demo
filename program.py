@@ -35,7 +35,13 @@ app.layout = html.Div([
             
             html.Br(),
 
-            html.Span(id='sniper_container')
+            html.Span(id='sniper_container', children=[dcc.Dropdown(id='user_hand', 
+                            options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
+                            value=list(definitions.handMatrix.keys())[0],
+                            clearable=False,  
+                            style={'width':'50%'})]
+
+            )
 
         ], style={'width': '95%'}),     
 
@@ -135,13 +141,13 @@ def allow_hand_input(sniper, test):
     if sniperdisplayed[0] == False and sniper > 0 and component_id == 'sniper_mode':
         sniperdisplayed[0] = True
         return [dcc.Dropdown(id='user_hand', 
-                            options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
-                            value=list(definitions.handMatrix.keys())[0],
-                            clearable=False,  
-                            style={'width':'50%'})]
-    else: 
+                        options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
+                        value=list(definitions.handMatrix.keys())[0],
+                        clearable=False,  
+                        style={'width':'50%'})]
+    else:
         sniperdisplayed[0] = False
-        return''
+        return ''  
 
     if component_id == 'test_mode' and test > 0:
         sniperdisplayed[0] = False
@@ -235,32 +241,42 @@ def set_variable_value(variable_dict, select, usecase, xaxis_variables):
     Input('select_yaxis', 'n_clicks'),
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
+    Input('user_hand', 'value'),
     State('yaxis_variables', 'value'))
-def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, yaxis_variables):
+def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, user_hand, yaxis_variables):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-
     difference = len(yaxis_variables) - len(list(variable_dict))
+    print('set_checklist_config called')
 
-    if button_id == 'select_yaxis':
-        if difference == 0: 
+
+    if sniperdisplayed[0] == True:    
+        yaxis_variables.clear() 
+        yaxis_variables.append(definitions.handMatrix[user_hand]['code'])
+
+    if sniperdisplayed[0] == False: 
+        if button_id == 'select_yaxis':
+            if difference == 0: 
+                yaxis_variables = []
+            else:
+                yaxis_variables = list(definitions.handVariants.keys())
+
+        if button_id == 'suited':
             yaxis_variables = []
-        else:
-            yaxis_variables = list(definitions.handVariants.keys())
+            for key in definitions.handVariants.keys():
+                if key[-1] == 's':
+                    yaxis_variables.append(key)
+        
+        if button_id == 'offsuit':
+            yaxis_variables = []
+            for key in definitions.handVariants.keys():
+                if key[-1] == 'o':
+                    yaxis_variables.append(key)
 
-    if button_id == 'suited':
-        yaxis_variables = []
-        for key in definitions.handVariants.keys():
-            if key[-1] == 's':
-                yaxis_variables.append(key)
-    
-    if button_id == 'offsuit':
-        yaxis_variables = []
-        for key in definitions.handVariants.keys():
-            if key[-1] == 'o':
-                yaxis_variables.append(key)
-
-    return yaxis_variables
+    if sniperdisplayed[0] == True:
+        return yaxis_variables 
+    else:
+        return yaxis_variables
 
 
 @app.callback(
@@ -271,11 +287,13 @@ def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, yaxis_var
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
 def render_heatmap(update_chart, user_hand, usecaseconfig, yaxis_variables, xaxis_variables): 
-    suppress_callback_exceptions=True
+    sniper_hand = ''
+    #suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
     
     if sniperdisplayed[0] == True: 
+        sniper_hand = user_hand[0]['props']['value']
         print('user hand = ', user_hand[0]['props']['value'])
     else: 
         print('false test passed') 
