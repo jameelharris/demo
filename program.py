@@ -35,13 +35,15 @@ app.layout = html.Div([
             
             html.Br(),
 
-            html.Span(id='sniper_container', children=[dcc.Dropdown(id='user_hand', 
-                            options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
-                            value=list(definitions.handMatrix.keys())[0],
-                            clearable=False,  
-                            style={'width':'50%'})]
-
-            )
+          
+            dcc.Dropdown(
+                id='user_hand', 
+                options=[{'label': hand, 'value': hand, 'disabled':True} for hand in definitions.handMatrix.keys()],
+                value=list(definitions.handMatrix.keys())[0],
+                clearable=False,  
+                style={'width':'50%'}
+            ),
+            
 
         ], style={'width': '95%'}),     
 
@@ -132,7 +134,7 @@ app.layout = html.Div([
 ])
 
 @app.callback(
-    Output('sniper_container', 'children'),
+    Output('user_hand', 'options'),
     Input('sniper_mode', 'n_clicks'),
     Input('test_mode', 'n_clicks'))
 def allow_hand_input(sniper, test):
@@ -140,18 +142,14 @@ def allow_hand_input(sniper, test):
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if sniperdisplayed[0] == False and sniper > 0 and component_id == 'sniper_mode':
         sniperdisplayed[0] = True
-        return [dcc.Dropdown(id='user_hand', 
-                        options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
-                        value=list(definitions.handMatrix.keys())[0],
-                        clearable=False,  
-                        style={'width':'50%'})]
+        return [{'label': hand, 'value': hand, 'disabled': False} for hand in definitions.handMatrix.keys()]
     else:
         sniperdisplayed[0] = False
-        return ''  
+        return [{'label': hand, 'value': hand, 'disabled': True} for hand in definitions.handMatrix.keys()]
 
     if component_id == 'test_mode' and test > 0:
         sniperdisplayed[0] = False
-        return''
+        return [{'label': hand, 'value': hand, 'disabled': True} for hand in definitions.handMatrix.keys()]
 
 @app.callback(
     Output('legend_container', 'children'),
@@ -247,8 +245,6 @@ def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, user_hand
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
-    print('set_checklist_config called')
-
 
     if sniperdisplayed[0] == True:    
         yaxis_variables.clear() 
@@ -273,16 +269,13 @@ def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, user_hand
                 if key[-1] == 'o':
                     yaxis_variables.append(key)
 
-    if sniperdisplayed[0] == True:
-        return yaxis_variables 
-    else:
-        return yaxis_variables
+    return yaxis_variables
 
 
 @app.callback(
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
-    State('sniper_container', 'children'),
+    State('user_hand', 'value'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
@@ -293,8 +286,7 @@ def render_heatmap(update_chart, user_hand, usecaseconfig, yaxis_variables, xaxi
         raise PreventUpdate
     
     if sniperdisplayed[0] == True: 
-        sniper_hand = user_hand[0]['props']['value']
-        print('user hand = ', user_hand[0]['props']['value'])
+        print('user hand = ', user_hand)
     else: 
         print('false test passed') 
     #print('xaxis_variables = ', xaxis_variables)
