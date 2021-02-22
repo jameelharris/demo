@@ -200,7 +200,7 @@ def set_variable_options(selected_usecase):
 
 @app.callback(
     Output('xaxis_variables', 'value'), 
-    Input('xaxis_variables', 'options'), 
+    Input('xaxis_variables', 'options'), #need options to trigger callback to initialize xaxis as preselected
     Input('select_xaxis', 'n_clicks'), 
     Input('usecases', 'value'), 
     State('xaxis_variables', 'value'))
@@ -232,20 +232,31 @@ def set_variable_value(variable_dict, select, usecase, xaxis_variables):
     usecaselog.pop(0)
     return variable_list
 
+'''
+@app.callback(
+    Output('yaxis_variables', 'options'),
+    Input('sniper_mode', 'n_clicks'),
+    State('yaxis_variables', 'options'))
+def set_checklist_enabled_state(sniper_mode_button_clicks, options):
+    print('set checklist enabled state = ', options)
+    return ''
+'''
 
 @app.callback(
     Output('yaxis_variables', 'value'),
-    Input('yaxis_variables', 'options'),
+    Input('yaxis_variables', 'options'), # need options to trigger callback to initialize checklist as preselected
     Input('select_yaxis', 'n_clicks'),
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
     Input('user_hand', 'value'),
-    State('user_hand', 'disabled'),
+    Input('user_hand', 'disabled'),
     State('yaxis_variables', 'value'))
-def set_checklist_config(variable_dict, select_yaxis, suited, offsuit, user_hand, user_hand_disabled, yaxis_variables):
+def set_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, user_hand_disabled, yaxis_variables):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
+
+    print('user hand disabled = ', user_hand_disabled)
 
     if user_hand_disabled == False:    
         yaxis_variables.clear() 
