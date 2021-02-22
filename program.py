@@ -232,15 +232,18 @@ def set_variable_value(variable_dict, select, usecase, xaxis_variables):
     usecaselog.pop(0)
     return variable_list
 
-'''
+
 @app.callback(
     Output('yaxis_variables', 'options'),
-    Input('sniper_mode', 'n_clicks'),
-    State('yaxis_variables', 'options'))
-def set_checklist_enabled_state(sniper_mode_button_clicks, options):
-    print('set checklist enabled state = ', options)
-    return ''
-'''
+    Input('user_hand', 'disabled'),
+    State('yaxis_variables', 'options'), 
+    State('user_hand', 'value'))
+def set_checklist_enabled_state(user_hand_disabled, options, user_hand):
+
+    if user_hand_disabled == True: 
+        return [{'label':handsubclass, 'value':handsubclass, 'disabled': False} for handsubclass in definitions.handVariants.keys()]
+    else:
+        return [{'label':handsubclass, 'value':handsubclass, 'disabled': True} for handsubclass in definitions.handVariants.keys()]
 
 @app.callback(
     Output('yaxis_variables', 'value'),
