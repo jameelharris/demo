@@ -197,13 +197,14 @@ def set_button_enabled_state_axis(yaxis_variables, xaxis_variables):
     Output('select_yaxis', 'disabled'),
     Output('suited', 'disabled'), 
     Output('offsuit', 'disabled'),
+    Output('test_mode', 'disabled'),
     Input('user_hand', 'disabled'))
 def set_button_enabled_state_sniper(user_hand_disabled): 
     if user_hand_disabled == False:
-        return True, True, True
+        return True, True, True, True
 
     if user_hand_disabled == True:
-        return False, False, False
+        return False, False, False, False
 
 @app.callback(
     Output('xaxis_variables', 'options'),
@@ -228,19 +229,38 @@ def set_variable_checklist(selected_usecase):
         return [{'label': element, 'value': element} for element in variable_list]
 
 @app.callback(
+    Output('xaxis_var', 'disabled'),
+    Input('test_mode', 'n_clicks'),
+    State('xaxis_var', 'disabled'))
+def set_test_mode_status(test_mode_button, test_mode_disabled):
+    if test_mode_disabled == True and test_mode_button == 0:
+        return True
+    
+    if test_mode_disabled == True and test_mode_button > 0: 
+        return False 
+    else:
+        return True
+
+@app.callback(
     Output('xaxis_var', 'options'),
+    Output('xaxis_var', 'value'),
+    Input('xaxis_var', 'disabled'),
     Input('usecases', 'value'))
-def set_variable_dropdown(selected_usecase):
+def set_variable_dropdown(test_mode_disabled, selected_usecase):
     variable_list = []
+    
+    if test_mode_disabled == False:
+        for key in definitions.preFlopUseCases.keys():
+            #print('substring =', key, ' string =', selected_usecase)
+            
+            if key in selected_usecase:
+                #print('substring condition passed')
+                variable_list = list(definitions.verticalfilter[selected_usecase].values())[-1]
 
-    for key in definitions.preFlopUseCases.keys():
-        #print('substring =', key, ' string =', selected_usecase)
-        
-        if key in selected_usecase:
-            #print('substring condition passed')
-            variable_list = list(definitions.verticalfilter[selected_usecase].values())[-1]
+        return [{'label': element, 'value': element} for element in variable_list], variable_list[0]
+    else:
+        return [{'label': element, 'value': element} for element in variable_list], ''
 
-    return [{'label': element, 'value': element} for element in variable_list]
 
 @app.callback(
     Output('xaxis_variables', 'value'), 
