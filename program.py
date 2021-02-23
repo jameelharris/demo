@@ -208,7 +208,7 @@ def set_button_enabled_state_sniper(user_hand_disabled):
 @app.callback(
     Output('xaxis_variables', 'options'),
     Input('usecases', 'value'))
-def set_variable_options(selected_usecase):
+def set_variable_checklist(selected_usecase):
     variable_list = []
     #print('selected_usecase= ', selected_usecase)
     last_element = list(definitions.verticalfilter[selected_usecase].keys())[-1] 
@@ -227,10 +227,24 @@ def set_variable_options(selected_usecase):
     else:
         return [{'label': element, 'value': element} for element in variable_list]
 
+@app.callback(
+    Output('xaxis_var', 'options'),
+    Input('usecases', 'value'))
+def set_variable_dropdown(selected_usecase):
+    variable_list = []
+
+    for key in definitions.preFlopUseCases.keys():
+        #print('substring =', key, ' string =', selected_usecase)
+        
+        if key in selected_usecase:
+            #print('substring condition passed')
+            variable_list = list(definitions.verticalfilter[selected_usecase].values())[-1]
+
+    return [{'label': element, 'value': element} for element in variable_list]
 
 @app.callback(
     Output('xaxis_variables', 'value'), 
-    Input('xaxis_variables', 'options'), #need options to trigger callback to initialize xaxis as preselected
+    Input('xaxis_variables', 'options'),
     Input('select_xaxis', 'n_clicks'), 
     Input('usecases', 'value'), 
     State('xaxis_variables', 'value'))
@@ -277,7 +291,7 @@ def set_checklist_enabled_state(user_hand_disabled, options, user_hand):
 
 @app.callback(
     Output('yaxis_variables', 'value'),
-    Input('yaxis_variables', 'options'), # need options to trigger callback to initialize checklist as preselected
+    Input('yaxis_variables', 'options'),
     Input('select_yaxis', 'n_clicks'),
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
