@@ -24,6 +24,7 @@ app.config.suppress_callback_exceptions = True
 app.layout = html.Div([
 
     html.Div([        
+        
         html.Div([
             dcc.Dropdown(
                 id='usecases',
@@ -31,21 +32,41 @@ app.layout = html.Div([
                 value='RFI-polar',
                 clearable=False 
             ),
-            
-            html.Br(),
+        ], style={'width':'95%'}),
+        
+        html.Br(),
 
-          
-            dcc.Dropdown(
-                id='user_hand', 
-                options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
-                value=list(definitions.handMatrix.keys())[0],
-                clearable=False,  
-                style={'width':'50%'},
-                disabled=True
-            ),
-            
+        html.Div([
+            html.Div([
+                dcc.Dropdown(
+                    id='user_hand', 
+                    options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
+                    value=list(definitions.handMatrix.keys())[0],
+                    clearable=False,  
+                    style={'width':'100%'},
+                    disabled=True
+                ),
+            ], style={'display':'inline-block', 'width':'28%'}),
 
-        ], style={'width': '95%'}),     
+            html.Div([
+                dcc.Dropdown(
+                    id='xaxis_var', 
+                    clearable=False,
+                    style = {'width':'100%'},
+                    disabled=True 
+                ), 
+            ], style={'display':'inline-block', 'width':'36%'}),
+
+            html.Div([
+                dcc.Dropdown(
+                    id='trace_var', 
+                    clearable=False,
+                    style = {'width':'100%'},
+                    disabled=True 
+                )
+            ], style={'display':'inline-block', 'width':'36%'})
+
+        ], style={'width':'95%'})
 
     ], style={'width': '16%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
 
