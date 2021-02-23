@@ -165,11 +165,24 @@ def show_legend(legend):
     Output('submit-button-state', 'disabled'),
     Input('yaxis_variables', 'value'),
     Input('xaxis_variables', 'value'))
-def set_button_enabled_state(yaxis_variables, xaxis_variables):
+def set_button_enabled_state_axis(yaxis_variables, xaxis_variables):
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         return True 
     else:
         return False
+
+
+@app.callback(
+    Output('select_yaxis', 'disabled'),
+    Output('suited', 'disabled'), 
+    Output('offsuit', 'disabled'),
+    Input('user_hand', 'disabled'))
+def set_button_enabled_state_sniper(user_hand_disabled): 
+    if user_hand_disabled == False:
+        return True, True, True
+
+    if user_hand_disabled == True:
+        return False, False, False
 
 @app.callback(
     Output('xaxis_variables', 'options'),
