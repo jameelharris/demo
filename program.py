@@ -40,8 +40,6 @@ app.layout = html.Div([
             html.Div([
                 dcc.Dropdown(
                     id='user_hand', 
-                    options=[{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()],
-                    value=list(definitions.handMatrix.keys())[0],
                     clearable=False,  
                     style={'width':'100%'},
                     disabled=True
@@ -167,6 +165,17 @@ def allow_hand_input(sniper_button, disabled):
         return False
     else:
         return True
+
+@app.callback(
+    Output('user_hand', 'options'),
+    Output('user_hand', 'value'), 
+    Input('user_hand', 'disabled'))
+def set_hand_dropdown(user_hand_disabled):
+    if user_hand_disabled == False: 
+        return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], list(definitions.handMatrix.keys())[0]
+    else:
+        return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], ''
+    
 
 @app.callback(
     Output('legend_container', 'children'),
