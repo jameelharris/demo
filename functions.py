@@ -347,6 +347,8 @@ def getHandMatrix(hands, user_hand, user_hand_disabled):
 
     if user_hand_disabled == False: 
         for hand in hands:
+            if user_hand[:-1] == hand:
+                hand = user_hand
             if user_hand in hand: 
                 if isHandDiscounted(hand):
                     if(getDiscountedHandRank(hand) in definitions.handMatrix):
