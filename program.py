@@ -370,9 +370,9 @@ def render_heatmap(update_chart, user_hand_disabled, user_hand, usecaseconfig, y
         
         print('\n')
 
-        print('program-test user hand = ', user_hand)
-        print('program-test user hand[-1] = ', user_hand[-1])
-        print('program-test hands = ', hands)
+        #print('program-test user hand = ', user_hand)
+        #print('program-test user hand[-1] = ', user_hand[-1])
+        #print('program-test hands = ', hands)
         
         hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands, user_hand, user_hand_disabled))
         for (key, value) in hero['handVariantMatrix'].items():
