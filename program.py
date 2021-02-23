@@ -136,9 +136,8 @@ app.layout = html.Div([
 @app.callback(
     Output('user_hand', 'disabled'),
     Input('sniper_mode', 'n_clicks'),
-    Input('test_mode', 'n_clicks'),
     State('user_hand', 'disabled'))
-def allow_hand_input(sniper_button, test_button, disabled):
+def allow_hand_input(sniper_button, disabled):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     print('sniper button clicks = ', sniper_button)
@@ -146,9 +145,6 @@ def allow_hand_input(sniper_button, test_button, disabled):
     if disabled == True and sniper_button > 0:
         return False
     else:
-        return True
-
-    if component_id == 'test_mode' and test_button > 0:
         return True
 
 @app.callback(
