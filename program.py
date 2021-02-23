@@ -203,17 +203,23 @@ def set_button_enabled_state_axis(yaxis_variables, xaxis_variables):
 
 
 @app.callback(
+    Output('select_xaxis', 'disabled'),
     Output('select_yaxis', 'disabled'),
     Output('suited', 'disabled'), 
     Output('offsuit', 'disabled'),
-    Output('test_mode', 'disabled'),
-    Input('user_hand', 'disabled'))
-def set_button_enabled_state_sniper(user_hand_disabled): 
+    Output('test_mode', 'disabled'), 
+    Output('sniper_mode', 'disabled'),
+    Input('user_hand', 'disabled'), 
+    Input('xaxis_var', 'disabled'))
+def set_button_enabled_state_sniper(user_hand_disabled, xaxis_var_disabled): 
     if user_hand_disabled == False:
-        return True, True, True, True
+        return False, True, True, True, True, False
 
-    if user_hand_disabled == True:
-        return False, False, False, False
+    if xaxis_var_disabled == False:
+        return True, True, True, True, False, True
+
+    if user_hand_disabled == True and xaxis_var_disabled == True:
+        return False, False, False, False, False, False
 
 @app.callback(
     Output('xaxis_variables', 'options'),
