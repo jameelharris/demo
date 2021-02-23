@@ -161,7 +161,7 @@ app.layout = html.Div([
 def allow_hand_input(sniper_button, disabled):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('sniper button clicks = ', sniper_button)
+    #print('sniper button clicks = ', sniper_button)
     #print('component_id = ', component_id)
     if disabled == True and sniper_button > 0:
         return False
@@ -289,7 +289,7 @@ def set_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
 
-    print('user hand disabled = ', user_hand_disabled)
+    #print('user hand disabled = ', user_hand_disabled)
 
     if user_hand_disabled == False:    
         yaxis_variables.clear() 
