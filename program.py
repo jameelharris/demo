@@ -225,7 +225,7 @@ def set_button_enabled_state_sniper(user_hand_disabled, xaxis_var_disabled):
     Output('xaxis_variables', 'options'),
     Input('usecases', 'value'), 
     Input('xaxis_var', 'disabled'))
-def set_variable_checklist(selected_usecase, xaxis_var_disabled):
+def set_xaxis_checklist_options(selected_usecase, xaxis_var_disabled):
     
     variable_list = []
     #print('selected_usecase= ', selected_usecase)
@@ -269,7 +269,7 @@ def set_test_mode_status(test_mode_button, test_mode_disabled):
     Output('xaxis_var', 'value'),
     Input('xaxis_var', 'disabled'),
     Input('usecases', 'value'))
-def set_variable_dropdown(test_mode_disabled, selected_usecase):
+def set_xaxis_dropdown(test_mode_disabled, selected_usecase):
     variable_list = []
     
     if test_mode_disabled == False:
@@ -290,19 +290,26 @@ def set_variable_dropdown(test_mode_disabled, selected_usecase):
     Input('xaxis_variables', 'options'),
     Input('select_xaxis', 'n_clicks'), 
     Input('usecases', 'value'),
-    Input('xaxis_var', 'disabled'), 
+    Input('xaxis_var', 'disabled'),
+    Input('xaxis_var', 'value'), 
     State('xaxis_variables', 'value'))
-def set_variable_value(variable_dict, select, usecase, xaxis_var_disabled, xaxis_variables):
+def set_xaxis_checklist_values(variable_dict, select, usecase, xaxis_var_disabled, selected_variable, xaxis_variables):
     #print('usecaselog = ', usecaselog)
     variable_list = []
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    if xaxis_var_disabled == False: 
+    if component_id != 'xaxis_var' and xaxis_var_disabled == False: 
         variable_list.append(xaxis_variables[0])
+
+    if component_id == 'xaxis_var' and xaxis_var_disabled == False: 
+        variable_list.clear()
+        variable_list.append(selected_variable)
+
 
     if xaxis_var_disabled == True: 
         difference = len(xaxis_variables) - len(list(variable_dict))
+    
 
         '''
         print(variable_dict)
@@ -331,7 +338,7 @@ def set_variable_value(variable_dict, select, usecase, xaxis_var_disabled, xaxis
     Input('xaxis_var', 'disabled'),
     State('yaxis_variables', 'options'), 
     State('user_hand', 'value'))
-def set_checklist_enabled_state(user_hand_disabled, xaxis_var_disabled, options, user_hand):
+def set_yaxis_checklist_enabled_state(user_hand_disabled, xaxis_var_disabled, options, user_hand):
 
     if user_hand_disabled == True and xaxis_var_disabled == True: 
         return [{'label':handsubclass, 'value':handsubclass, 'disabled': False} for handsubclass in definitions.handVariants.keys()]
@@ -350,7 +357,7 @@ def set_checklist_enabled_state(user_hand_disabled, xaxis_var_disabled, options,
     Input('user_hand', 'disabled'),
     Input('xaxis_var', 'disabled'),
     State('yaxis_variables', 'value'))
-def set_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, user_hand_disabled, xaxis_var_disabled, yaxis_variables):
+def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, user_hand_disabled, xaxis_var_disabled, yaxis_variables):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
