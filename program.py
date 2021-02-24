@@ -332,13 +332,18 @@ def set_checklist_enabled_state(user_hand_disabled, options, user_hand):
     Input('offsuit', 'n_clicks'), 
     Input('user_hand', 'value'),
     Input('user_hand', 'disabled'),
+    Input('xaxis_var', 'disabled'),
     State('yaxis_variables', 'value'))
-def set_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, user_hand_disabled, yaxis_variables):
+def set_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, user_hand_disabled, xaxis_var_disabled, yaxis_variables):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
 
     #print('user hand disabled = ', user_hand_disabled)
+
+    if xaxis_var_disabled == False: 
+        yaxis_variables = list(definitions.handVariants.keys())
+
 
     if user_hand_disabled == False:    
         yaxis_variables.clear() 
