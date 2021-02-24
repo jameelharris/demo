@@ -45,7 +45,7 @@ app.layout = html.Div([
                     disabled=True
                 ),
             ], style={'display':'inline-block', 'width':'28%'}),
-
+            
             html.Div([
                 dcc.Dropdown(
                     id='xaxis_var', 
@@ -53,7 +53,7 @@ app.layout = html.Div([
                     style = {'width':'100%'},
                     disabled=True 
                 ), 
-            ], style={'display':'inline-block', 'width':'36%'}),
+            ], style={'display':'inline-block', 'width':'36%', 'visibility':'hidden'}),
 
             html.Div([
                 dcc.Dropdown(
@@ -62,8 +62,8 @@ app.layout = html.Div([
                     style = {'width':'100%'},
                     disabled=True 
                 )
-            ], style={'display':'inline-block', 'width':'36%'})
-
+            ], style={'display':'inline-block', 'width':'36%', 'visibility':'hidden'})
+        
         ], style={'width':'95%'})
 
     ], style={'width': '16%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
@@ -101,9 +101,9 @@ app.layout = html.Div([
                 html.Button(id='sniper_mode', n_clicks=0, children= 'sniper mode', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'12.5%'}),
 
-            html.Div([
-                html.Button(id='test_mode', n_clicks=0, children= 'test mode', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
+            #html.Div([
+            #    html.Button(id='test_mode', n_clicks=0, children= 'test mode', style={'width':'99%'})
+            #], style={'display':'inline-block', 'width':'12.5%'}),
      
             html.Div([
                 html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
