@@ -223,8 +223,10 @@ def set_button_enabled_state_sniper(user_hand_disabled, xaxis_var_disabled):
 
 @app.callback(
     Output('xaxis_variables', 'options'),
-    Input('usecases', 'value'))
-def set_variable_checklist(selected_usecase):
+    Input('usecases', 'value'), 
+    Input('xaxis_var', 'disabled'))
+def set_variable_checklist(selected_usecase, xaxis_var_disabled):
+    
     variable_list = []
     #print('selected_usecase= ', selected_usecase)
     last_element = list(definitions.verticalfilter[selected_usecase].keys())[-1] 
@@ -238,10 +240,16 @@ def set_variable_checklist(selected_usecase):
 
     #print('variable_list= ', variable_list)    
     #print('last_element = ', last_element)
-    if 'StackDepth' in last_element:  
-        return [{'label': element.replace('BB', 'bb'), 'value': element} for element in variable_list]
+    if xaxis_var_disabled == True: 
+        if 'StackDepth' in last_element:  
+            return [{'label': element.replace('BB', 'bb'), 'value': element} for element in variable_list]
+        else:
+            return [{'label': element, 'value': element} for element in variable_list]
     else:
-        return [{'label': element, 'value': element} for element in variable_list]
+        if 'StackDepth' in last_element:  
+            return [{'label': element.replace('BB', 'bb'), 'value': element, 'disabled': True} for element in variable_list]
+        else:
+            return [{'label': element, 'value': element, 'disabled': True} for element in variable_list]
 
 @app.callback(
     Output('xaxis_var', 'disabled'),
