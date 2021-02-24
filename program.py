@@ -281,34 +281,39 @@ def set_variable_dropdown(test_mode_disabled, selected_usecase):
     Output('xaxis_variables', 'value'), 
     Input('xaxis_variables', 'options'),
     Input('select_xaxis', 'n_clicks'), 
-    Input('usecases', 'value'), 
+    Input('usecases', 'value'),
+    Input('xaxis_var', 'disabled'), 
     State('xaxis_variables', 'value'))
-def set_variable_value(variable_dict, select, usecase, xaxis_variables):
+def set_variable_value(variable_dict, select, usecase, xaxis_var_disabled, xaxis_variables):
     #print('usecaselog = ', usecaselog)
     variable_list = []
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    difference = len(xaxis_variables) - len(list(variable_dict))
+    if xaxis_var_disabled == False: 
+        variable_list.append(xaxis_variables[0])
 
-    '''
-    print(variable_dict)
-    print('component_id = ', component_id)
-    print('select = ', select)
-    print('difference = ', difference)
-    print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
-    '''
+    if xaxis_var_disabled == True: 
+        difference = len(xaxis_variables) - len(list(variable_dict))
 
-    if usecaselog[-1] == usecase and difference == 0:
-        variable_list = []
-    
-    if usecaselog[-1] == usecase and difference != 0 or component_id == 'xaxis_variables' or usecaselog[-1] != usecase: 
-        for variable in variable_dict:
-            #print('for testing...= ', variable)
-            variable_list.append(variable['value'])
+        '''
+        print(variable_dict)
+        print('component_id = ', component_id)
+        print('select = ', select)
+        print('difference = ', difference)
+        print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
+        '''
 
-    usecaselog.append(usecase)
-    usecaselog.pop(0)
+        if usecaselog[-1] == usecase and difference == 0:
+            variable_list = []
+        
+        if usecaselog[-1] == usecase and difference != 0 or component_id == 'xaxis_variables' or usecaselog[-1] != usecase: 
+            for variable in variable_dict:
+                #print('for testing...= ', variable)
+                variable_list.append(variable['value'])
+
+        usecaselog.append(usecase)
+        usecaselog.pop(0)
     return variable_list
 
 
@@ -319,7 +324,7 @@ def set_variable_value(variable_dict, select, usecase, xaxis_variables):
     State('yaxis_variables', 'options'), 
     State('user_hand', 'value'))
 def set_checklist_enabled_state(user_hand_disabled, xaxis_var_disabled, options, user_hand):
-    
+
     if user_hand_disabled == True and xaxis_var_disabled == True: 
         return [{'label':handsubclass, 'value':handsubclass, 'disabled': False} for handsubclass in definitions.handVariants.keys()]
     else:
