@@ -323,7 +323,7 @@ def set_xaxis_checklist_values(variable_dict, select, usecase, xaxis_var_disable
         
         if usecaselog[-1] == usecase and difference != 0 or usecaselog[-1] != usecase: 
             for variable in variable_dict:
-                print('for testing...= ', variable)
+                #print('for testing...= ', variable)
                 variable_list.append(variable['value'])
 
         usecaselog.append(usecase)
