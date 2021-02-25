@@ -298,7 +298,7 @@ def set_xaxis_checklist_values(variable_dict, select, usecase, xaxis_var_disable
     variable_list = []
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('comp id = ', component_id)
+    #print('comp id = ', component_id)
 
     
     if component_id == 'xaxis_var' and xaxis_var_disabled == False: 
@@ -310,20 +310,20 @@ def set_xaxis_checklist_values(variable_dict, select, usecase, xaxis_var_disable
         difference = len(xaxis_variables) - len(list(variable_dict))
     
 
-        '''
-        print(variable_dict)
-        print('component_id = ', component_id)
-        print('select = ', select)
-        print('difference = ', difference)
-        print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
-        '''
+        
+        #print(variable_dict)
+        #print('component_id = ', component_id)
+        #print('select = ', select)
+        #print('difference = ', difference)
+        #print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
+        
 
         if usecaselog[-1] == usecase and difference == 0:
             variable_list = []
         
-        if usecaselog[-1] == usecase and difference != 0 or component_id == 'xaxis_variables' or usecaselog[-1] != usecase: 
+        if usecaselog[-1] == usecase and difference != 0 or usecaselog[-1] != usecase: 
             for variable in variable_dict:
-                #print('for testing...= ', variable)
+                print('for testing...= ', variable)
                 variable_list.append(variable['value'])
 
         usecaselog.append(usecase)
