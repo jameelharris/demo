@@ -195,7 +195,7 @@ def show_legend(legend):
     Output('submit-button-state', 'disabled'),
     Input('yaxis_variables', 'value'),
     Input('xaxis_variables', 'value'))
-def set_button_enabled_state_axis(yaxis_variables, xaxis_variables):
+def set_submit_button_enabled_state(yaxis_variables, xaxis_variables):
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         return True 
     else:
