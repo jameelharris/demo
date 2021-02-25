@@ -301,7 +301,7 @@ def set_xaxis_checklist_values(variable_dict, select, usecase, xaxis_var_disable
     #print('comp id = ', component_id)
 
     
-    if component_id == 'xaxis_var' and xaxis_var_disabled == False: 
+    if component_id == 'xaxis_var' or component_id == 'usecases' and xaxis_var_disabled == False: 
         variable_list.clear()
         variable_list.append(selected_variable)
     
