@@ -103,21 +103,21 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'8.5%', 'visibility':'hidden'}),
 
             html.Div([
                 dcc.RadioItems(
                     id='app_mode', 
                     options=[
-                        {'label': 'default mode', 'value': 'default'},
+                        {'label': 'nuclear option', 'value': 'nuclear'},
                         {'label': 'sniper mode', 'value': 'sniper'},
-                        {'label': 'test mode', 'value': 'test'}
+                        {'label': 'target practice', 'value': 'test'}
                     ],
-                    value='default',
+                    value='nuclear',
                     labelStyle={'display': 'inline-block'},
                     style={'width':'99%'}
                  )
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'28%'}),
      
         ], style={'width':'100%'}),
 
