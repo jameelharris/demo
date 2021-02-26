@@ -98,17 +98,27 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'12.5%'}),
 
             html.Div([
-                html.Button(id='sniper_mode', n_clicks=0, children= 'sniper mode', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
-
-            html.Div([
-                html.Button(id='test_mode', n_clicks=0, children= 'test mode', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
-     
-            html.Div([
                 html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'12.5%'}),
 
+            html.Div([
+                html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'12.5%', 'visibility':'hidden'}),
+
+            html.Div([
+                dcc.RadioItems(
+                    id='app_mode', 
+                    options=[
+                        {'label': 'default mode', 'value': 'default'},
+                        {'label': 'sniper mode', 'value': 'sniper'},
+                        {'label': 'test mode', 'value': 'test'}
+                    ],
+                    value='default',
+                    labelStyle={'display': 'inline-block'},
+                    style={'width':'99%'}
+                 )
+            ], style={'display':'inline-block', 'width':'25%'}),
+     
         ], style={'width':'100%'}),
 
         html.Div([
