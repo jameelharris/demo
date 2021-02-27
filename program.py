@@ -209,7 +209,7 @@ def show_legend(legend):
     Output('submit-button-state', 'disabled'),
     Input('yaxis_variables', 'value'),
     Input('xaxis_variables', 'value'))
-def set_submit_button_enabled_state(yaxis_variables, xaxis_variables):
+def validate_update_chart_enabled_state(yaxis_variables, xaxis_variables):
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         return True 
     else:
@@ -221,25 +221,22 @@ def set_submit_button_enabled_state(yaxis_variables, xaxis_variables):
     Output('select_yaxis', 'disabled'),
     Output('suited', 'disabled'), 
     Output('offsuit', 'disabled'),
-    Output('test_mode', 'disabled'), 
-    Output('sniper_mode', 'disabled'),
-    Input('user_hand', 'disabled'), 
-    Input('xaxis_var', 'disabled'))
-def set_button_enabled_state_sniper(user_hand_disabled, xaxis_var_disabled): 
-    if user_hand_disabled == False:
-        return False, True, True, True, True, False
+    Input('app_mode', 'value'))
+def set_button_enabled_state_sniper(app_mode): 
+    if app_mode == 'sniper':
+        return False, True, True, True
 
-    if xaxis_var_disabled == False:
-        return True, True, True, True, False, True
+    if app_mode == 'test':
+        return True, True, True, True
 
-    if user_hand_disabled == True and xaxis_var_disabled == True:
-        return False, False, False, False, False, False
+    if app_mode == 'nuclear':
+        return False, False, False, False
 
 @app.callback(
     Output('xaxis_variables', 'options'),
     Input('usecases', 'value'), 
-    Input('xaxis_var', 'disabled'))
-def set_xaxis_checklist_options(selected_usecase, xaxis_var_disabled):
+    Input('app_mode', 'value'))
+def set_xaxis_checklist_options(selected_usecase, app_mode):
     
     variable_list = []
     #print('selected_usecase= ', selected_usecase)
@@ -254,12 +251,12 @@ def set_xaxis_checklist_options(selected_usecase, xaxis_var_disabled):
 
     #print('variable_list= ', variable_list)    
     #print('last_element = ', last_element)
-    if xaxis_var_disabled == True: 
+    if app_mode == 'nuclear' or app_mode == 'sniper': 
         if 'StackDepth' in last_element:  
             return [{'label': element.replace('BB', 'bb'), 'value': element} for element in variable_list]
         else:
             return [{'label': element, 'value': element} for element in variable_list]
-    else:
+    if app_mode == 'test':
         if 'StackDepth' in last_element:  
             return [{'label': element.replace('BB', 'bb'), 'value': element, 'disabled': True} for element in variable_list]
         else:
@@ -267,14 +264,10 @@ def set_xaxis_checklist_options(selected_usecase, xaxis_var_disabled):
 
 @app.callback(
     Output('xaxis_var', 'disabled'),
-    Input('test_mode', 'n_clicks'),
-    State('xaxis_var', 'disabled'))
-def set_test_mode_status(test_mode_button, test_mode_disabled):
-    if test_mode_disabled == True and test_mode_button == 0:
-        return True
-    
-    if test_mode_disabled == True and test_mode_button > 0: 
-        return False 
+    Input('app_mode', 'value'))
+def validate_xaxis_dropdown_enablement(app_mode):
+    if app_mode == 'test':
+        return False
     else:
         return True
 
@@ -325,17 +318,17 @@ def set_xaxis_checklist_values(variable_dict, select, usecase, xaxis_var_disable
     
 
         
-        #print(variable_dict)
-        #print('component_id = ', component_id)
-        #print('select = ', select)
-        #print('difference = ', difference)
-        #print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
+        print(variable_dict)
+        print('component_id = ', component_id)
+        print('select = ', select)
+        print('difference = ', difference)
+        print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
         
 
-        if usecaselog[-1] == usecase and difference == 0:
+        if usecaselog[-1] == usecase and difference == 0 or select == 1:
             variable_list = []
         
-        if usecaselog[-1] == usecase and difference != 0 or usecaselog[-1] != usecase: 
+        if usecaselog[-1] == usecase and difference != 0 and select != 1 or usecaselog[-1] != usecase: 
             for variable in variable_dict:
                 #print('for testing...= ', variable)
                 variable_list.append(variable['value'])
