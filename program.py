@@ -183,9 +183,9 @@ def enable_sniper_dropdown(app_mode):
 @app.callback(
     Output('user_hand', 'options'),
     Output('user_hand', 'value'), 
-    Input('user_hand', 'disabled'))
-def set_hand_dropdown(user_hand_disabled):
-    if user_hand_disabled == False: 
+    Input('app_mode', 'value'))
+def set_hand_dropdown(app_mode):
+    if app_mode == 'sniper': 
         return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], list(definitions.handMatrix.keys())[0]
     else:
         return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], ''
