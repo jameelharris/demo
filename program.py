@@ -38,7 +38,7 @@ app.layout = html.Div([
                     value='nuclear',
                     labelStyle={'display': 'inline-block'},
                  )
-            ], style={'display':'inline-block', 'width':'27%'}),
+            ], style={'display':'inline-block', 'width':'25%'}),
 
             html.Div([
                 html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '99%'}),
@@ -77,12 +77,13 @@ app.layout = html.Div([
                 options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
                 value='RFI-polar',
                 clearable=False,
+                style={'width': '99%'}
             ),
         ], style={'display': 'inline-block', 'width':'20%', 'vertical-align': 'bottom'}),
 
         html.Div([
                 html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'6%', 'visibility':'hidden'}),
+        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
 
 
         html.Div([
@@ -130,7 +131,7 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     id='trace_var', 
                     clearable=False,
-                    style = {'width':'100%'},
+                    style = {'width':'99%'},
                     disabled=True 
                 )
             ], style={'display':'inline-block', 'width':'36%'})
@@ -139,7 +140,7 @@ app.layout = html.Div([
 
         html.Div([
                 html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'6%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
 
         html.Div([
             html.Div([
