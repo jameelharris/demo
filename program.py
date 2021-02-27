@@ -38,7 +38,7 @@ app.layout = html.Div([
                     value='nuclear',
                     labelStyle={'display': 'inline-block'},
                  )
-            ], style={'display':'inline-block', 'width':'25%'}),
+            ], style={'display':'inline-block', 'width':'24%'}),
 
             html.Div([
                 html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '99%'}),
@@ -65,9 +65,9 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'7%'}),
 
      
-        ], style={'width':'100%'}),
+        ]),
 
-    ], style={'width': '100%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
 
     html.Div([
 
@@ -103,7 +103,7 @@ app.layout = html.Div([
 
         ], style={'display': 'inline-block'}),
 
-    ], style={'width': '100%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
 
 
     html.Div([
@@ -156,7 +156,7 @@ app.layout = html.Div([
         
         ], style={'display':'inline-block'}),
 
-    ], style={'width': '100%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}), 
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}), 
 
     html.Span(id='legend_container'),
 
