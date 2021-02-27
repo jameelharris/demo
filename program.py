@@ -38,31 +38,31 @@ app.layout = html.Div([
                     value='nuclear',
                     labelStyle={'display': 'inline-block'},
                  )
-            ], style={'display':'inline-block', 'width':'30%'}),
+            ], style={'display':'inline-block', 'width':'27%'}),
 
             html.Div([
                 html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '99%'}),
-            ], style={'display':'inline-block', 'width':'11.6%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
                 html.Button(id='select_xaxis', n_clicks=0, children= 'x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'11.6%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
                 html.Button(id='select_yaxis', n_clicks=0, children= 'y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'11.6%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'11.6%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'11.6%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
                 html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'11.6%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
      
         ], style={'width':'100%'}),
@@ -79,6 +79,10 @@ app.layout = html.Div([
                 clearable=False,
             ),
         ], style={'display': 'inline-block', 'width':'20%', 'vertical-align': 'bottom'}),
+
+        html.Div([
+                html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
+        ], style={'display':'inline-block', 'width':'6%', 'visibility':'hidden'}),
 
 
         html.Div([
@@ -111,7 +115,7 @@ app.layout = html.Div([
                     style={'width':'99%'},
                     disabled=True
                 ),
-            ], style={'display':'inline-block', 'width':'28%'}),
+            ], style={'display':'inline-block', 'width':'27%'}),
 
             html.Div([
                 dcc.Dropdown(
@@ -126,12 +130,16 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     id='trace_var', 
                     clearable=False,
-                    style = {'width':'99%'},
+                    style = {'width':'100%'},
                     disabled=True 
                 )
             ], style={'display':'inline-block', 'width':'36%'})
 
         ], style={'width':'20%', 'display':'inline-block', 'vertical-align':'bottom'}),
+
+        html.Div([
+                html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'6%', 'visibility':'hidden'}),
 
         html.Div([
             html.Div([
@@ -145,7 +153,7 @@ app.layout = html.Div([
                 ),
             ], style={'display': 'inline-block'}),
         
-        ], style={'width':'70%', 'display':'inline-block'}),
+        ], style={'display':'inline-block'}),
 
     ], style={'width': '100%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}), 
 
