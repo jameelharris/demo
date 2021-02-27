@@ -24,86 +24,8 @@ app.config.suppress_callback_exceptions = True
 app.layout = html.Div([
 
     html.Div([        
-        
-        html.Div([
-            dcc.Dropdown(
-                id='usecases',
-                options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
-                value='RFI-polar',
-                clearable=False 
-            ),
-        ], style={'width':'95%'}),
-        
-        html.Br(),
 
         html.Div([
-            html.Div([
-                dcc.Dropdown(
-                    id='user_hand', 
-                    clearable=False,  
-                    style={'width':'100%'},
-                    disabled=True
-                ),
-            ], style={'display':'inline-block', 'width':'28%'}),
-
-            html.Div([
-                dcc.Dropdown(
-                    id='xaxis_var', 
-                    clearable=False,
-                    style = {'width':'100%'},
-                    disabled=True 
-                ), 
-            ], style={'display':'inline-block', 'width':'36%'}),
-
-            html.Div([
-                dcc.Dropdown(
-                    id='trace_var', 
-                    clearable=False,
-                    style = {'width':'100%'},
-                    disabled=True 
-                )
-            ], style={'display':'inline-block', 'width':'36%'})
-
-        ], style={'width':'95%'})
-
-    ], style={'width': '16%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
-
-    html.Div([
-        html.Div([
-            html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '90%'}),
-        ]),
-
-
-    ], style={'width': '8%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block', 'vertical-align': 'top'}),
-
-
-    html.Div([
-
-        html.Div([
-
-            html.Div([
-                html.Button(id='select_xaxis', n_clicks=0, children= 'x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
-
-            html.Div([
-                html.Button(id='select_yaxis', n_clicks=0, children= 'y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
-
-            html.Div([
-                html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
-
-            html.Div([
-                html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
-
-            html.Div([
-                html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12.5%'}),
-
-            html.Div([
-                html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'8.5%', 'visibility':'hidden'}),
 
             html.Div([
                 dcc.RadioItems(
@@ -115,25 +37,101 @@ app.layout = html.Div([
                     ],
                     value='nuclear',
                     labelStyle={'display': 'inline-block'},
-                    style={'width':'99%'}
                  )
-            ], style={'display':'inline-block', 'width':'28%'}),
+            ], style={'display':'inline-block', 'width':'30%'}),
+
+            html.Div([
+                html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '99%'}),
+            ], style={'display':'inline-block', 'width':'11.6%'}),
+
+            html.Div([
+                html.Button(id='select_xaxis', n_clicks=0, children= 'x-axis', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'11.6%'}),
+
+            html.Div([
+                html.Button(id='select_yaxis', n_clicks=0, children= 'y-axis', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'11.6%'}),
+
+            html.Div([
+                html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'11.6%'}),
+
+            html.Div([
+                html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'11.6%'}),
+
+            html.Div([
+                html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'11.6%'}),
+
      
         ], style={'width':'100%'}),
 
+    ], style={'width': '100%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+
+    html.Div([
+
         html.Div([
+            dcc.Dropdown(
+                id='usecases',
+                options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
+                value='RFI-polar',
+                clearable=False,
+            ),
+        ], style={'display': 'inline-block', 'width':'20%', 'vertical-align': 'bottom'}),
+
+
+        html.Div([
+            
             html.Div([
-                html.P('y-axis: ')
-            ], style={'display': 'inline-block'}),
+                html.P('y-axis: '),
+            ], style={'display':'inline-block'}),
 
             html.Div([
                 dcc.Checklist(
                     id='yaxis_variables',
                     options=[{'label': handsubclass, 'value': handsubclass} for handsubclass in definitions.handVariants.keys()],
                     value=list(definitions.handVariants.keys()),
+        
                 ),
-            ], style={'display': 'inline-block'}),
-        ]),
+            ], style={'display': 'inline-block'})
+
+        ], style={'display': 'inline-block'}),
+
+    ], style={'width': '100%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+
+
+    html.Div([
+
+         html.Div([
+            html.Div([
+                dcc.Dropdown(
+                    id='user_hand', 
+                    clearable=False,  
+                    style={'width':'99%'},
+                    disabled=True
+                ),
+            ], style={'display':'inline-block', 'width':'28%'}),
+
+            html.Div([
+                dcc.Dropdown(
+                    id='xaxis_var', 
+                    clearable=False,
+                    style = {'width':'99%'},
+                    disabled=True 
+                ), 
+            ], style={'display':'inline-block', 'width':'36%'}),
+
+            html.Div([
+                dcc.Dropdown(
+                    id='trace_var', 
+                    clearable=False,
+                    style = {'width':'99%'},
+                    disabled=True 
+                )
+            ], style={'display':'inline-block', 'width':'36%'})
+
+        ], style={'width':'20%', 'display':'inline-block', 'vertical-align':'bottom'}),
 
         html.Div([
             html.Div([
@@ -146,9 +144,10 @@ app.layout = html.Div([
                     value=[]
                 ),
             ], style={'display': 'inline-block'}),
-        ]),
+        
+        ], style={'width':'70%', 'display':'inline-block'}),
 
-    ], style={'width': '76%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'display':'inline-block','vertical-align': 'top'}), 
+    ], style={'width': '100%', 'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}), 
 
     html.Span(id='legend_container'),
 
