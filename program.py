@@ -315,10 +315,10 @@ def set_xaxis_dropdown(app_mode, selected_usecase):
     Input('xaxis_variables', 'options'),
     Input('select_xaxis', 'n_clicks'), 
     Input('usecases', 'value'),
-    Input('xaxis_var', 'disabled'),
+    Input('app_mode', 'value'),
     Input('xaxis_var', 'value'), 
     State('xaxis_variables', 'value'))
-def set_xaxis_checklist_values(variable_dict, select, usecase, xaxis_var_disabled, selected_variable, xaxis_variables):
+def set_xaxis_checklist_values(variable_dict, select, usecase, app_mode, selected_variable, xaxis_variables):
     #print('usecaselog = ', usecaselog)
     variable_list = []
     ctx = dash.callback_context
@@ -326,12 +326,12 @@ def set_xaxis_checklist_values(variable_dict, select, usecase, xaxis_var_disable
     #print('comp id = ', component_id)
 
     
-    if component_id == 'xaxis_var' or component_id == 'usecases' and xaxis_var_disabled == False: 
+    if app_mode == 'test': 
         variable_list.clear()
         variable_list.append(selected_variable)
     
 
-    if xaxis_var_disabled == True: 
+    if app_mode != 'test': 
         difference = len(xaxis_variables) - len(list(variable_dict))
     
 
