@@ -64,6 +64,13 @@ app.layout = html.Div([
                 html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'7%'}),
 
+            html.Div([
+                html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'22%', 'visibility':'hidden'}),
+
+            html.Div([
+                html.Div(id='product_name_container', style={'width':'99%'})
+            ], style={'display':'inline-block'}),
      
         ]),
 
@@ -204,6 +211,17 @@ def show_legend(legend):
     else:
         imagedisplayed[0] = False
         return ''
+
+@app.callback(
+    Output('product_name_container', 'children'),
+    Input('app_mode', 'value'))
+def show_product_name(app_mode): 
+    image_filename = 'product_name.PNG' # replace with your own image
+    encoded_image = base64.b64encode(open(image_filename, 'rb').read())
+
+    return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height='14', style={'vertical-align':'bottom'})
+
+
 
 @app.callback(
     Output('submit-button-state', 'disabled'),
