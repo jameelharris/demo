@@ -354,13 +354,9 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
 
 @app.callback(
     Output('yaxis_variables', 'options'),
-    Input('user_hand', 'disabled'),
-    Input('xaxis_var', 'disabled'),
-    State('yaxis_variables', 'options'), 
-    State('user_hand', 'value'))
-def set_yaxis_checklist_enabled_state(user_hand_disabled, xaxis_var_disabled, options, user_hand):
-
-    if user_hand_disabled == True and xaxis_var_disabled == True: 
+    Input('app_mode', 'value'))
+def set_yaxis_checklist_enabled_state(app_mode):
+    if app_mode == 'nuclear': 
         return [{'label':handsubclass, 'value':handsubclass, 'disabled': False} for handsubclass in definitions.handVariants.keys()]
     else:
         return [{'label':handsubclass, 'value':handsubclass, 'disabled': True} for handsubclass in definitions.handVariants.keys()]
