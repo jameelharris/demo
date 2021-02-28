@@ -318,7 +318,7 @@ def set_xaxis_dropdown(app_mode, selected_usecase):
     Input('app_mode', 'value'),
     Input('xaxis_var', 'value'), 
     State('xaxis_variables', 'value'))
-def set_xaxis_checklist_values(variable_dict, select, usecase, app_mode, selected_variable, xaxis_variables):
+def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app_mode, selected_variable, xaxis_variables):
     #print('usecaselog = ', usecaselog)
     variable_list = []
     ctx = dash.callback_context
@@ -332,21 +332,17 @@ def set_xaxis_checklist_values(variable_dict, select, usecase, app_mode, selecte
     
 
     if app_mode != 'test': 
-        difference = len(xaxis_variables) - len(list(variable_dict))
-    
-
-        
         print(variable_dict)
         print('component_id = ', component_id)
-        print('select = ', select)
-        print('difference = ', difference)
+        print('select = ', select_button_clicks)
         print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
-        
+        print('mod = ', select_button_clicks % 1)
 
-        if usecaselog[-1] == usecase and difference == 0 or select == 1:
+        # Since the xaxis checklist defaults to preselected, then the odd number of clicks is when it should be deselected
+        if (select_button_clicks % 2) == 1:
+            print('mod test passed')
             variable_list = []
-        
-        if usecaselog[-1] == usecase and difference != 0 and select != 1 or usecaselog[-1] != usecase: 
+        else: 
             for variable in variable_dict:
                 #print('for testing...= ', variable)
                 variable_list.append(variable['value'])
