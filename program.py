@@ -339,6 +339,7 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
         print('mod = ', select_button_clicks % 1)
 
         # Since the xaxis checklist defaults to preselected, then the odd number of clicks is when it should be deselected
+            # Need to add logic to account for when mod condition passes when 
         if (select_button_clicks % 2) == 1:
             print('mod test passed')
             variable_list = []
@@ -377,7 +378,6 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
 
-    #print('user hand disabled = ', user_hand_disabled)
 
     if app_mode == 'test': 
         yaxis_variables = list(definitions.handVariants.keys())
@@ -412,17 +412,17 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
 @app.callback(
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
-    State('user_hand', 'disabled'),
+    State('app_mode', 'value'),
     State('user_hand', 'value'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(update_chart, user_hand_disabled, user_hand, usecaseconfig, yaxis_variables, xaxis_variables): 
+def render_heatmap(update_chart, app_mode, user_hand, usecaseconfig, yaxis_variables, xaxis_variables): 
     #suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
     
-    if user_hand_disabled == False: 
+    if app_mode == 'sniper': 
         print('user hand = ', user_hand)
     else: 
         print('user hand disabled is True') 
@@ -466,7 +466,7 @@ def render_heatmap(update_chart, user_hand_disabled, user_hand, usecaseconfig, y
         #print('program-test user hand[-1] = ', user_hand[-1])
         #print('program-test hands = ', hands)
         
-        hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands, user_hand, user_hand_disabled))
+        hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands, user_hand, app_mode))
         for (key, value) in hero['handVariantMatrix'].items():
             print('program() - after getNewNatrix() executed:', key,':', value)
 
