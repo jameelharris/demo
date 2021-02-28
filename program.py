@@ -339,7 +339,9 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
         print('mod = ', select_button_clicks % 1)
 
         # Since the xaxis checklist defaults to preselected, then the odd number of clicks is when it should be deselected
-            # Need to add logic to account for when mod condition passes when 
+            # Need to add logic to account for when mod condition passes (xaxis is deslected) when test mode is active 
+            # and user goes to sniper mode 
+            # also, in this instance, if I go from sniper to nuclear mode the application fails
         if (select_button_clicks % 2) == 1:
             print('mod test passed')
             variable_list = []
