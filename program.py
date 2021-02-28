@@ -292,12 +292,12 @@ def validate_xaxis_dropdown_enablement(app_mode):
 @app.callback(
     Output('xaxis_var', 'options'),
     Output('xaxis_var', 'value'),
-    Input('xaxis_var', 'disabled'),
+    Input('app_mode', 'value'),
     Input('usecases', 'value'))
-def set_xaxis_dropdown(test_mode_disabled, selected_usecase):
+def set_xaxis_dropdown(app_mode, selected_usecase):
     variable_list = []
     
-    if test_mode_disabled == False:
+    if app_mode == 'test':
         for key in definitions.preFlopUseCases.keys():
             #print('substring =', key, ' string =', selected_usecase)
             
