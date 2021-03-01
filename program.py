@@ -122,7 +122,7 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     id='user_hand', 
                     clearable=False,  
-                    style={'width':'99%'},
+                    style={'width':'99%', 'visibility':'hidden'},
                     disabled=True
                 ),
             ], style={'display':'inline-block', 'width':'27%'}),
@@ -131,7 +131,7 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     id='xaxis_var', 
                     clearable=False,
-                    style = {'width':'99%'},
+                    style = {'width':'99%', 'visibility':'hidden'},
                     disabled=True 
                 ), 
             ], style={'display':'inline-block', 'width':'36%'}),
@@ -140,7 +140,7 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     id='trace_var', 
                     clearable=False,
-                    style = {'width':'99%'},
+                    style = {'width':'99%', 'visibility':'hidden'},
                     disabled=True 
                 )
             ], style={'display':'inline-block', 'width':'36%'})
@@ -178,6 +178,20 @@ app.layout = html.Div([
     #html.Span('test', id='tooltip-target'),
     #dbc.Tooltip('hover text', target='tooltip-target')
 ])
+
+
+@app.callback(
+    Output('user_hand', 'style'),
+    Output('xaxis_var', 'style'),
+    Output('trace_var', 'style'),
+    Input('app_mode', 'value'))
+def change_dropdown_visbility(app_mode):
+    if app_mode == 'nuclear':
+        return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
+    if app_mode == 'sniper':
+        return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
+    if app_mode == 'test':
+        return {'visibility':'hidden', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 
 @app.callback(
@@ -447,7 +461,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
 def render_heatmap(update_chart, app_mode, user_hand, usecaseconfig, yaxis_variables, xaxis_variables): 
-    #suppress_callback_exceptions=True
+    suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
     
