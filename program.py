@@ -17,6 +17,8 @@ import base64
 
 
 usecaselog = ['',]
+appmodelog = ['',]
+selectxlog = [True,]
 imagedisplayed = [False,]
 
 app = dash.Dash(__name__)
@@ -324,34 +326,41 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     #print('comp id = ', component_id)
-
+    xaxis_deslected = False
+    previous_app_mode = appmodelog[-1]
     
+    print(variable_dict)
+    print('component_id = ', component_id)
+    print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
+    print('last app mode = ',  appmodelog[-1], ' current app mode = ', app_mode)
+    print('xaxis deselected = ', xaxis_deslected)
+
     if app_mode == 'test': 
         variable_list.clear()
         variable_list.append(selected_variable)
-    
 
-    if app_mode != 'test': 
-        print(variable_dict)
-        print('component_id = ', component_id)
-        print('select = ', select_button_clicks)
-        print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
-        print('mod = ', select_button_clicks % 1)
+
+    if app_mode in ('sniper', 'nuclear'): 
 
         # Since the xaxis checklist defaults to preselected, then the odd number of clicks is when it should be deselected
             # Need to add logic to account for when mod condition passes (xaxis is deslected) when test mode is active 
             # and user goes to sniper mode 
             # also, in this instance, if I go from sniper to nuclear mode the application fails
-        if (select_button_clicks % 2) == 1:
+        if component_id == 'select_xaxis' and (previous_app_mode == app_mode) and selectxlog[0] == True:
             print('mod test passed')
             variable_list = []
+            selectxlog[0] = False
         else: 
             for variable in variable_dict:
                 #print('for testing...= ', variable)
                 variable_list.append(variable['value'])
+            selectxlog[0] = True
 
-        usecaselog.append(usecase)
-        usecaselog.pop(0)
+
+    appmodelog.append(app_mode)
+    appmodelog.pop(0)
+    #usecaselog.append(usecase)
+    #usecaselog.pop(0)
     return variable_list
 
 
