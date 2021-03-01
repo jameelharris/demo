@@ -179,6 +179,15 @@ app.layout = html.Div([
     #dbc.Tooltip('hover text', target='tooltip-target')
 ])
 
+'''
+@app.callback(
+    Output('submit-button-state', 'children'),
+    Input('app_mode', 'value'))
+def change_button_title(app_mode):
+    if app_mode == 'test':
+        return 'Submit Test' 
+'''
+
 @app.callback(
     Output('user_hand', 'disabled'),
     Input('app_mode', 'value'))
@@ -247,7 +256,7 @@ def set_button_enabled_state_sniper(app_mode):
         return False, True, True, True
 
     if app_mode == 'test':
-        return True, True, True, True
+        return True, False, False, False
 
     if app_mode == 'nuclear':
         return False, False, False, False
@@ -375,7 +384,7 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
     Output('yaxis_variables', 'options'),
     Input('app_mode', 'value'))
 def set_yaxis_checklist_enabled_state(app_mode):
-    if app_mode == 'nuclear': 
+    if app_mode in ('nuclear', 'test'): 
         return [{'label':handsubclass, 'value':handsubclass, 'disabled': False} for handsubclass in definitions.handVariants.keys()]
     else:
         return [{'label':handsubclass, 'value':handsubclass, 'disabled': True} for handsubclass in definitions.handVariants.keys()]
