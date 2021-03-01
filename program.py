@@ -326,9 +326,10 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     #print('comp id = ', component_id)
-    xaxis_deslected = False
+    xaxis_deslected = selectxlog[0]
     previous_app_mode = appmodelog[-1]
-    
+    difference = len(xaxis_variables) - len(list(variable_dict))
+
     print(variable_dict)
     print('component_id = ', component_id)
     print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
@@ -342,17 +343,20 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
 
     if app_mode in ('sniper', 'nuclear'): 
 
-        # Since the xaxis checklist defaults to preselected, then the odd number of clicks is when it should be deselected
-            # Need to add logic to account for when mod condition passes (xaxis is deslected) when test mode is active 
-            # and user goes to sniper mode 
-            # also, in this instance, if I go from sniper to nuclear mode the application fails
         if component_id == 'select_xaxis' and (previous_app_mode == app_mode) and selectxlog[0] == True:
-            print('mod test passed')
-            variable_list = []
-            selectxlog[0] = False
+            if difference == 0:
+                print('first condition passed')
+                variable_list = []
+                selectxlog[0] = False
+            else: 
+                for variable in variable_dict:
+                    #print('for testing...= ', variable)
+                    variable_list.append(variable['value'])
+                selectxlog[0] = True
         else: 
             if previous_app_mode == 'test':
                 variable_list = xaxis_variables
+                selectxlog[0] = True
             else:
                 for variable in variable_dict:
                     #print('for testing...= ', variable)
