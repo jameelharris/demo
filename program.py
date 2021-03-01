@@ -351,10 +351,13 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
             variable_list = []
             selectxlog[0] = False
         else: 
-            for variable in variable_dict:
-                #print('for testing...= ', variable)
-                variable_list.append(variable['value'])
-            selectxlog[0] = True
+            if previous_app_mode == 'test':
+                variable_list = xaxis_variables
+            else:
+                for variable in variable_dict:
+                    #print('for testing...= ', variable)
+                    variable_list.append(variable['value'])
+                selectxlog[0] = True
 
 
     appmodelog.append(app_mode)
