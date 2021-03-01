@@ -43,7 +43,7 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'24%'}),
 
             html.Div([
-                html.Button(id='submit-button-state', n_clicks=0, children= 'Update Chart', style={'width': '99%'}),
+                html.Button(id='submit-button-state', n_clicks=0, children= 'Update Target', style={'width': '99%'}),
             ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
@@ -179,14 +179,16 @@ app.layout = html.Div([
     #dbc.Tooltip('hover text', target='tooltip-target')
 ])
 
-'''
+
 @app.callback(
     Output('submit-button-state', 'children'),
     Input('app_mode', 'value'))
 def change_button_title(app_mode):
     if app_mode == 'test':
-        return 'Submit Test' 
-'''
+        return 'Take Shot' 
+    else:
+        return 'Update Target'
+
 
 @app.callback(
     Output('user_hand', 'disabled'),
