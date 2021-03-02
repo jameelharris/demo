@@ -130,10 +130,10 @@ app.layout = html.Div([
 
             html.Div([
                 dcc.Dropdown(
-                    id='trace_var', 
+                    id='dropdown_2', 
                     clearable=False,
                     style = {'width':'99%', 'visibility':'hidden'},
-                    disabled=True 
+                    disabled=True,  
                 )
             ], style={'display':'inline-block', 'width':'50%'})
 
@@ -168,14 +168,24 @@ app.layout = html.Div([
         #figure=fig
     ), 
 
+    dcc.Store(id='test_answers'),
+    dcc.Store(id='trace_names')
+
     #html.Span('test', id='tooltip-target'),
     #dbc.Tooltip('hover text', target='tooltip-target')
 ])
 
+@app.callback(
+    Output('dropdown_2', 'options'),
+    Output('dropdown_2', 'value'),
+    Input('trace_names', 'data'), prevent_initial_call=True) 
+def set_dropdown_2(data):
+    print('data = ', data)
+    return [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
 
 @app.callback(
     Output('dropdown_1', 'style'),
-    Output('trace_var', 'style'),
+    Output('dropdown_2', 'style'),
     Input('app_mode', 'value'))
 def change_dropdown_visbility(app_mode):
     if app_mode == 'nuclear':
@@ -198,13 +208,16 @@ def change_button_title(app_mode):
 
 @app.callback(
     Output('dropdown_1', 'disabled'),
+    Output('dropdown_2', 'disabled'),
     Input('app_mode', 'value'))
-def enable_sniper_dropdown(app_mode):
-    print('app_mode = ', app_mode)
-    if app_mode in ('sniper', 'test'):
-        return False
-    else:
-        return True
+def set_dropdown_enablement(app_mode):
+    #print('app_mode = ', app_mode)
+    if app_mode == 'sniper':
+        return False, True
+    if app_mode == 'test':
+        return False, False
+    if app_mode == 'nuclear':
+        return True, True
 
 
 @app.callback(
@@ -445,6 +458,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
 @app.callback(
     Output('graph', 'figure'),
     Output('graph', 'style'),
+    Output('trace_names', 'data'),
     Input('submit-button-state', 'n_clicks'),
     State('app_mode', 'value'),
     State('dropdown_1', 'value'),
