@@ -121,7 +121,7 @@ verticalfilter = {
         'heroActions': (),
         'heroStackDepths': (),
         #'heroPositions': ('EP', 'MP', 'HJ', 'CO', 'BTN', 'SB'),
-        'heroPositions': ('BTN',),
+        'heroPositions': ('SB',),
         'heroUseCaseVariants': ('vsEP', 'vsMP', 'vsHJ', 'vsCO', 'vsBTN'),
         
         },
