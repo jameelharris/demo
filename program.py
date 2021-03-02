@@ -210,10 +210,11 @@ def enable_sniper_dropdown(app_mode):
     Output('dropdown_1', 'options'),
     Output('dropdown_1', 'value'),
     Input('app_mode', 'value'),
-    Input('usecases', 'value'))
-def set_xaxis_dropdown(app_mode, selected_usecase):
+    Input('usecases', 'value'), 
+    State('dropdown_1', 'value'))
+def set_xaxis_dropdown(app_mode, selected_usecase, selected_dropdown_value):
     variable_list = []
-    
+
     if app_mode in ('nuclear', 'test'):
         for key in definitions.preFlopUseCases.keys():
             #print('substring =', key, ' string =', selected_usecase)
@@ -224,8 +225,15 @@ def set_xaxis_dropdown(app_mode, selected_usecase):
 
         return [{'label': element, 'value': element} for element in variable_list], variable_list[0]
 
-    if app_mode in ('nuclear', 'sniper'): 
-        return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], list(definitions.handMatrix.keys())[0]
+    if app_mode in ('nuclear', 'sniper'):
+        # if the dropdown value is not the default value then maintain the state of the selected value
+        if selected_dropdown_value in list(definitions.handMatrix.keys()) and selected_dropdown_value != list(definitions.handMatrix.keys())[0]:
+            dropdown1_value = selected_dropdown_value
+        else:
+            dropdown1_value = list(definitions.handMatrix.keys())[0] 
+        return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], dropdown1_value
+
+    
 
 @app.callback(
     Output('legend_container', 'children'),
