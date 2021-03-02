@@ -112,7 +112,7 @@ app.layout = html.Div([
 
         ], style={'display': 'inline-block'}),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '4px'}),
 
 
     html.Div([
@@ -157,7 +157,7 @@ app.layout = html.Div([
         
         ], style={'display':'inline-block'}),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}), 
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px'}), 
 
     html.Span(id='legend_container'),
 
