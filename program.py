@@ -343,29 +343,37 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
 
         if component_id == 'select_xaxis' and (previous_app_mode == app_mode) and selectxlog[0] == True:
             if difference == 0:
-                print('first condition passed')
+                print('first condition if')
                 variable_list = []
                 selectxlog[0] = False
             else: 
+                print('first condition else')
                 for variable in variable_dict:
                     #print('for testing...= ', variable)
                     variable_list.append(variable['value'])
                 selectxlog[0] = True
         else: 
             if previous_app_mode == 'test':
+                print('second condition if')
                 variable_list = xaxis_variables
                 selectxlog[0] = True
             else:
-                for variable in variable_dict:
-                    #print('for testing...= ', variable)
-                    variable_list.append(variable['value'])
-                selectxlog[0] = True
+                print('second condition else')
+                # if dropdown contains hands then maintain state of xaxis selections unless the use case changes
+                if selected_variable in list(definitions.handMatrix.keys()) and usecase == usecaselog[-1]:
+                    variable_list = xaxis_variables
+                    selectxlog[0] = True
+                else:
+                    for variable in variable_dict:
+                        #print('for testing...= ', variable)
+                        variable_list.append(variable['value'])
+                    selectxlog[0] = True
 
 
     appmodelog.append(app_mode)
     appmodelog.pop(0)
-    #usecaselog.append(usecase)
-    #usecaselog.pop(0)
+    usecaselog.append(usecase)
+    usecaselog.pop(0)
     return variable_list
 
 
