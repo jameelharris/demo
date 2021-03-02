@@ -186,49 +186,45 @@ def set_dropdown_2(data):
 @app.callback(
     Output('dropdown_1', 'style'),
     Output('dropdown_2', 'style'),
-    Input('app_mode', 'value'))
-def change_dropdown_visbility(app_mode):
+    Input('app_mode', 'value'),
+    Input('submit-button-state', 'children'))
+def change_dropdown_visbility(app_mode, submit_text):
     if app_mode == 'nuclear':
         return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'sniper':
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test':
+    if app_mode == 'test' and submit_text == 'Load Target':
+        return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
+    if app_mode == 'test' and submit_text == 'Take Shots':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
-
 
 @app.callback(
     Output('submit-button-state', 'children'),
-    Input('app_mode', 'value'))
-def change_button_title(app_mode):
+    Input('app_mode', 'value'),
+    Input('submit-button-state', 'n_clicks'), 
+    State('submit-button-state', 'children'))
+def change_button_title(app_mode, submit_button_clicks, button_text):
     if app_mode == 'test':
-        return 'Lock and Load' 
+        if button_text == 'Load Target':
+            return 'Take Shots' 
+        else:
+            return 'Load Target'
     else:
         return 'Update Target'
 
 
 @app.callback(
     Output('dropdown_1', 'disabled'),
-    Input('app_mode', 'value'))
-def set_dropdown1_enablement(app_mode):
-    #print('app_mode = ', app_mode)
-    if app_mode == 'sniper':
-        return False
-    if app_mode == 'test':
-        return False
-    if app_mode == 'nuclear':
-        return True
-
-@app.callback(
     Output('dropdown_2', 'disabled'),
     Input('app_mode', 'value'))
-def set_dropdown2_enablement(app_mode):
+def set_dropdown_enablement(app_mode):
     #print('app_mode = ', app_mode)
     if app_mode == 'sniper':
-        return True
+        return False, True
     if app_mode == 'test':
-        return False
+        return False, False
     if app_mode == 'nuclear':
-        return True
+        return True, True
 
 
 @app.callback(
