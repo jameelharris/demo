@@ -208,16 +208,27 @@ def change_button_title(app_mode):
 
 @app.callback(
     Output('dropdown_1', 'disabled'),
-    Output('dropdown_2', 'disabled'),
     Input('app_mode', 'value'))
-def set_dropdown_enablement(app_mode):
+def set_dropdown1_enablement(app_mode):
     #print('app_mode = ', app_mode)
     if app_mode == 'sniper':
-        return False, True
+        return False
     if app_mode == 'test':
-        return False, False
+        return False
     if app_mode == 'nuclear':
-        return True, True
+        return True
+
+@app.callback(
+    Output('dropdown_2', 'disabled'),
+    Input('app_mode', 'value'))
+def set_dropdown2_enablement(app_mode):
+    #print('app_mode = ', app_mode)
+    if app_mode == 'sniper':
+        return True
+    if app_mode == 'test':
+        return False
+    if app_mode == 'nuclear':
+        return True
 
 
 @app.callback(
