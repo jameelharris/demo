@@ -189,6 +189,7 @@ def set_dropdown_2(data):
     Input('app_mode', 'value'),
     Input('submit-button-state', 'children'))
 def change_dropdown_visbility(app_mode, submit_text):
+
     if app_mode == 'nuclear':
         return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'sniper':
@@ -201,17 +202,20 @@ def change_dropdown_visbility(app_mode, submit_text):
 @app.callback(
     Output('submit-button-state', 'children'),
     Input('app_mode', 'value'),
-    Input('submit-button-state', 'n_clicks'), 
+    Input('submit-button-state', 'n_clicks'),
+    Input('usecases', 'value') ,
     State('submit-button-state', 'children'))
-def change_button_title(app_mode, submit_button_clicks, button_text):
+def change_button_title(app_mode, submit_button_clicks, selected_usecase, button_text):
     if app_mode == 'test':
-        if button_text == 'Load Target':
+        if button_text == 'Load Target' and usecaselog[-1] == selected_usecase:
             return 'Take Shots' 
         else:
             return 'Load Target'
     else:
         return 'Update Target'
 
+    usecaselog.append(usecase)
+    usecaselog.pop(0)
 
 @app.callback(
     Output('dropdown_1', 'disabled'),
