@@ -164,6 +164,7 @@ app.layout = html.Div([
     dcc.Graph(
         id='graph',
         config={'displayModeBar': False, 'showTips': False},
+        style={'visibility':'hidden'}
         #figure=fig
     ), 
 
@@ -443,6 +444,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
 
 @app.callback(
     Output('graph', 'figure'),
+    Output('graph', 'style'),
     Input('submit-button-state', 'n_clicks'),
     State('app_mode', 'value'),
     State('dropdown_1', 'value'),
@@ -453,7 +455,7 @@ def render_heatmap(update_chart, app_mode, user_hand, usecaseconfig, yaxis_varia
     suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
-    
+
     if app_mode == 'sniper': 
         print('user hand = ', user_hand)
     else: 

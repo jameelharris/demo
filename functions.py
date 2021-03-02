@@ -615,7 +615,7 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
    
     #fig.show(config={'displayModeBar': False, 'showTips': False})
     
-    return fig
+    return fig, {'visibility':'visible'}
 
 
 def modifyhoverlabel():
