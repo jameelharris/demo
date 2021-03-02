@@ -190,7 +190,7 @@ def change_dropdown_visbility(app_mode):
     Input('app_mode', 'value'))
 def change_button_title(app_mode):
     if app_mode == 'test':
-        return 'Take Shot' 
+        return 'Lock and Load' 
     else:
         return 'Update Target'
 
