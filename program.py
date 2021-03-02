@@ -120,21 +120,13 @@ app.layout = html.Div([
          html.Div([
             html.Div([
                 dcc.Dropdown(
-                    id='user_hand', 
+                    id='dropdown_1', 
                     clearable=False,  
                     style={'width':'99%', 'visibility':'hidden'},
                     disabled=True
                 ),
-            ], style={'display':'inline-block', 'width':'27%'}),
+            ], style={'display':'inline-block', 'width':'49%'}),
 
-            html.Div([
-                dcc.Dropdown(
-                    id='xaxis_var', 
-                    clearable=False,
-                    style = {'width':'99%', 'visibility':'hidden'},
-                    disabled=True 
-                ), 
-            ], style={'display':'inline-block', 'width':'36%'}),
 
             html.Div([
                 dcc.Dropdown(
@@ -143,7 +135,7 @@ app.layout = html.Div([
                     style = {'width':'99%', 'visibility':'hidden'},
                     disabled=True 
                 )
-            ], style={'display':'inline-block', 'width':'36%'})
+            ], style={'display':'inline-block', 'width':'50%'})
 
         ], style={'width':'20%', 'display':'inline-block', 'vertical-align':'bottom'}),
 
@@ -181,17 +173,16 @@ app.layout = html.Div([
 
 
 @app.callback(
-    Output('user_hand', 'style'),
-    Output('xaxis_var', 'style'),
+    Output('dropdown_1', 'style'),
     Output('trace_var', 'style'),
     Input('app_mode', 'value'))
 def change_dropdown_visbility(app_mode):
     if app_mode == 'nuclear':
-        return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
+        return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'sniper':
-        return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
+        return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'test':
-        return {'visibility':'hidden', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
+        return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 
 @app.callback(
@@ -205,25 +196,36 @@ def change_button_title(app_mode):
 
 
 @app.callback(
-    Output('user_hand', 'disabled'),
+    Output('dropdown_1', 'disabled'),
     Input('app_mode', 'value'))
 def enable_sniper_dropdown(app_mode):
     print('app_mode = ', app_mode)
-    if app_mode == 'sniper':
+    if app_mode in ('sniper', 'test'):
         return False
     else:
         return True
-    
+
+
 @app.callback(
-    Output('user_hand', 'options'),
-    Output('user_hand', 'value'), 
-    Input('app_mode', 'value'))
-def set_hand_dropdown(app_mode):
-    if app_mode == 'sniper': 
-        return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], list(definitions.handMatrix.keys())[0]
-    else:
-        return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], ''
+    Output('dropdown_1', 'options'),
+    Output('dropdown_1', 'value'),
+    Input('app_mode', 'value'),
+    Input('usecases', 'value'))
+def set_xaxis_dropdown(app_mode, selected_usecase):
+    variable_list = []
     
+    if app_mode in ('nuclear', 'test'):
+        for key in definitions.preFlopUseCases.keys():
+            #print('substring =', key, ' string =', selected_usecase)
+            
+            if key in selected_usecase:
+                #print('substring condition passed')
+                variable_list = list(definitions.verticalfilter[selected_usecase].values())[-1]
+
+        return [{'label': element, 'value': element} for element in variable_list], variable_list[0]
+
+    if app_mode in ('nuclear', 'sniper'): 
+        return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], list(definitions.handMatrix.keys())[0]
 
 @app.callback(
     Output('legend_container', 'children'),
@@ -307,35 +309,6 @@ def set_xaxis_checklist_options(selected_usecase, app_mode):
         else:
             return [{'label': element, 'value': element, 'disabled': True} for element in variable_list]
 
-@app.callback(
-    Output('xaxis_var', 'disabled'),
-    Input('app_mode', 'value'))
-def validate_xaxis_dropdown_enablement(app_mode):
-    if app_mode == 'test':
-        return False
-    else:
-        return True
-
-@app.callback(
-    Output('xaxis_var', 'options'),
-    Output('xaxis_var', 'value'),
-    Input('app_mode', 'value'),
-    Input('usecases', 'value'))
-def set_xaxis_dropdown(app_mode, selected_usecase):
-    variable_list = []
-    
-    if app_mode == 'test':
-        for key in definitions.preFlopUseCases.keys():
-            #print('substring =', key, ' string =', selected_usecase)
-            
-            if key in selected_usecase:
-                #print('substring condition passed')
-                variable_list = list(definitions.verticalfilter[selected_usecase].values())[-1]
-
-        return [{'label': element, 'value': element} for element in variable_list], variable_list[0]
-    else:
-        return [{'label': element, 'value': element} for element in variable_list], ''
-
 
 @app.callback(
     Output('xaxis_variables', 'value'), 
@@ -343,7 +316,7 @@ def set_xaxis_dropdown(app_mode, selected_usecase):
     Input('select_xaxis', 'n_clicks'), 
     Input('usecases', 'value'),
     Input('app_mode', 'value'),
-    Input('xaxis_var', 'value'), 
+    Input('dropdown_1', 'value'), 
     State('xaxis_variables', 'value'))
 def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app_mode, selected_variable, xaxis_variables):
     #print('usecaselog = ', usecaselog)
@@ -413,7 +386,7 @@ def set_yaxis_checklist_enabled_state(app_mode):
     Input('select_yaxis', 'n_clicks'),
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
-    Input('user_hand', 'value'),
+    Input('dropdown_1', 'value'),
     Input('app_mode', 'value'),
     State('yaxis_variables', 'value'))
 def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, app_mode, yaxis_variables):
@@ -456,7 +429,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
     Output('graph', 'figure'),
     Input('submit-button-state', 'n_clicks'),
     State('app_mode', 'value'),
-    State('user_hand', 'value'),
+    State('dropdown_1', 'value'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
