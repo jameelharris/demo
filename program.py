@@ -197,7 +197,7 @@ def change_dropdown_visbility(app_mode, submit_text):
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'test' and submit_text == 'Load x and y':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text == 'Focus':
+    if app_mode == 'test' and submit_text == 'Choose focus':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 @app.callback(
@@ -209,7 +209,7 @@ def change_dropdown_visbility(app_mode, submit_text):
 def change_button_title(app_mode, submit_button_clicks, selected_usecase, button_text):
     if app_mode == 'test':
         if button_text == 'Load x and y' and usecaselog[-1] == selected_usecase:
-            return 'Focus' 
+            return 'Choose focus' 
         else:
             return 'Load x and y'
     else:
