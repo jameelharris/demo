@@ -431,15 +431,19 @@ def set_yaxis_checklist_enabled_state(app_mode):
     Input('offsuit', 'n_clicks'), 
     Input('dropdown_1', 'value'),
     Input('app_mode', 'value'),
-    State('yaxis_variables', 'value'))
-def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, app_mode, yaxis_variables):
+    State('yaxis_variables', 'value'),
+    State('submit-button-state', 'children'))
+def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, app_mode, yaxis_variables, button_text):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
 
 
-    if app_mode == 'test': 
-        yaxis_variables = list(definitions.handVariants.keys())
+    if app_mode == 'test':
+        if button_text in ('Set x and y', 'Set focus'): 
+            pass
+        else:
+            yaxis_variables = list(definitions.handVariants.keys())
 
 
     if app_mode == 'sniper':    
