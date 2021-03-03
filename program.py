@@ -195,7 +195,9 @@ def change_dropdown_visbility(app_mode, submit_text):
         return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'sniper':
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test':
+    if app_mode == 'test' and submit_text == 'Load x and y':
+        return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
+    if app_mode == 'test' and submit_text == 'Focus':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 @app.callback(
