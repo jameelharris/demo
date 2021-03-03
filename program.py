@@ -196,7 +196,7 @@ def change_dropdown_visbility(app_mode, submit_text):
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'test' and submit_text == 'Set x and y':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text == 'Set focus':
+    if app_mode == 'test' and submit_text == 'Set column':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 @app.callback(
@@ -213,7 +213,7 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, select
     
     if app_mode == 'test':
         if button_text == 'Set x and y' and usecaselog[-1] == selected_usecase and component_id != 'dropdown_1':
-            return 'Set focus' 
+            return 'Set column' 
         else:
             return 'Set x and y'
     else:
@@ -440,7 +440,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
 
 
     if app_mode == 'test':
-        if button_text in ('Set x and y', 'Set focus'): 
+        if button_text in ('Set x and y', 'Set column'): 
             pass
         else:
             yaxis_variables = list(definitions.handVariants.keys())
