@@ -18,8 +18,7 @@ import base64
 
 usecaselog = ['',]
 appmodelog = ['',]
-xaxisdropdownlog = ['']
-selectxlog = [True,]
+selectxbool = [True,]
 imagedisplayed = [False,]
 
 app = dash.Dash(__name__)
@@ -204,17 +203,22 @@ def change_dropdown_visbility(app_mode, submit_text):
     Output('submit-button-state', 'children'),
     Input('app_mode', 'value'),
     Input('submit-button-state', 'n_clicks'),
-    Input('usecases', 'value') ,
+    Input('usecases', 'value'),
+    Input('dropdown_1', 'value'),
     State('submit-button-state', 'children'))
-def change_button_title(app_mode, submit_button_clicks, selected_usecase, button_text):
+def change_button_title(app_mode, submit_button_clicks, selected_usecase, selected_x_value, button_text):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    print('component_id = ', component_id)
+    
     if app_mode == 'test':
-        if button_text == 'Load x and y' and usecaselog[-1] == selected_usecase:
+        if button_text == 'Load x and y' and usecaselog[-1] == selected_usecase and component_id != 'dropdown_1':
             return 'Choose focus' 
         else:
             return 'Load x and y'
     else:
         return 'Update Target'
-
+    
 @app.callback(
     Output('dropdown_1', 'disabled'),
     Output('dropdown_2', 'disabled'),
@@ -355,7 +359,7 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     #print('comp id = ', component_id)
-    xaxis_deslected = selectxlog[0]
+    xaxis_deslected = selectxbool[0]
     previous_app_mode = appmodelog[-1]
     difference = len(xaxis_variables) - len(list(variable_dict))
 
@@ -372,33 +376,33 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
 
     if app_mode in ('sniper', 'nuclear'): 
 
-        if component_id == 'select_xaxis' and (previous_app_mode == app_mode) and selectxlog[0] == True:
+        if component_id == 'select_xaxis' and (previous_app_mode == app_mode) and selectxbool[0] == True:
             if difference == 0:
                 print('first condition if')
                 variable_list = []
-                selectxlog[0] = False
+                selectxbool[0] = False
             else: 
                 print('first condition else')
                 for variable in variable_dict:
                     #print('for testing...= ', variable)
                     variable_list.append(variable['value'])
-                selectxlog[0] = True
+                selectxbool[0] = True
         else: 
             if previous_app_mode == 'test':
                 print('second condition if')
                 variable_list = xaxis_variables
-                selectxlog[0] = True
+                selectxbool[0] = True
             else:
                 print('second condition else')
                 # if dropdown contains hands then maintain state of xaxis selections unless the use case changes
                 if selected_variable in list(definitions.handMatrix.keys()) and usecase == usecaselog[-1]:
                     variable_list = xaxis_variables
-                    selectxlog[0] = True
+                    selectxbool[0] = True
                 else:
                     for variable in variable_dict:
                         #print('for testing...= ', variable)
                         variable_list.append(variable['value'])
-                    selectxlog[0] = True
+                    selectxbool[0] = True
 
 
     appmodelog.append(app_mode)
