@@ -194,9 +194,9 @@ def change_dropdown_visbility(app_mode, submit_text):
         return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'sniper':
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text == 'Load x and y':
+    if app_mode == 'test' and submit_text == 'Set x and y':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text == 'Choose focus':
+    if app_mode == 'test' and submit_text == 'Set focus':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 @app.callback(
@@ -212,10 +212,10 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, select
     print('component_id = ', component_id)
     
     if app_mode == 'test':
-        if button_text == 'Load x and y' and usecaselog[-1] == selected_usecase and component_id != 'dropdown_1':
-            return 'Choose focus' 
+        if button_text == 'Set x and y' and usecaselog[-1] == selected_usecase and component_id != 'dropdown_1':
+            return 'Set focus' 
         else:
-            return 'Load x and y'
+            return 'Set x and y'
     else:
         return 'Update Target'
     
