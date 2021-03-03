@@ -214,9 +214,6 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, button
     else:
         return 'Update Target'
 
-    usecaselog.append(usecase)
-    usecaselog.pop(0)
-
 @app.callback(
     Output('dropdown_1', 'disabled'),
     Output('dropdown_2', 'disabled'),
