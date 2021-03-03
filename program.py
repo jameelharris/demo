@@ -18,6 +18,7 @@ import base64
 
 usecaselog = ['',]
 appmodelog = ['',]
+xaxisdropdownlog = ['']
 selectxlog = [True,]
 imagedisplayed = [False,]
 
@@ -194,9 +195,7 @@ def change_dropdown_visbility(app_mode, submit_text):
         return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'sniper':
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text == 'Load Target':
-        return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text == 'Take Shots':
+    if app_mode == 'test':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 @app.callback(
@@ -207,10 +206,10 @@ def change_dropdown_visbility(app_mode, submit_text):
     State('submit-button-state', 'children'))
 def change_button_title(app_mode, submit_button_clicks, selected_usecase, button_text):
     if app_mode == 'test':
-        if button_text == 'Load Target' and usecaselog[-1] == selected_usecase:
-            return 'Take Shots' 
+        if button_text == 'Load x and y' and usecaselog[-1] == selected_usecase:
+            return 'Focus' 
         else:
-            return 'Load Target'
+            return 'Load x and y'
     else:
         return 'Update Target'
 
