@@ -345,6 +345,16 @@ def set_xaxis_checklist_options(selected_usecase, app_mode):
         else:
             return [{'label': element, 'value': element, 'disabled': True} for element in variable_list]
 
+@app.callback(
+    Output('select_xaxis', 'children'),
+    Input('xaxis_variables', 'value'), 
+    State('xaxis_variables', 'options'))
+def change_select_xaxis_button_text(xaxis_variables, variable_dict):
+    difference = len(xaxis_variables) - len(list(variable_dict))
+    if difference == 0:
+        return 'deselect all x'
+    else:
+        return 'select all x'
 
 @app.callback(
     Output('xaxis_variables', 'value'), 
