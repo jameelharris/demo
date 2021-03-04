@@ -175,13 +175,6 @@ app.layout = html.Div([
     #dbc.Tooltip('hover text', target='tooltip-target')
 ])
 
-@app.callback(
-    Output('dropdown_2', 'options'),
-    Output('dropdown_2', 'value'),
-    Input('trace_names', 'data'), prevent_initial_call=True) 
-def set_dropdown_2(data):
-    print('data = ', data)
-    return [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
 
 @app.callback(
     Output('dropdown_1', 'style'),
@@ -201,23 +194,30 @@ def change_dropdown_visbility(app_mode, submit_text):
 
 @app.callback(
     Output('submit-button-state', 'children'),
+    Output('dropdown_2', 'options'),
+    Output('dropdown_2', 'value'),
     Input('app_mode', 'value'),
     Input('submit-button-state', 'n_clicks'),
     Input('usecases', 'value'),
     Input('dropdown_1', 'value'),
+    Input('trace_names', 'data'),
     State('submit-button-state', 'children'))
-def change_button_title(app_mode, submit_button_clicks, selected_usecase, selected_x_value, button_text):
+def change_button_title(app_mode, submit_button_clicks, selected_usecase, selected_x_value, data, button_text):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     print('component_id = ', component_id)
     
     if app_mode == 'test':
         if button_text == 'Set x and y' and usecaselog[-1] == selected_usecase and component_id != 'dropdown_1':
-            return 'Set column' 
+            return 'Set column', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
         else:
-            return 'Set x and y'
+            return 'Set x and y', [], ''
     else:
-        return 'Update Target'
+        return 'Update Target', [], ''
+ 
+def set_dropdown_2(data):
+    print('data = ', data)
+    return [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
     
 @app.callback(
     Output('dropdown_1', 'disabled'),
