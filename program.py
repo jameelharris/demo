@@ -206,10 +206,14 @@ def change_dropdown_visbility(app_mode, submit_text):
 def change_button_title(app_mode, submit_button_clicks, selected_usecase, selected_x_value, data, yaxis_variables, button_text):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('component_id = ', component_id)
-    
+    print('change_button_title() - component_id = ', component_id)
+    print('change_button_title() - selected usecase = ', selected_usecase)
+    print('change_button_title() - last usecase = ', usecaselog[-1])
+
+
     if app_mode == 'test':
-        if button_text == 'Set x and y' and usecaselog[-1] == selected_usecase and component_id != 'dropdown_1' and component_id != 'yaxis_variables':
+        if button_text == 'Set x and y' and component_id not in ('dropdown_1', 'yaxis_variables', 'usecases'):
+            print('passed change button title test')
             return 'Set column', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
         else:
             return 'Set x and y', [], ''
