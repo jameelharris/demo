@@ -463,7 +463,6 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
     print('button_id = ', button_id)
 
     if app_mode == 'test':
-        print('button text = ', button_text)
         pass
 
 
