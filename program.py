@@ -357,6 +357,18 @@ def change_select_xaxis_button_text(xaxis_variables, variable_dict):
         return 'select all x'
 
 @app.callback(
+    Output('select_yaxis', 'children'),
+    Input('yaxis_variables', 'value'), 
+    State('yaxis_variables', 'options'))
+def change_select_yaxis_button_text(yaxis_variables, variable_dict):
+    difference = len(yaxis_variables) - len(list(variable_dict))
+    if difference == 0:
+        return 'deselect all y'
+    else:
+        return 'select all y'
+
+
+@app.callback(
     Output('xaxis_variables', 'value'), 
     Input('xaxis_variables', 'options'),
     Input('select_xaxis', 'n_clicks'), 
@@ -436,16 +448,14 @@ def set_yaxis_checklist_enabled_state(app_mode):
 
 @app.callback(
     Output('yaxis_variables', 'value'),
-    Output('select_yaxis', 'children'),
     Input('yaxis_variables', 'options'),
     Input('select_yaxis', 'n_clicks'),
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
     Input('dropdown_1', 'value'),
     Input('app_mode', 'value'),
-    State('yaxis_variables', 'value'),
-    State('select_yaxis', 'children'))
-def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, app_mode, yaxis_variables, button_text):
+    State('yaxis_variables', 'value'))
+def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, app_mode, yaxis_variables):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
@@ -465,27 +475,23 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
         if button_id == 'select_yaxis':
             if difference == 0: 
                 yaxis_variables.clear()
-                button_text = 'select all y'
             else:
                 yaxis_variables = list(definitions.handVariants.keys())
-                button_text = 'deselect all y'
 
         if button_id == 'suited':
             yaxis_variables.clear()
             for key in definitions.handVariants.keys():
                 if key[-1] == 's':
                     yaxis_variables.append(key)
-            button_text = 'select all y'
 
         if button_id == 'offsuit':
             yaxis_variables.clear()
             for key in definitions.handVariants.keys():
                 if key[-1] == 'o':
                     yaxis_variables.append(key)
-            button_text = 'select all y'
     
     
-    return yaxis_variables, button_text
+    return yaxis_variables
 
 
 @app.callback(
