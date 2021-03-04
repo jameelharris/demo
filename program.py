@@ -47,11 +47,19 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
-                html.Button(id='select_xaxis', n_clicks=0, children= 'x-axis', style={'width':'99%'})
+                html.Button(id='select_xaxis', n_clicks=0, children= 'select all x', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
+                html.Button(id='select_yaxis', n_clicks=0, children= 'select all y', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
+                html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
-                html.Button(id='select_yaxis', n_clicks=0, children= 'y-axis', style={'width':'99%'})
+                html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
@@ -75,20 +83,12 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
-                html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
-
-            html.Div([
-                html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
-
-            html.Div([
                 html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
                 html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'8%', 'visibility':'hidden'}),
 
             html.Div([
                 html.Div(id='product_name_container', style={'width':'99%'})
