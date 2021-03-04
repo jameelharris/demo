@@ -48,31 +48,47 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='select_xaxis', n_clicks=0, children= 'x-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
+            ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
                 html.Button(id='select_yaxis', n_clicks=0, children= 'y-axis', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
+            ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
                 html.Button(id='pair', n_clicks=0, children= 'pair', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
+            ], style={'display':'inline-block', 'width':'5%'}),
+
+            html.Div([
+                html.Button(id='Ace', n_clicks=0, children= 'ace', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'5%'}),
+
+            html.Div([
+                html.Button(id='Connector', n_clicks=0, children= 'con', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'5%'}),
+
+            html.Div([
+                html.Button(id='Gapper Sr.', n_clicks=0, children= 'gap sr.', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'5%'}),
+        
+            html.Div([
+                html.Button(id='Gapper Jr.', n_clicks=0, children= 'gap jr.', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
+            ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
+            ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
                 html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
+            ], style={'display':'inline-block', 'width':'5%'}),
 
             html.Div([
                 html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'15%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'12%', 'visibility':'hidden'}),
 
             html.Div([
                 html.Div(id='product_name_container', style={'width':'99%'})
@@ -96,7 +112,7 @@ app.layout = html.Div([
 
         html.Div([
                 html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
+        ], style={'display':'inline-block', 'width':'5%', 'visibility':'hidden'}),
 
 
         html.Div([
@@ -145,7 +161,7 @@ app.layout = html.Div([
 
         html.Div([
                 html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'5%', 'visibility':'hidden'}),
 
         html.Div([
             html.Div([
