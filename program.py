@@ -55,6 +55,10 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
+                html.Button(id='pair', n_clicks=0, children= 'pair', style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
             ], style={'display':'inline-block', 'width':'7%'}),
 
@@ -68,7 +72,7 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'22%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'15%', 'visibility':'hidden'}),
 
             html.Div([
                 html.Div(id='product_name_container', style={'width':'99%'})
@@ -428,17 +432,18 @@ def set_yaxis_checklist_enabled_state(app_mode):
     Output('yaxis_variables', 'value'),
     Input('yaxis_variables', 'options'),
     Input('select_yaxis', 'n_clicks'),
+    Input('pair', 'n_clicks'),
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
     Input('dropdown_1', 'value'),
     Input('app_mode', 'value'),
     State('yaxis_variables', 'value'),
     State('submit-button-state', 'children'))
-def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, app_mode, yaxis_variables, button_text):
+def set_yaxis_checklist_values(variable_dict, select_yaxis, pair, suited, offsuit, user_hand, app_mode, yaxis_variables, button_text):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
-
+    print('button_id = ', button_id)
 
     if app_mode == 'test':
         print('button text = ', button_text)
@@ -455,6 +460,12 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
                 yaxis_variables.clear()
             else:
                 yaxis_variables = list(definitions.handVariants.keys())
+
+        if button_id == 'pair':
+            yaxis_variables.clear()
+            for key in definitions.handVariants.keys():
+                if key[-1] not in ('s', 'o'):
+                    yaxis_variables.append(key)
 
         if button_id == 'suited':
             yaxis_variables.clear()
