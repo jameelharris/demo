@@ -451,18 +451,18 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
     if app_mode != 'sniper': 
         if button_id == 'select_yaxis':
             if difference == 0: 
-                yaxis_variables = []
+                yaxis_variables.clear()
             else:
                 yaxis_variables = list(definitions.handVariants.keys())
 
         if button_id == 'suited':
-            yaxis_variables = []
+            yaxis_variables.clear()
             for key in definitions.handVariants.keys():
                 if key[-1] == 's':
                     yaxis_variables.append(key)
         
         if button_id == 'offsuit':
-            yaxis_variables = []
+            yaxis_variables.clear()
             for key in definitions.handVariants.keys():
                 if key[-1] == 'o':
                     yaxis_variables.append(key)
