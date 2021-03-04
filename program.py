@@ -440,10 +440,8 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, use
 
 
     if app_mode == 'test':
-        if button_text in ('Set x and y', 'Set column'): 
-            pass
-        else:
-            yaxis_variables = list(definitions.handVariants.keys())
+        print('button text = ', button_text)
+        pass
 
 
     if app_mode == 'sniper':    
