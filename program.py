@@ -395,7 +395,7 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
             else:
                 print('second condition else')
                 # if dropdown contains hands then maintain state of xaxis selections unless the use case changes
-                if selected_variable in list(definitions.handMatrix.keys()) and usecase == usecaselog[-1]:
+                if selected_variable in list(definitions.handMatrix.keys()) and usecase == usecaselog[-1] and len(xaxis_variables) != 0:
                     variable_list = xaxis_variables
                     selectxbool[0] = True
                 else:
