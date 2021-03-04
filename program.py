@@ -56,39 +56,19 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
                 html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
-
-            html.Div([
-                html.Button(id='pair', n_clicks=0, children= 'pair', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
-
-            html.Div([
-                html.Button(id='Ace', n_clicks=0, children= 'ace', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
-
-            html.Div([
-                html.Button(id='Connector', n_clicks=0, children= 'con', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
-
-            html.Div([
-                html.Button(id='Gapper Sr.', n_clicks=0, children= 'gap sr.', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
-        
-            html.Div([
-                html.Button(id='Gapper Jr.', n_clicks=0, children= 'gap jr.', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
                 html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
                 html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'8%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'27%', 'visibility':'hidden'}),
 
             html.Div([
                 html.Div(id='product_name_container', style={'width':'99%'})
@@ -111,7 +91,7 @@ app.layout = html.Div([
         ], style={'display': 'inline-block', 'width':'20%', 'vertical-align': 'bottom'}),
 
         html.Div([
-                html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
+            html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
         ], style={'display':'inline-block', 'width':'5%', 'visibility':'hidden'}),
 
 
@@ -160,8 +140,8 @@ app.layout = html.Div([
         ], style={'width':'20%', 'display':'inline-block', 'vertical-align':'bottom'}),
 
         html.Div([
-                html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'5%', 'visibility':'hidden'}),
+            html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
+        ], style={'display':'inline-block', 'width':'5%', 'visibility':'hidden'}),
 
         html.Div([
             html.Div([
@@ -449,14 +429,13 @@ def set_yaxis_checklist_enabled_state(app_mode):
     Output('select_yaxis', 'children'),
     Input('yaxis_variables', 'options'),
     Input('select_yaxis', 'n_clicks'),
-    Input('pair', 'n_clicks'),
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
     Input('dropdown_1', 'value'),
     Input('app_mode', 'value'),
     State('yaxis_variables', 'value'),
     State('select_yaxis', 'children'))
-def set_yaxis_checklist_values(variable_dict, select_yaxis, pair, suited, offsuit, user_hand, app_mode, yaxis_variables, button_text):
+def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, user_hand, app_mode, yaxis_variables, button_text):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
@@ -480,13 +459,6 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, pair, suited, offsui
             else:
                 yaxis_variables = list(definitions.handVariants.keys())
                 button_text = 'deselect all y'
-
-        if button_id == 'pair':
-            yaxis_variables.clear()
-            for key in definitions.handVariants.keys():
-                if key[-1] not in ('s', 'o'):
-                    yaxis_variables.append(key)
-            button_text = 'select all y'
 
         if button_id == 'suited':
             yaxis_variables.clear()
