@@ -155,7 +155,7 @@ app.layout = html.Div([
     
     html.Div([
         html.Span(id='legend_container', style={'visibility':'hidden'}),
-        html.Span(id='test_form', style={'visibility':'hidden'})
+        html.Span(id='test_form', style={'visibility':'hidden'}),
         dcc.Graph(
             id='graph',
             config={'displayModeBar': False, 'showTips': False},
@@ -438,6 +438,9 @@ def set_yaxis_checklist_enabled_state(app_mode):
     Input('app_mode', 'value'),
     State('yaxis_variables', 'value'))
 def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dropdown_1_value, app_mode, yaxis_variables):
+    selected_hand = ''
+    if app_mode == 'sniper':
+        selected_hand = dropdown_1_value
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
@@ -450,7 +453,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
 
     if app_mode == 'sniper':    
         yaxis_variables.clear() 
-        yaxis_variables.append(definitions.handMatrix[dropdown_1_value]['code'])
+        yaxis_variables.append(definitions.handMatrix[selected_hand]['code'])
 
     if app_mode != 'sniper': 
         if button_id == 'select_yaxis':
@@ -486,12 +489,14 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
 def render_heatmap(update_chart, app_mode, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables): 
+    selected_hand = ''
     suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
 
     if app_mode == 'sniper': 
-        print('user hand = ', dropdown_1_value)
+        selected_hand = dropdown_1_value
+        print('user hand = ', selected_hand)
     else: 
         print('user hand disabled is True') 
     #print('xaxis_variables = ', xaxis_variables)
@@ -530,11 +535,11 @@ def render_heatmap(update_chart, app_mode, dropdown_1_value, usecaseconfig, yaxi
         
         print('\n')
 
-        #print('program-test user hand = ', dropdown_1_value)
-        #print('program-test user hand[-1] = ', dropdown_1_value[-1])
+        #print('program-test user hand = ', selected_hand)
+        #print('program-test user hand[-1] = ', selected_hand[-1])
         #print('program-test hands = ', hands)
         
-        hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands, dropdown_1_value, app_mode))
+        hero['handVariantMatrix'] = functions.getNewMatrix('handVariant', functions.getHandMatrix(hands, selected_hand, app_mode))
         for (key, value) in hero['handVariantMatrix'].items():
             print('program() - after getNewNatrix() executed:', key,':', value)
 

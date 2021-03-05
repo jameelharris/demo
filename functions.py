@@ -326,7 +326,7 @@ def addFrequency(frequency, key, matrix):
     return matrix
     
     
-def getHandMatrix(hands, user_hand, app_mode):
+def getHandMatrix(hands, selected_hand, app_mode):
     #creates and returns dictionary comprised of discounted and undiscounted hands, whose frequencies are calculated and combos are assigned 
     handMatrix = {}
     
@@ -348,9 +348,9 @@ def getHandMatrix(hands, user_hand, app_mode):
     if app_mode == 'sniper': 
         for hand in hands:
             
-            if user_hand[:-1] == hand: # The hands extracted from the txt files do not specify suit when all 16 combos apply, so this IF accounts for that
-                hand = user_hand
-            if user_hand in hand: 
+            if selected_hand[:-1] == hand: # The hands extracted from the txt files do not specify suit when all 16 combos apply, so this IF accounts for that
+                hand = selected_hand
+            if selected_hand in hand: 
                 if isHandDiscounted(hand):
                     if(getDiscountedHandRank(hand) in definitions.handMatrix):
                         handMatrix.update(buildSpecifiedHandMatrix(getDiscountedHandRank(hand), getDiscount(hand)))
