@@ -596,8 +596,11 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
         tracename = '<b>' + str(list(xtickDict.keys())[i]).replace('BB', 'bb', 1) + '</b>'
         fig.add_trace(go.Heatmap(df_to_plotly(df, dfsecondary, list(xtickDict.values())[i]), zmin=0, zmax=1, colorscale=subplotcolor, name=tracename, opacity=opacity), row=1, col = i + 1)        
         
-        tracename = tracename.replace('<b>', '').replace('</b>', '')
-        tracename_list.append(tracename)
+        if opacity == 1:
+            tracename = tracename.replace('<b>', '').replace('</b>', '')
+            tracename_list.append(tracename)
+
+    
         ##### iterating through each data frame
         i = i + 1
 

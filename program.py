@@ -214,10 +214,7 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, select
             return 'Set x and y', [], ''
     else:
         return 'Update Target', [], ''
- 
-def set_dropdown_2(data):
-    print('data = ', data)
-    return [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
+
     
 @app.callback(
     Output('dropdown_1', 'disabled'),
