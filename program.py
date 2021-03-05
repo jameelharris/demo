@@ -16,9 +16,7 @@ from dash.exceptions import PreventUpdate
 import base64
 
 
-usecaselog = ['',]
-appmodelog = ['',]
-selectxbool = [True,]
+
 imagedisplayed = [False,]
 
 app = dash.Dash(__name__)
@@ -352,6 +350,9 @@ def set_xaxis_checklist_options(selected_usecase, app_mode):
     State('xaxis_variables', 'options'))
 def change_select_xaxis_button_text(xaxis_variables, variable_dict):
     difference = len(xaxis_variables) - len(list(variable_dict))
+    #print('change select == ', difference)
+    #print('change select == xaxisvariables', xaxis_variables),
+    #print('change select == variabledict', variable_dict)
     if difference == 0:
         return 'deselect all x'
     else:
@@ -378,61 +379,46 @@ def change_select_yaxis_button_text(yaxis_variables, variable_dict):
     Input('dropdown_1', 'value'), 
     State('xaxis_variables', 'value'))
 def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app_mode, selected_variable, xaxis_variables):
-    #print('usecaselog = ', usecaselog)
     variable_list = []
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    #print('comp id = ', component_id)
-    xaxis_deslected = selectxbool[0]
-    previous_app_mode = appmodelog[-1]
+    print('set axis checklist values - component id = ', component_id)
+    print('set axis checklist values - app mode = ', app_mode)
+    print('set axis...variable dict = ', variable_dict)
+
     difference = len(xaxis_variables) - len(list(variable_dict))
+    print('difference == ', difference)
 
-    print(variable_dict)
-    print('component_id = ', component_id)
-    print('last use case = ',  usecaselog[-1], ' current use case = ', usecase)
-    print('last app mode = ',  appmodelog[-1], ' current app mode = ', app_mode)
-    print('xaxis deselected = ', xaxis_deslected)
+    if component_id in ('select_xaxis',):
+        if difference == 0:
+            variable_list = [] 
+        else:
+            for variable in variable_dict:
+                variable_list.append(variable['value'])
+        return variable_list
 
-    if app_mode == 'test': 
-        variable_list.clear()
+    if app_mode in ('nuclear',):
+        print('app mode in nuclear')
+        if component_id in ('app_mode'): 
+            variable_list = xaxis_variables
+        else:
+            for variable in variable_dict:
+                variable_list.append(variable['value'])
+        
+    
+    if app_mode in ('sniper',): 
+        print('app mode in sniper')
+        if component_id not in ('usecases',):
+            variable_list = xaxis_variables
+        else:
+            for variable in variable_dict:
+                variable_list.append(variable['value'])
+            
+
+    if app_mode in ('test',): 
+        print('app mode in test')
         variable_list.append(selected_variable)
-
-
-    if app_mode in ('sniper', 'nuclear'): 
-
-        if component_id == 'select_xaxis' and (previous_app_mode == app_mode) and selectxbool[0] == True:
-            if difference == 0:
-                print('first condition if')
-                variable_list = []
-                selectxbool[0] = False
-            else: 
-                print('first condition else')
-                for variable in variable_dict:
-                    #print('for testing...= ', variable)
-                    variable_list.append(variable['value'])
-                selectxbool[0] = True
-        else: 
-            if previous_app_mode == 'test':
-                print('second condition if')
-                variable_list = xaxis_variables
-                selectxbool[0] = True
-            else:
-                print('second condition else')
-                # if dropdown contains hands then maintain state of xaxis selections unless the use case changes
-                if (selected_variable in list(definitions.handMatrix.keys()) and usecase == usecaselog[-1] and len(xaxis_variables) != 0) or previous_app_mode == 'sniper':
-                    variable_list = xaxis_variables
-                    selectxbool[0] = True
-                else:
-                    for variable in variable_dict:
-                        #print('for testing...= ', variable)
-                        variable_list.append(variable['value'])
-                    selectxbool[0] = True
-
-
-    appmodelog.append(app_mode)
-    appmodelog.pop(0)
-    usecaselog.append(usecase)
-    usecaselog.pop(0)
+    
     return variable_list
 
 
