@@ -66,7 +66,7 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'20%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'12%', 'visibility':'hidden'}),
 
             html.Div([
                 html.Div(id='product_name_container', style={'width':'99%'})
@@ -74,7 +74,7 @@ app.layout = html.Div([
      
         ]),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial'}),
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'2px'}),
 
     html.Div([
 
@@ -90,7 +90,7 @@ app.layout = html.Div([
 
         html.Div([
             html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'5%', 'visibility':'hidden'}),
+        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
 
 
         html.Div([
@@ -110,7 +110,7 @@ app.layout = html.Div([
 
         ], style={'display': 'inline-block'}),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '4px'}),
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '4px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'25px'}),
 
 
     html.Div([
@@ -139,7 +139,7 @@ app.layout = html.Div([
 
         html.Div([
             html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'5%', 'visibility':'hidden'}),
+        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
 
         html.Div([
             html.Div([
@@ -155,22 +155,24 @@ app.layout = html.Div([
         
         ], style={'display':'inline-block'}),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px'}), 
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'65px'}), 
+    
+    html.Div([
+        html.Span(id='legend_container'),
 
-    html.Span(id='legend_container'),
+        dcc.Graph(
+            id='graph',
+            config={'displayModeBar': False, 'showTips': False},
+            style={'visibility':'hidden'}
+            #figure=fig
+        ), 
 
-    dcc.Graph(
-        id='graph',
-        config={'displayModeBar': False, 'showTips': False},
-        style={'visibility':'hidden'}
-        #figure=fig
-    ), 
+        dcc.Store(id='test_answers'),
+        dcc.Store(id='trace_names')
 
-    dcc.Store(id='test_answers'),
-    dcc.Store(id='trace_names')
-
-    #html.Span('test', id='tooltip-target'),
-    #dbc.Tooltip('hover text', target='tooltip-target')
+        #html.Span('test', id='tooltip-target'),
+        #dbc.Tooltip('hover text', target='tooltip-target')
+    ], style={'position':'absolute', 'width':'1500px', 'height':'650px', 'top':'104px'})
 ])
 
 
