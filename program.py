@@ -66,7 +66,7 @@ app.layout = html.Div([
 
             html.Div([
                 html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'27%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'20%', 'visibility':'hidden'}),
 
             html.Div([
                 html.Div(id='product_name_container', style={'width':'99%'})
