@@ -207,7 +207,7 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, select
 
 
     if app_mode == 'test':
-        if button_text == 'Set x and y' and component_id not in ('dropdown_1', 'yaxis_variables', 'usecases'):
+        if button_text == 'Set x and y' and component_id not in ('dropdown_1', 'yaxis_variables', 'usecases') and len(data) > 0:
             print('passed change button title test')
             return 'Set column', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
         else:
