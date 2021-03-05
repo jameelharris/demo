@@ -15,10 +15,6 @@ from dash.exceptions import PreventUpdate
 
 import base64
 
-
-
-imagedisplayed = [False,]
-
 app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
 app.layout = html.Div([
@@ -158,7 +154,7 @@ app.layout = html.Div([
     ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'65px'}), 
     
     html.Div([
-        html.Span(id='legend_container'),
+        html.Span(id='legend_container', style={'visibility':'hidden'}),
 
         dcc.Graph(
             id='graph',
@@ -263,18 +259,18 @@ def set_xaxis_dropdown(app_mode, selected_usecase, selected_dropdown_value):
 
 @app.callback(
     Output('legend_container', 'children'),
-    Input('show_legend', 'n_clicks'))
-def show_legend(legend):
+    Output('legend_container', 'style'),
+    Input('show_legend', 'n_clicks'), 
+    State('legend_container', 'style'))
+def show_legend(legend_button, legend_style):
     image_filename = 'legend.PNG' # replace with your own image
     encoded_image = base64.b64encode(open(image_filename, 'rb').read())
-    
-    if imagedisplayed[0] == False and legend > 0:
-        imagedisplayed[0] = True
-        return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'})
+    print('legend style = ', legend_style)
+    if legend_style['visibility'] == 'hidden' and legend_button > 0:
+        return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}), {'visibility':'visible'}
     else:
-        imagedisplayed[0] = False
-        return ''
-
+        return '', {'visibility':'hidden'}
+                    
 @app.callback(
     Output('product_name_container', 'children'),
     Input('app_mode', 'value'))
