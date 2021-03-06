@@ -163,7 +163,6 @@ app.layout = html.Div([
             #figure=fig
         ), 
 
-        dcc.Store(id='test_answers'),
         dcc.Store(id='trace_names')
 
         #html.Span('test', id='tooltip-target'),
