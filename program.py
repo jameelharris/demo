@@ -164,13 +164,27 @@ app.layout = html.Div([
         ), 
 
         dcc.Store(id='trace_names'),
-        dcc.Store(id='usecase_inventory')
+        dcc.Store(id='usecase_inventory'),
+        dcc.Store(id ='test_scope')
 
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
     ], style={'position':'absolute', 'width':'1500px', 'height':'650px', 'top':'104px'})
 ])
 
+
+@app.callback(
+    Output('test_scope', 'data'),
+    Input('submit-button-state', 'n_clicks'),
+    Input('usecase_inventory', 'data'),
+    State('dropdown_2', 'value'), 
+    State('submit-button-state', 'children'))
+def validate_test_scope(submit_button_clicks, data, selected_column, submit_text):
+    if data != '{}':
+        print('from validate test scope - selected column = ', selected_column)
+        print('from validate test scope - usecase inventory = ', data)
+    else:
+        raise PreventUpdate
 
 @app.callback(
     Output('dropdown_1', 'style'),
