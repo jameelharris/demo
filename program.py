@@ -163,7 +163,8 @@ app.layout = html.Div([
             #figure=fig
         ), 
 
-        dcc.Store(id='trace_names')
+        dcc.Store(id='trace_names'),
+        dcc.Store(id='usecase_inventory')
 
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
@@ -481,13 +482,15 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     Output('graph', 'figure'),
     Output('graph', 'style'),
     Output('trace_names', 'data'),
+    Output('usecase_inventory', 'data'),
     Input('submit-button-state', 'n_clicks'),
     State('app_mode', 'value'),
+    State('submit-button-state', 'children'),
     State('dropdown_1', 'value'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(update_chart, app_mode, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables): 
+def render_heatmap(update_chart, app_mode, button_text, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables): 
     selected_hand = ''
     #suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
@@ -569,7 +572,8 @@ def render_heatmap(update_chart, app_mode, dropdown_1_value, usecaseconfig, yaxi
         print('\n')
 
     
-
+    if app_mode in ('test',) and button_text == 'Set column':
+        return {}, {'visibility':'visible'}, [], useCaseInventory
     '''
     orderedUseCaseInventory = functions.reorderUseCases(useCaseInventory)
 
