@@ -490,7 +490,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     State('xaxis_variables', 'value'), prevent_initial_call=True)
 def render_heatmap(update_chart, app_mode, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables): 
     selected_hand = ''
-    suppress_callback_exceptions=True
+    #suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
 
