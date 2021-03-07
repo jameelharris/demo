@@ -589,7 +589,7 @@ def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdow
 
     
     if app_mode in ('test',) and button_text == 'Set column':
-        return functions.get_test_answers(useCaseInventory, selected_column)
+        return functions.get_test_answers(useCaseInventory, selected_column, dropdown_1_value, usecaseconfig)
 
     '''
     orderedUseCaseInventory = functions.reorderUseCases(useCaseInventory)
