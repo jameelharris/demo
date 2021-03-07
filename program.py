@@ -154,8 +154,8 @@ app.layout = html.Div([
     ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'65px'}), 
     
     html.Div([
-        html.Span(id='legend_container', style={'visibility':'hidden'}),
-        html.Span(id='test_form', style={'visibility':'hidden'}),
+        html.Span(id='legend_container', style={'display':'none'}),
+        html.Span(id='test_form', style={'display':'none'}),
         dcc.Graph(
             id='graph',
             config={'displayModeBar': False, 'showTips': False},
@@ -277,10 +277,10 @@ def show_legend(legend_button, legend_style):
     image_filename = 'legend.PNG' # replace with your own image
     encoded_image = base64.b64encode(open(image_filename, 'rb').read())
     #print('legend style = ', legend_style)
-    if legend_style['visibility'] == 'hidden' and legend_button > 0:
-        return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}), {'visibility':'visible'}
+    if legend_style['display'] == 'none' and legend_button > 0:
+        return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}), {'display':'block'}
     else:
-        return '', {'visibility':'hidden'}
+        return '', {'display':'none'}
                     
 @app.callback(
     Output('product_name_container', 'children'),
