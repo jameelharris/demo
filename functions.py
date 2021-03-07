@@ -903,7 +903,7 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         var_list.pop(0)
     
     
-    correctHandVariantMatrix = {}
+    correctUseCaseDict = {}
     red_flag = False
     for useCase_dict in useCaseInventory.values(): 
         for var_key, var_value in var_dict.items():
@@ -918,6 +918,13 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
                 continue
         if red_flag is False:
             print('red_flag is False')
-            correctHandVariantMatrix = useCase_dict.copy()
+            correctUseCaseDict = useCase_dict.copy()
             break 
-    return {}, {'display':'none'}, [], correctHandVariantMatrix
+
+    handVariantMatrix = correctUseCaseDict['handVariantMatrix'].copy()
+
+    for key in correctUseCaseDict['handVariantMatrix'].keys(): 
+        if key not in yaxis_variables: 
+            del handVariantMatrix[key]
+        
+    return {}, {'display':'none'}, [], handVariantMatrix
