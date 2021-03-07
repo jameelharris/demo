@@ -217,7 +217,7 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, select
 
     if app_mode == 'test':
         if button_text == 'Set x and y' and component_id not in ('dropdown_1', 'yaxis_variables', 'usecases') and len(data) > 0:
-            print('passed change button title test')
+            #print('passed change button title test')
             return 'Set column', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
         else:
             return 'Set x and y', [], ''
@@ -276,7 +276,7 @@ def set_xaxis_dropdown(app_mode, selected_usecase, selected_dropdown_value):
 def show_legend(legend_button, legend_style):
     image_filename = 'legend.PNG' # replace with your own image
     encoded_image = base64.b64encode(open(image_filename, 'rb').read())
-    print('legend style = ', legend_style)
+    #print('legend style = ', legend_style)
     if legend_style['visibility'] == 'hidden' and legend_button > 0:
         return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}), {'visibility':'visible'}
     else:
@@ -388,12 +388,12 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
     variable_list = []
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('set axis checklist values - component id = ', component_id)
-    print('set axis checklist values - app mode = ', app_mode)
-    print('set axis...variable dict = ', variable_dict)
+    #print('set axis checklist values - component id = ', component_id)
+    #print('set axis checklist values - app mode = ', app_mode)
+    #print('set axis...variable dict = ', variable_dict)
 
     difference = len(xaxis_variables) - len(list(variable_dict))
-    print('difference == ', difference)
+    #print('difference == ', difference)
 
     if component_id in ('select_xaxis',):
         if difference == 0:
@@ -404,7 +404,7 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
         return variable_list
 
     if app_mode in ('nuclear',):
-        print('app mode in nuclear')
+        #print('app mode in nuclear')
         if component_id in ('app_mode'): 
             variable_list = xaxis_variables
         else:
@@ -413,7 +413,7 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
         
     
     if app_mode in ('sniper',): 
-        print('app mode in sniper')
+        #print('app mode in sniper')
         if component_id not in ('usecases',):
             variable_list = xaxis_variables
         else:
@@ -422,7 +422,7 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
             
 
     if app_mode in ('test',): 
-        print('app mode in test')
+        #print('app mode in test')
         variable_list.append(selected_variable)
     
     return variable_list
@@ -456,7 +456,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
 
-    print('button_id = ', button_id)
+    #print('button_id = ', button_id)
 
     if app_mode == 'test':
         pass
@@ -509,10 +509,8 @@ def render_heatmap(update_chart, selected_column, app_mode, button_text, usecase
 
     if app_mode == 'sniper': 
         selected_hand = dropdown_1_value
-        print('user hand = ', selected_hand)
-    else: 
-        print('user hand disabled is True') 
-    #print('xaxis_variables = ', xaxis_variables)
+        #print('user hand = ', selected_hand)
+
     useCase = ''
 
     ##### derive abstract use case from specific use case
