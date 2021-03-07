@@ -901,4 +901,22 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
     for key in definitions.verticalfilter[usecaseconfig].keys(): 
         var_dict.update({key[:-1] : var_list[0]})
         var_list.pop(0)
-    return {}, {'display':'none'}, [], var_dict
+    
+    
+    correctHandVariantMatrix = {}
+    red_flag = False
+    for useCase_dict in useCaseInventory.values(): 
+        for var_key, var_value in var_dict.items():
+            if 'heroStackDepth' in var_key: 
+                var_value = var_value.replace('bb', 'BB')
+            print('useCase_dict[var_key] =', useCase_dict[var_key], 'and var_value = ', var_value)
+            if useCase_dict[var_key] != var_value:
+                red_flag = True 
+                break
+            else: 
+                continue
+        if red_flag is False:
+            print('red_flag is False')
+            correctHandVariantMatrix = copy.deepcopy(useCase_dict)
+        break 
+    return {}, {'display':'none'}, [], correctHandVariantMatrix
