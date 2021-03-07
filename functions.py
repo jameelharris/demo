@@ -914,9 +914,10 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
                 red_flag = True 
                 break
             else: 
+                red_flag = False
                 continue
         if red_flag is False:
             print('red_flag is False')
-            correctHandVariantMatrix = copy.deepcopy(useCase_dict)
-        break 
+            correctHandVariantMatrix = useCase_dict.copy()
+            break 
     return {}, {'display':'none'}, [], correctHandVariantMatrix
