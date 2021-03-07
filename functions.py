@@ -894,4 +894,11 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
     print('from get test answers - selected x value = ', selected_x_value)
     print('from get test answers - y axis variables = ', yaxis_variables)
     print('from get test answers - usecaseconfig = ', usecaseconfig)
-    return {}, {'display':'none'}, [], 'hi from get_test_answers()'
+    
+    var_dict = {}
+    var_string = selected_column + '-' + str(selected_x_value[0])
+    var_list = var_string.split(definitions.delimiters['columnHeaderDelimiter'])
+    for key in definitions.verticalfilter[usecaseconfig].keys(): 
+        var_dict.update({key[:-1] : var_list[0]})
+        var_list.pop(0)
+    return {}, {'display':'none'}, [], var_dict
