@@ -889,5 +889,6 @@ def mutecolumns(useCaseInventory, vertical_filter, usecaseconfig):
                         useCaseNestedDicts['overallFrequency'] = '0.00'
     return useCaseInventory
 
-def get_test_answers(useCaseInventory):
+def get_test_answers(useCaseInventory, selected_column):
+    print('from get test answers - selected column = ', selected_column)
     return {}, {'visibility':'visible'}, [], useCaseInventory

@@ -181,6 +181,7 @@ app.layout = html.Div([
     State('submit-button-state', 'children'))
 def validate_test_scope(submit_button_clicks, data, selected_column, submit_text):
     if data != '{}':
+        # may need selected column as a display item
         print('from validate test scope - selected column = ', selected_column)
         print('from validate test scope - usecase inventory = ', data)
     else:
@@ -498,13 +499,14 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     Output('trace_names', 'data'),
     Output('usecase_inventory', 'data'),
     Input('submit-button-state', 'n_clicks'),
+    State('dropdown_2', 'value'), 
     State('app_mode', 'value'),
     State('submit-button-state', 'children'),
     State('dropdown_1', 'value'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(update_chart, app_mode, button_text, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables): 
+def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables): 
     selected_hand = ''
     #suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
@@ -587,7 +589,7 @@ def render_heatmap(update_chart, app_mode, button_text, dropdown_1_value, usecas
 
     
     if app_mode in ('test',) and button_text == 'Set column':
-        return functions.get_test_answers(useCaseInventory)
+        return functions.get_test_answers(useCaseInventory, selected_column)
 
     '''
     orderedUseCaseInventory = functions.reorderUseCases(useCaseInventory)
