@@ -587,7 +587,8 @@ def render_heatmap(update_chart, app_mode, button_text, dropdown_1_value, usecas
 
     
     if app_mode in ('test',) and button_text == 'Set column':
-        return {}, {'visibility':'visible'}, [], useCaseInventory
+        return functions.get_test_answers(useCaseInventory)
+
     '''
     orderedUseCaseInventory = functions.reorderUseCases(useCaseInventory)
 
