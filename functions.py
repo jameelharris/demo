@@ -894,4 +894,4 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
     print('from get test answers - selected x value = ', selected_x_value)
     print('from get test answers - y axis variables = ', yaxis_variables)
     print('from get test answers - usecaseconfig = ', usecaseconfig)
-    return {}, {'visibility':'visible'}, [], 'hi from get_test_answers()'
+    return {}, {'display':'none'}, [], 'hi from get_test_answers()'
