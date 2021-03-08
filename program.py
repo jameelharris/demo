@@ -164,8 +164,9 @@ app.layout = html.Div([
         ), 
 
         dcc.Store(id='trace_names'),
-        dcc.Store(id='usecase_inventory'),
-        dcc.Store(id ='test_scope')
+        dcc.Store(id='blank_test'),
+        dcc.Store(id='test_answers'),
+        dcc.Store(id='test_scope')
 
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
@@ -175,11 +176,13 @@ app.layout = html.Div([
 
 @app.callback(
     Output('test_scope', 'data'),
-    Input('usecase_inventory', 'data'))
-def validate_test_scope(data):
-    if data != '{}':
+    Input('blank_test', 'data'), 
+    Input('test_answers', 'data'))
+def validate_test_scope(blank_test, test_answers):
+    if blank_test != '{}' and test_answers != '{}':
         # may need selected column + selected x value as a concatenated string --- render heatmap should provide this to data store
-        print('from validate test scope - usecase inventory = ', data)
+        print('from validate test scope - blank test = ', blank_test)
+        print('from validate test scope - test answers = ', test_answers)
     else:
         raise PreventUpdate
 
@@ -493,7 +496,8 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     Output('graph', 'figure'),
     Output('graph', 'style'),
     Output('trace_names', 'data'),
-    Output('usecase_inventory', 'data'),
+    Output('blank_test', 'data'),
+    Output('test_answers', 'data'),
     Input('submit-button-state', 'n_clicks'),
     State('dropdown_2', 'value'), 
     State('app_mode', 'value'),

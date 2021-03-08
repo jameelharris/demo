@@ -620,7 +620,7 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
    
     #fig.show(config={'displayModeBar': False, 'showTips': False})
     
-    return fig, {'visibility':'visible'}, tracename_list, {}
+    return fig, {'visibility':'visible'}, tracename_list, {}, {}
 
 
 def modifyhoverlabel():
@@ -922,7 +922,6 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
             break 
 
     handVariantMatrix = correctUseCaseDict['handVariantMatrix'].copy()
-
     for hand_class in correctUseCaseDict['handVariantMatrix'].keys(): 
         if hand_class not in yaxis_variables: 
             del handVariantMatrix[hand_class]
@@ -932,4 +931,8 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         hands = find_key_for(definitions.handMatrix, hand_class, 'code')
         genericVariantMatrix.update({hand_class : hands})
 
-    return {}, {'display':'none'}, [], genericVariantMatrix
+    answerVariantMatrix = {}
+    for hand_class, hand_class_dict in handVariantMatrix.items():
+        answerVariantMatrix.update({hand_class : hand_class_dict['hands'].split(definitions.delimiters['handListDelimiter'])})
+
+    return {}, {'display':'none'}, [], genericVariantMatrix, answerVariantMatrix
