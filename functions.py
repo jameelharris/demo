@@ -937,7 +937,7 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
 
     answerVariantMatrixCleaned = {}
     for hand_class, hand_list in answerVariantMatrix.items():
-        ls = [hand if ' ' not in hand else hand.replace(' ', '') for hand in hand_list] 
+        ls = [hand.replace(' ', '') for hand in hand_list] 
         answerVariantMatrixCleaned.update({hand_class : ls})
 
     return {}, {'display':'none'}, [], genericVariantMatrix, answerVariantMatrixCleaned
