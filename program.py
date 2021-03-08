@@ -193,7 +193,10 @@ def display_test_ui(blank_test, test_answers, test_scenario):
                 html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
                 html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
                 html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
-                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
+                html.Div([
+                    html.Button(id='exit', n_clicks=0, children= 'leave target practice', style={'display':'inline-block', 'width': '75%'}),
+                    html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'inline-block', 'width': '25%'}),
+                ])
             ], style={'display':'inline-block', 'position':'absolute', 'width':'250px', 'left':'360px', 'top':'100px', 'background':'black'}), 
 
             html.Div([
