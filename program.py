@@ -195,7 +195,7 @@ def display_test_ui(blank_test, test_answers, test_scenario):
                 html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
                 html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width': '25%', 'margin-left': '75%'})
             ])
-        ], {'display':'block', 'position':'absolute', 'width':'250px', 'right':'300px', 'background':'black'}
+        ], {'display':'block', 'position':'absolute', 'width':'250px', 'left':'650px', 'top':'200px', 'background':'black'}
 
 
     else:
