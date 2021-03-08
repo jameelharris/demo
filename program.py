@@ -176,14 +176,6 @@ app.layout = html.Div([
 
 
 @app.callback(
-    Output('test_form', 'style'),
-    Input('test_form', 'children'))
-def change_test_visibility(test_form): 
-    
-    return {'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}
-
-
-@app.callback(
     Output('test_ui', 'children'),
     Output('test_ui', 'style'),
     Input('blank_test', 'data'), 
