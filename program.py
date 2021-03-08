@@ -189,13 +189,13 @@ def display_test_ui(blank_test, test_answers, test_scenario):
         
         return [
             html.Div([
-                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '7%'}),
-                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '7%'}),
-                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '7%'}),
-                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '7%'}),
-                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width': '7%'})
+                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '25%'}),
+                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '25%'}),
+                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '25%'}),
+                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '25%'}),
+                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width': '25%'})
             ])
-        ], {'display':'block'}
+        ], {'display':'block', 'position':'absolute', 'width':'250px', 'right':'300px', 'background':'black'}
 
 
     else:
