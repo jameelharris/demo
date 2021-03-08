@@ -155,7 +155,7 @@ app.layout = html.Div([
     
     html.Div([
         html.Span(id='legend_container', style={'display':'none'}),
-        html.Span(id='test_form', style={'display':'none'}),
+        html.Span(id='test_ui', style={'display':'none'}),
         dcc.Graph(
             id='graph',
             config={'displayModeBar': False, 'showTips': False},
@@ -166,7 +166,8 @@ app.layout = html.Div([
         dcc.Store(id='trace_names'),
         dcc.Store(id='blank_test'),
         dcc.Store(id='test_answers'),
-        dcc.Store(id='test_scenario')
+        dcc.Store(id='test_scenario'),
+        dcc.Store(id='test_prompt')
 
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
@@ -183,27 +184,28 @@ def change_test_visibility(test_form):
 
 
 @app.callback(
-    Output('test_form', 'children'),
+    Output('test_ui', 'children'),
+    Output('test_ui', 'style'),
     Input('blank_test', 'data'), 
     Input('test_answers', 'data'), 
     Input('test_scenario', 'data'))
-def render_test_form(blank_test, test_answers, test_scenario):
-    if (blank_test and test_answers and test_scenario) is not None:
-        #print('from validate test scope - blank test = ', blank_test)
-        #print('from validate test scope - test answers = ', test_answers)
-        #print('from validate test scope - test scenario = ', test_scenario)
+def display_test_ui(blank_test, test_answers, test_scenario):
+    if (blank_test and test_answers and test_scenario) is not None and len(blank_test.keys()) != 0:
+        print('from validate test scope - blank test = ', blank_test)
+        print('from validate test scope - test answers = ', test_answers)
+        print('from validate test scope - test scenario = ', test_scenario)
         
-        radio_item_list = [] 
+        return [
+            html.Div([
+                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '7%'}),
+                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '7%'}),
+                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '7%'}),
+                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '7%'}),
+                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width': '7%'})
+            ])
+        ], {'display':'block'}
 
-        for hand_class, hand_class_list in blank_test.items(): 
-            radio_item_list.append( 
-                dcc.RadioItems(
-                    id= hand_class,
-                    options=[{'label': hand, 'value': hand} for hand in hand_class_list],
-                ),
-            )
 
-        return radio_item_list
     else:
         print('from validate test scope - prevent update')
         raise PreventUpdate
