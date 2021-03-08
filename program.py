@@ -166,7 +166,6 @@ app.layout = html.Div([
         dcc.Store(id='trace_names'),
         dcc.Store(id='blank_test'),
         dcc.Store(id='test_answers'),
-        dcc.Store(id='test_scope'), 
         dcc.Store(id='test_scenario')
 
         #html.Span('test', id='tooltip-target'),
@@ -176,16 +175,35 @@ app.layout = html.Div([
 
 
 @app.callback(
-    Output('test_scope', 'data'),
+    Output('test_form', 'style'),
+    Input('test_form', 'children'))
+def change_test_visibility(test_form): 
+    
+    return {'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}
+
+
+@app.callback(
+    Output('test_form', 'children'),
     Input('blank_test', 'data'), 
     Input('test_answers', 'data'), 
     Input('test_scenario', 'data'))
-def validate_test_scope(blank_test, test_answers, test_scenario):
+def render_test_form(blank_test, test_answers, test_scenario):
     if (blank_test and test_answers and test_scenario) is not None:
-        # may need selected column + selected x value as a concatenated string --- render heatmap should provide this to data store
-        print('from validate test scope - blank test = ', blank_test)
-        print('from validate test scope - test answers = ', test_answers)
-        print('from validate test scope - test scenario = ', test_scenario)
+        #print('from validate test scope - blank test = ', blank_test)
+        #print('from validate test scope - test answers = ', test_answers)
+        #print('from validate test scope - test scenario = ', test_scenario)
+        
+        radio_item_list = [] 
+
+        for hand_class, hand_class_list in blank_test.items(): 
+            radio_item_list.append( 
+                dcc.RadioItems(
+                    id= hand_class,
+                    options=[{'label': hand, 'value': hand} for hand in hand_class_list],
+                ),
+            )
+
+        return radio_item_list
     else:
         print('from validate test scope - prevent update')
         raise PreventUpdate
