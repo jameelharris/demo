@@ -181,12 +181,13 @@ app.layout = html.Div([
     Input('test_answers', 'data'), 
     Input('test_scenario', 'data'))
 def validate_test_scope(blank_test, test_answers, test_scenario):
-    if blank_test != '{}' and test_answers != '{}':
+    if (blank_test and test_answers and test_scenario) is not None:
         # may need selected column + selected x value as a concatenated string --- render heatmap should provide this to data store
         print('from validate test scope - blank test = ', blank_test)
         print('from validate test scope - test answers = ', test_answers)
         print('from validate test scope - test scenario = ', test_scenario)
     else:
+        print('from validate test scope - prevent update')
         raise PreventUpdate
 
 @app.callback(
