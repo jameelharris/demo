@@ -923,8 +923,13 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
 
     handVariantMatrix = correctUseCaseDict['handVariantMatrix'].copy()
 
-    for key in correctUseCaseDict['handVariantMatrix'].keys(): 
-        if key not in yaxis_variables: 
-            del handVariantMatrix[key]
-        
-    return {}, {'display':'none'}, [], handVariantMatrix
+    for hand_class in correctUseCaseDict['handVariantMatrix'].keys(): 
+        if hand_class not in yaxis_variables: 
+            del handVariantMatrix[hand_class]
+
+    genericVariantMatrix = {}
+    for hand_class in yaxis_variables: 
+        hands = find_key_for(definitions.handMatrix, hand_class, 'code')
+        genericVariantMatrix.update({hand_class : hands})
+
+    return {}, {'display':'none'}, [], genericVariantMatrix
