@@ -158,6 +158,7 @@ app.layout = html.Div([
         html.Span(id='test_info', style={'display':'none'}),
         html.Span(id='test_buttons', style={'display':'none'}),
         html.Span(id='test_results', style={'display':'none'}),
+        html.Span(id='exit_button', style={'display':'none'}),
 
         dcc.Graph(
             id='graph',
@@ -209,12 +210,12 @@ def display_test_buttons(submit_text):
 
         return [
             html.Div([
-                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
-                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
-                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
-                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
-                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%', 'margin-left':'75%'}),
-            ], style={'display':'inline-block', 'position':'absolute', 'width':'62.5px', 'left':'500px', 'top':'100px'}), 
+                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%'}),
+                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%'}),
+                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
+                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
+                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
+            ], style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'550px', 'top':'100px'}), 
 
 
         ], {'display':'block'}
@@ -235,7 +236,7 @@ def display_test_results(submit_text):
     
             html.Div([
 
-            ], style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'722px', 'left':'609px', 'top':'100px', 'background':'black'})
+            ], style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'609px', 'top':'100px', 'background':'black'})
 
         ], {'display':'block'}
 
@@ -244,6 +245,27 @@ def display_test_results(submit_text):
         print('from display test results - prevent update')
         raise PreventUpdate
 
+
+@app.callback(
+    Output('exit_button', 'children'),
+    Output('exit_button', 'style'),
+    Input('submit-button-state', 'children'))
+def display_exit_button(submit_text):
+    if submit_text == 'Set column':
+
+        return [
+            html.Div([
+                html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'}),
+ 
+            ], style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1330px', 'top':'100px'}), 
+
+
+        ], {'display':'block'}
+
+
+    else:
+        print('from display exit button - prevent update')
+        raise PreventUpdate
 
 
 @app.callback(
