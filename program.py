@@ -290,25 +290,7 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, select
     else:
         return 'Update Target', [], ''
 
-    
-@app.callback(
-    Output('dropdown_1', 'disabled'),
-    Input('exit', 'n_clicks'),
-    Input('submit-button-state', 'n_clicks'),
-    State('app_mode', 'value'),
-    State('submit-button-state', 'children'), 
-    State('dropdown_1', 'disabled'))
-def set_dropdown_enablement(exit_button_clicks, submit_button_clicks, app_mode, submit_text, dropdown_1_state):
- 
-    ctx = dash.callback_context
-    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    if app_mode == 'test' and component_id == 'submit-button-state' and submit_text == 'Set column':
-        print('set dropdown enabled called')
-        return True
-    
-    if app_mode == 'test' and component_id == 'exit':
-        return False
 
 @app.callback(
     Output('dropdown_1', 'options'),
@@ -367,8 +349,20 @@ def show_product_name(app_mode):
 @app.callback(
     Output('submit-button-state', 'disabled'),
     Input('yaxis_variables', 'value'),
-    Input('xaxis_variables', 'value'))
-def validate_update_chart_enabled_state(yaxis_variables, xaxis_variables):
+    Input('xaxis_variables', 'value'),
+    Input('exit', 'n_clicks'), 
+    Input('submit-button-state', 'n_clicks'),
+    State('submit-button-state', 'children'))
+def validate_update_chart_enabled_state(yaxis_variables, xaxis_variables, exit_button_clicks, submit_button_clicks, submit_text):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if component_id == 'submit-button-state' and submit_text == 'Set column':
+        return True
+
+    if component_id == 'exit':
+        return False
+
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         return True 
     else:
