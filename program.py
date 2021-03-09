@@ -16,7 +16,6 @@ from dash.exceptions import PreventUpdate
 import base64
 
 app = dash.Dash(__name__)
-app.config.suppress_callback_exceptions = True
 app.layout = html.Div([
 
     html.Div([        
@@ -117,7 +116,6 @@ app.layout = html.Div([
                     id='dropdown_1', 
                     clearable=False,  
                     style={'width':'99%', 'visibility':'hidden'},
-                    disabled=True
                 ),
             ], style={'display':'inline-block', 'width':'49%'}),
 
@@ -127,7 +125,6 @@ app.layout = html.Div([
                     id='dropdown_2', 
                     clearable=False,
                     style = {'width':'99%', 'visibility':'hidden'},
-                    disabled=True,  
                 )
             ], style={'display':'inline-block', 'width':'50%'})
 
@@ -155,10 +152,25 @@ app.layout = html.Div([
     
     html.Div([
        
-        html.Span(id='test_info', style={'display':'none'}),
-        html.Span(id='test_buttons', style={'display':'none'}),
-        html.Span(id='test_results', style={'display':'none'}),
-        html.Span(id='exit_button', style={'display':'none'}),
+        html.Div([
+
+        ], id='test_info', style={'display':'none'}),
+
+        html.Div([
+            html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%'}),
+            html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%'}),
+            html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
+            html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
+            html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
+        ], id='test_buttons', style={'display':'none'}), 
+
+        html.Div([
+
+        ], id='test_results', style={'display':'none'}),
+
+        html.Div([
+            html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'}),
+        ], id='exit_button', style={'display':'none'}),
 
         dcc.Graph(
             id='graph',
@@ -183,7 +195,6 @@ app.layout = html.Div([
 
 
 @app.callback(
-    Output('test_results', 'children'),
     Output('test_results', 'style'),
     Input('submit-button-state', 'n_clicks'), 
     State('submit-button-state', 'children'))
@@ -191,59 +202,32 @@ def display_test_info(submit_clicks, submit_text):
     print('from display test info - submit text = ', submit_text)
     if submit_text == 'Set column':
         
-        return [
-            html.Div([
-
-            ], style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black'}), 
-
-        ], {'display':'block'}
-
-
+        return {'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black'}
     else:
         print('from display test info - prevent update')
         raise PreventUpdate
 
 @app.callback(
-    Output('test_buttons', 'children'),
     Output('test_buttons', 'style'),
     Input('submit-button-state', 'n_clicks'), 
     State('submit-button-state', 'children'))
 def display_test_buttons(submit_clicks, submit_text):
     if submit_text == 'Set column':
 
-        return [
-            html.Div([
-                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%'}),
-                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%'}),
-                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
-                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
-                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
-            ], style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'550px', 'top':'100px'}), 
-
-
-        ], {'display':'block'}
-
+        return {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'550px', 'top':'100px'}
 
     else:
         print('from display test buttons - prevent update')
         raise PreventUpdate
 
 @app.callback(
-    Output('test_info', 'children'),
     Output('test_info', 'style'),
     Input('submit-button-state', 'n_clicks'), 
     State('submit-button-state', 'children'))
 def display_test_results(submit_clicks, submit_text):
     if submit_text == 'Set column':
         
-        return [
-    
-            html.Div([
-
-            ], style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'609px', 'top':'100px', 'background':'black'})
-
-        ], {'display':'block'}
-
+        return {'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'609px', 'top':'100px', 'background':'black'}
 
     else:
         print('from display test results - prevent update')
@@ -251,22 +235,14 @@ def display_test_results(submit_clicks, submit_text):
 
 
 @app.callback(
-    Output('exit_button', 'children'),
     Output('exit_button', 'style'),
     Input('submit-button-state', 'n_clicks'), 
     State('submit-button-state', 'children'))
 def display_exit_button(submit_clicks, submit_text):
+    
     if submit_text == 'Set column':
 
-        return [
-            html.Div([
-                html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'}),
- 
-            ], style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1330px', 'top':'100px'}), 
-
-
-        ], {'display':'block'}
-
+        return {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1330px', 'top':'100px'} 
 
     else:
         print('from display exit button - prevent update')
@@ -317,17 +293,22 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, select
     
 @app.callback(
     Output('dropdown_1', 'disabled'),
-    Output('dropdown_2', 'disabled'),
-    Input('app_mode', 'value'))
-def set_dropdown_enablement(app_mode):
-    #print('app_mode = ', app_mode)
-    if app_mode == 'sniper':
-        return False, True
-    if app_mode == 'test':
-        return False, False
-    if app_mode == 'nuclear':
-        return True, True
+    Input('exit', 'n_clicks'),
+    Input('submit-button-state', 'n_clicks'),
+    State('app_mode', 'value'),
+    State('submit-button-state', 'children'), 
+    State('dropdown_1', 'disabled'))
+def set_dropdown_enablement(exit_button_clicks, submit_button_clicks, app_mode, submit_text, dropdown_1_state):
+ 
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
+    if app_mode == 'test' and component_id == 'submit-button-state' and submit_text == 'Set column':
+        print('set dropdown enabled called')
+        return True
+    
+    if app_mode == 'test' and component_id == 'exit':
+        return False
 
 @app.callback(
     Output('dropdown_1', 'options'),
@@ -596,7 +577,6 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     State('xaxis_variables', 'value'), prevent_initial_call=True)
 def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables): 
     selected_hand = ''
-    #suppress_callback_exceptions=True
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
 
