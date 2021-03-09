@@ -235,7 +235,7 @@ def display_test_results(submit_text):
     
             html.Div([
 
-            ], style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'700px', 'left':'609px', 'top':'100px', 'background':'black'})
+            ], style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'722px', 'left':'609px', 'top':'100px', 'background':'black'})
 
         ], {'display':'block'}
 
