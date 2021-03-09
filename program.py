@@ -185,8 +185,10 @@ app.layout = html.Div([
 @app.callback(
     Output('test_results', 'children'),
     Output('test_results', 'style'),
-    Input('submit-button-state', 'children'))
-def display_test_info(submit_text):
+    Input('submit-button-state', 'n_clicks'), 
+    State('submit-button-state', 'children'))
+def display_test_info(submit_clicks, submit_text):
+    print('from display test info - submit text = ', submit_text)
     if submit_text == 'Set column':
         
         return [
@@ -204,8 +206,9 @@ def display_test_info(submit_text):
 @app.callback(
     Output('test_buttons', 'children'),
     Output('test_buttons', 'style'),
-    Input('submit-button-state', 'children'))
-def display_test_buttons(submit_text):
+    Input('submit-button-state', 'n_clicks'), 
+    State('submit-button-state', 'children'))
+def display_test_buttons(submit_clicks, submit_text):
     if submit_text == 'Set column':
 
         return [
@@ -228,8 +231,9 @@ def display_test_buttons(submit_text):
 @app.callback(
     Output('test_info', 'children'),
     Output('test_info', 'style'),
-    Input('submit-button-state', 'children'))
-def display_test_results(submit_text):
+    Input('submit-button-state', 'n_clicks'), 
+    State('submit-button-state', 'children'))
+def display_test_results(submit_clicks, submit_text):
     if submit_text == 'Set column':
         
         return [
@@ -249,8 +253,9 @@ def display_test_results(submit_text):
 @app.callback(
     Output('exit_button', 'children'),
     Output('exit_button', 'style'),
-    Input('submit-button-state', 'children'))
-def display_exit_button(submit_text):
+    Input('submit-button-state', 'n_clicks'), 
+    State('submit-button-state', 'children'))
+def display_exit_button(submit_clicks, submit_text):
     if submit_text == 'Set column':
 
         return [
