@@ -154,14 +154,19 @@ app.layout = html.Div([
     ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'65px'}), 
     
     html.Div([
-        html.Span(id='legend_container', style={'display':'none'}),
-        html.Span(id='test_ui', style={'display':'none'}),
+       
+        html.Span(id='test_info', style={'display':'none'}),
+        html.Span(id='test_buttons', style={'display':'none'}),
+        html.Span(id='test_results', style={'display':'none'}),
+
         dcc.Graph(
             id='graph',
             config={'displayModeBar': False, 'showTips': False},
             style={'display':'none'}
             #figure=fig
-        ), 
+        ),
+
+        html.Span(id='legend_container', style={'display':'none'}),
 
         dcc.Store(id='trace_names'),
         dcc.Store(id='blank_test'),
@@ -175,37 +180,86 @@ app.layout = html.Div([
 ])
 
 
+
 @app.callback(
-    Output('test_ui', 'children'),
-    Output('test_ui', 'style'),
+    Output('test_results', 'children'),
+    Output('test_results', 'style'),
     Input('blank_test', 'data'), 
     Input('test_answers', 'data'), 
     Input('test_scenario', 'data'))
-def display_test_ui(blank_test, test_answers, test_scenario):
+def display_test_info(blank_test, test_answers, test_scenario):
     if (blank_test and test_answers and test_scenario) is not None and len(blank_test.keys()) != 0:
-        print('from validate test scope - blank test = ', blank_test)
-        print('from validate test scope - test answers = ', test_answers)
-        print('from validate test scope - test scenario = ', test_scenario)
+        print('from display test info - blank test = ', blank_test)
+        print('from display test info - test answers = ', test_answers)
+        print('from display test info - test scenario = ', test_scenario)
         
         return [
             html.Div([
-                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
-                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
-                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
-                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '25%', 'margin-left': '75%'}),
-                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'25%', 'margin-left':'75%'}),
-            ], style={'display':'inline-block', 'position':'absolute', 'width':'250px', 'left':'360px', 'top':'100px', 'background':'black'}), 
 
-            html.Div([
-
-            ], id='test_results', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'700px', 'left':'650px', 'top':'100px', 'background':'black'})
+            ], style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black'}), 
 
         ], {'display':'block'}
 
 
     else:
-        print('from validate test scope - prevent update')
+        print('from display test info - prevent update')
         raise PreventUpdate
+
+@app.callback(
+    Output('test_buttons', 'children'),
+    Output('test_buttons', 'style'),
+    Input('blank_test', 'data'), 
+    Input('test_answers', 'data'), 
+    Input('test_scenario', 'data'))
+def display_test_buttons(blank_test, test_answers, test_scenario):
+    if (blank_test and test_answers and test_scenario) is not None and len(blank_test.keys()) != 0:
+        print('from display test buttons - blank test = ', blank_test)
+        print('from display test buttons - test answers = ', test_answers)
+        print('from display test buttons - test scenario = ', test_scenario)
+        
+        return [
+            html.Div([
+                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
+                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
+                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
+                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
+                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%', 'margin-left':'75%'}),
+            ], style={'display':'inline-block', 'position':'absolute', 'width':'62.5px', 'left':'500px', 'top':'100px'}), 
+
+
+        ], {'display':'block'}
+
+
+    else:
+        print('from display test buttons - prevent update')
+        raise PreventUpdate
+
+@app.callback(
+    Output('test_info', 'children'),
+    Output('test_info', 'style'),
+    Input('blank_test', 'data'), 
+    Input('test_answers', 'data'), 
+    Input('test_scenario', 'data'))
+def display_test_results(blank_test, test_answers, test_scenario):
+    if (blank_test and test_answers and test_scenario) is not None and len(blank_test.keys()) != 0:
+        print('from display test results - blank test = ', blank_test)
+        print('from display test results - test answers = ', test_answers)
+        print('from display test results - test scenario = ', test_scenario)
+        
+        return [
+    
+            html.Div([
+
+            ], style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'700px', 'left':'640px', 'top':'100px', 'background':'black'})
+
+        ], {'display':'block'}
+
+
+    else:
+        print('from display test results - prevent update')
+        raise PreventUpdate
+
+
 
 @app.callback(
     Output('dropdown_1', 'style'),
