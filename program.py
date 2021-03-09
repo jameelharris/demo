@@ -294,7 +294,29 @@ def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, sele
     else:
         return 'Update Target', [], ''
 
+    
+@app.callback(
+    Output('dropdown_1', 'disabled'),
+    Output('usecases', 'disabled'),
+    Input('exit', 'n_clicks'),
+    Input('submit-button-state', 'n_clicks'),
+    State('app_mode', 'value'),
+    State('submit-button-state', 'children'), 
+    State('dropdown_1', 'disabled'),
+    State('usecases', 'disabled'))
+def set_dropdown_enablement(exit_button_clicks, submit_button_clicks, app_mode, submit_text, dropdown_1_state, usecases_state):
+ 
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
+    if app_mode == 'test' and component_id == 'submit-button-state' and submit_text == 'Set column':
+        print('set dropdown enabled called')
+        return True, True
+    
+    if app_mode == 'test' and component_id == 'exit':
+        return False, False
+
+    return dropdown_1_state, usecases_state
 
 @app.callback(
     Output('dropdown_1', 'options'),
