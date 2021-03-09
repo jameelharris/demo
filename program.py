@@ -260,9 +260,9 @@ def change_dropdown_visbility(app_mode, submit_text):
         return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'sniper':
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text in ('Set x and y', 'Shoot...'):
+    if app_mode == 'test' and submit_text in ('Set x and y',):
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text == 'Set column':
+    if app_mode == 'test' and submit_text in ('Set column', 'Shoot...'):
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 @app.callback(
@@ -288,7 +288,7 @@ def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, sele
             return 'Set column', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
         else:
             if component_id == 'submit-button-state' and button_text == 'Set column':
-                return 'Shoot...', [], ''
+                return 'Shoot...', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
             else:
                 return 'Set x and y', [], ''
     else:
@@ -594,8 +594,9 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     State('dropdown_1', 'value'),
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
-    State('xaxis_variables', 'value'), prevent_initial_call=True)
-def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables): 
+    State('xaxis_variables', 'value'), 
+    State ('trace_names', 'data'), prevent_initial_call=True)
+def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables, trace_data_state): 
     selected_hand = ''
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         raise PreventUpdate
@@ -675,7 +676,7 @@ def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdow
 
     
     if app_mode in ('test',) and button_text == 'Set column':
-        return functions.get_test_answers(useCaseInventory, selected_column, xaxis_variables, yaxis_variables, usecaseconfig)
+        return functions.get_test_answers(useCaseInventory, selected_column, xaxis_variables, yaxis_variables, usecaseconfig, trace_data_state)
 
     '''
     orderedUseCaseInventory = functions.reorderUseCases(useCaseInventory)

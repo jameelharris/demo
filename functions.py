@@ -889,7 +889,7 @@ def mutecolumns(useCaseInventory, vertical_filter, usecaseconfig):
                         useCaseNestedDicts['overallFrequency'] = '0.00'
     return useCaseInventory
 
-def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_variables, usecaseconfig):
+def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_variables, usecaseconfig, trace_data_state):
     print('from get test answers - selected column = ', selected_column)
     print('from get test answers - selected x value = ', selected_x_value)
     print('from get test answers - y axis variables = ', yaxis_variables)
@@ -957,4 +957,4 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         ls = [hand.replace(' ', '') for hand in hand_list] 
         answerVariantMatrixCleaned.update({hand_class : ls})
 
-    return {}, {'display':'none'}, [], genericVariantMatrix, answerVariantMatrixCleaned, var_string
+    return {}, {'display':'none'}, trace_data_state, genericVariantMatrix, answerVariantMatrixCleaned, var_string
