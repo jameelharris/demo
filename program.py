@@ -184,14 +184,9 @@ app.layout = html.Div([
 @app.callback(
     Output('test_results', 'children'),
     Output('test_results', 'style'),
-    Input('blank_test', 'data'), 
-    Input('test_answers', 'data'), 
-    Input('test_scenario', 'data'))
-def display_test_info(blank_test, test_answers, test_scenario):
-    if (blank_test and test_answers and test_scenario) is not None and len(blank_test.keys()) != 0:
-        print('from display test info - blank test = ', blank_test)
-        print('from display test info - test answers = ', test_answers)
-        print('from display test info - test scenario = ', test_scenario)
+    Input('submit-button-state', 'children'))
+def display_test_info(submit_text):
+    if submit_text == 'Set column':
         
         return [
             html.Div([
@@ -208,15 +203,10 @@ def display_test_info(blank_test, test_answers, test_scenario):
 @app.callback(
     Output('test_buttons', 'children'),
     Output('test_buttons', 'style'),
-    Input('blank_test', 'data'), 
-    Input('test_answers', 'data'), 
-    Input('test_scenario', 'data'))
-def display_test_buttons(blank_test, test_answers, test_scenario):
-    if (blank_test and test_answers and test_scenario) is not None and len(blank_test.keys()) != 0:
-        print('from display test buttons - blank test = ', blank_test)
-        print('from display test buttons - test answers = ', test_answers)
-        print('from display test buttons - test scenario = ', test_scenario)
-        
+    Input('submit-button-state', 'children'))
+def display_test_buttons(submit_text):
+    if submit_text == 'Set column':
+
         return [
             html.Div([
                 html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%', 'margin-left': '75%'}),
@@ -237,14 +227,9 @@ def display_test_buttons(blank_test, test_answers, test_scenario):
 @app.callback(
     Output('test_info', 'children'),
     Output('test_info', 'style'),
-    Input('blank_test', 'data'), 
-    Input('test_answers', 'data'), 
-    Input('test_scenario', 'data'))
-def display_test_results(blank_test, test_answers, test_scenario):
-    if (blank_test and test_answers and test_scenario) is not None and len(blank_test.keys()) != 0:
-        print('from display test results - blank test = ', blank_test)
-        print('from display test results - test answers = ', test_answers)
-        print('from display test results - test scenario = ', test_scenario)
+    Input('submit-button-state', 'children'))
+def display_test_results(submit_text):
+    if submit_text == 'Set column':
         
         return [
     
