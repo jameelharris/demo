@@ -260,7 +260,7 @@ def change_dropdown_visbility(app_mode, submit_text):
         return {'visibility':'hidden', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'sniper':
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text == 'Set x and y':
+    if app_mode == 'test' and submit_text in ('Set x and y', 'Shoot...'):
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'test' and submit_text == 'Set column':
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
@@ -270,13 +270,14 @@ def change_dropdown_visbility(app_mode, submit_text):
     Output('dropdown_2', 'options'),
     Output('dropdown_2', 'value'),
     Input('app_mode', 'value'),
+    Input('exit', 'n_clicks'),
     Input('submit-button-state', 'n_clicks'),
     Input('usecases', 'value'),
     Input('dropdown_1', 'value'),
     Input('trace_names', 'data'),
     Input('yaxis_variables', 'value'),
     State('submit-button-state', 'children'))
-def change_button_title(app_mode, submit_button_clicks, selected_usecase, selected_x_value, data, yaxis_variables, button_text):
+def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, selected_usecase, selected_x_value, data, yaxis_variables, button_text):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
@@ -286,7 +287,10 @@ def change_button_title(app_mode, submit_button_clicks, selected_usecase, select
             #print('passed change button title test')
             return 'Set column', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
         else:
-            return 'Set x and y', [], ''
+            if component_id == 'submit-button-state' and button_text == 'Set column':
+                return 'Shoot...', [], ''
+            else:
+                return 'Set x and y', [], ''
     else:
         return 'Update Target', [], ''
 
