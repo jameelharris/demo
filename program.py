@@ -250,7 +250,7 @@ def display_test_results(blank_test, test_answers, test_scenario):
     
             html.Div([
 
-            ], style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'700px', 'left':'640px', 'top':'100px', 'background':'black'})
+            ], style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'700px', 'left':'609px', 'top':'100px', 'background':'black'})
 
         ], {'display':'block'}
 
