@@ -548,7 +548,6 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
             subplottitle = '<b>' + key + '</b>'
         else:
             subplottitle = key
-        subplottitle = subplottitle.replace('BB', 'bb', 1)
         subplottitlelist.append(subplottitle)
 
     #print('from visualizedatatemp()...xtickDict keys: ', xtickDict.keys())
@@ -593,7 +592,7 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
         dfsecondary = dfsecondary.pivot('variant', mostOuterVariable, 'property')
         #print('from visualizedatatemp()...', dfsecondary)
     
-        tracename = '<b>' + str(list(xtickDict.keys())[i]).replace('BB', 'bb', 1) + '</b>'
+        tracename = '<b>' + str(list(xtickDict.keys())[i]) + '</b>'
         fig.add_trace(go.Heatmap(df_to_plotly(df, dfsecondary, list(xtickDict.values())[i]), zmin=0, zmax=1, colorscale=subplotcolor, name=tracename, opacity=opacity), row=1, col = i + 1)        
         
         if opacity == 1:
@@ -924,8 +923,6 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
     red_flag = False
     for useCase_dict in useCaseInventory.values(): 
         for var_key, var_value in var_dict.items():
-            if 'heroStackDepth' in var_key: 
-                var_value = var_value.replace('bb', 'BB')
             print('useCase_dict[var_key] =', useCase_dict[var_key], 'and var_value = ', var_value)
             if useCase_dict[var_key] != var_value:
                 red_flag = True 

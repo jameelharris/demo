@@ -441,12 +441,12 @@ def set_xaxis_checklist_options(selected_usecase, app_mode):
     #print('last_element = ', last_element)
     if app_mode == 'nuclear' or app_mode == 'sniper': 
         if 'StackDepth' in last_element:  
-            return [{'label': element.replace('BB', 'bb'), 'value': element} for element in variable_list]
+            return [{'label': element, 'value': element} for element in variable_list]
         else:
             return [{'label': element, 'value': element} for element in variable_list]
     if app_mode == 'test':
         if 'StackDepth' in last_element:  
-            return [{'label': element.replace('BB', 'bb'), 'value': element, 'disabled': True} for element in variable_list]
+            return [{'label': element, 'value': element, 'disabled': True} for element in variable_list]
         else:
             return [{'label': element, 'value': element, 'disabled': True} for element in variable_list]
 
