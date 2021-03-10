@@ -415,6 +415,9 @@ def validate_update_chart_enabled_state(yaxis_variables, xaxis_variables, exit_b
     if component_id == 'exit':
         return False
 
+    if component_id == 'yaxis_variables' and submit_text == 'Set column':
+        return True
+
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
         return True 
     else:
@@ -559,8 +562,16 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
 
 @app.callback(
     Output('yaxis_variables', 'options'),
-    Input('app_mode', 'value'))
-def set_yaxis_checklist_enabled_state(app_mode):
+    Input('app_mode', 'value'), 
+    Input('submit-button-state', 'n_clicks'),
+    State('submit-button-state', 'children'))
+def set_yaxis_checklist_enabled_state(app_mode, submit_button_clicks, submit_text):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if component_id == 'submit-button-state' and submit_text == 'Set column': 
+        return [{'label':handsubclass, 'value':handsubclass, 'disabled': True} for handsubclass in definitions.handVariants.keys()]
+
     if app_mode in ('nuclear', 'test'): 
         return [{'label':handsubclass, 'value':handsubclass, 'disabled': False} for handsubclass in definitions.handVariants.keys()]
     else:
