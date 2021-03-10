@@ -303,10 +303,12 @@ def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, sele
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 
-    print('change button title - component id = ', component_id)
-    print('change button title - change id = ', changed_id)
-    print('change button title - button text = ', button_text)
-    print('change button title - yaxisvariables', yaxis_variables_options)
+    
+    #print('change button title - component id = ', component_id)
+    #print('change button title - change id = ', changed_id)
+    #print('change button title - button text = ', button_text)
+    #print('change button title - yaxisvariables', yaxis_variables_options)
+    
 
     if app_mode == 'test':
         if button_text == 'Set x and y' and component_id not in ('dropdown_1', 'yaxis_variables', 'usecases') and len(data) > 0:
@@ -416,9 +418,11 @@ def validate_update_chart_enabled_state(yaxis_variables, yaxis_variables_options
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
-    print('update chart enabled state - component id = ', component_id)
-    print('update chart enabled state - change id = ', changed_id)
-    print('update chart enabled state - submit text = ', submit_text)
+    
+    #print('update chart enabled state - component id = ', component_id)
+    #print('update chart enabled state - change id = ', changed_id)
+    #print('update chart enabled state - submit text = ', submit_text)
+    
 
     if component_id == 'submit-button-state' and submit_text == 'Set column':
         return True
@@ -579,9 +583,9 @@ def set_yaxis_checklist_enabled_state(app_mode, submit_button_clicks, exit_butto
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0] 
     changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
-    print('set yaxis enabled state - component id = ', component_id)
-    print('set yaxis enabled state - submit text = ', submit_text)
-    print('set yaxis enabled state - change id = ', changed_id)
+    #print('set yaxis enabled state - component id = ', component_id)
+    #print('set yaxis enabled state - submit text = ', submit_text)
+    #print('set yaxis enabled state - change id = ', changed_id)
 
     if component_id == 'submit-button-state' and submit_text == 'Set column': 
         for var in yaxis_variables: 
@@ -619,10 +623,10 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     if app_mode == 'sniper':
         selected_hand = dropdown_1_value
     ctx = dash.callback_context
-    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     difference = len(yaxis_variables) - len(list(variable_dict))
 
-    #print('button_id = ', button_id)
+    #print('component_id = ', component_id)
 
     if app_mode == 'test':
         pass
@@ -633,19 +637,19 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
         yaxis_variables.append(definitions.handMatrix[selected_hand]['code'])
 
     if app_mode != 'sniper': 
-        if button_id == 'select_yaxis':
+        if component_id == 'select_yaxis':
             if difference == 0: 
                 yaxis_variables.clear()
             else:
                 yaxis_variables = list(definitions.handVariants.keys())
 
-        if button_id == 'suited':
+        if component_id == 'suited':
             yaxis_variables.clear()
             for key in definitions.handVariants.keys():
                 if key[-1] == 's':
                     yaxis_variables.append(key)
 
-        if button_id == 'offsuit':
+        if component_id == 'offsuit':
             yaxis_variables.clear()
             for key in definitions.handVariants.keys():
                 if key[-1] == 'o':
