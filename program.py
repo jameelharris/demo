@@ -296,13 +296,17 @@ def change_dropdown_visbility(app_mode, submit_text):
     Input('yaxis_variables', 'value'),
     State('submit-button-state', 'children'), 
     State('dropdown_2', 'options'),
-    State('dropdown_2', 'value'))
-def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, selected_usecase, selected_x_value, data, yaxis_variables, button_text, dropdown_2_options, dropdown_2_value):
+    State('dropdown_2', 'value'),
+    State('yaxis_variables', 'options'))
+def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, selected_usecase, selected_x_value, data, yaxis_variables, button_text, dropdown_2_options, dropdown_2_value, yaxis_variables_state):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 
-    print('change id = ', changed_id)
+    print('change button title - component id = ', component_id)
+    print('change button title - change id = ', changed_id)
+    print('change button title - button text = ', button_text)
+    print('change button title - yaxisvariables', yaxis_variables_state)
 
     if app_mode == 'test':
         if button_text == 'Set x and y' and component_id not in ('dropdown_1', 'yaxis_variables', 'usecases') and len(data) > 0:
@@ -410,6 +414,10 @@ def show_product_name(app_mode):
 def validate_update_chart_enabled_state(yaxis_variables, xaxis_variables, exit_button_clicks, submit_button_clicks, submit_text):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    print('update chart enabled state - component id = ', component_id)
+    print('update chart enabled state - change id = ', changed_id)
+    print('update chart enabled state - submit text = ', submit_text)
 
     if component_id == 'submit-button-state' and submit_text == 'Set column':
         return True
@@ -562,16 +570,31 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
 @app.callback(
     Output('yaxis_variables', 'options'),
     Input('app_mode', 'value'), 
+    Input('submit-button-state', 'n_clicks'),
+    State('submit-button-state', 'children'),
     State('yaxis_variables', 'options'))
-def set_yaxis_checklist_enabled_state(app_mode, yaxis_variables):
+def set_yaxis_checklist_enabled_state(app_mode, submit_button_clicks, submit_text, yaxis_variables):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0] 
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    print('set yaxis enabled state - component id = ', component_id)
+    print('set yaxis enabled state - submit text = ', submit_text)
+    print('set yaxis enabled state - change id = ', changed_id)
+
+    if component_id == 'submit-button-state' and submit_text == 'Set column': 
+        for var in yaxis_variables: 
+            var['disabled'] = True
+        return yaxis_variables
+
     if app_mode in ('nuclear', 'test'): 
         for var in yaxis_variables: 
-            var['disabled'] = False   
+            var['disabled'] = False  
+        return yaxis_variables 
     else:
         for var in yaxis_variables: 
             var['disabled'] = True
-
-    return yaxis_variables
+        return yaxis_variables
+    
 
 
 
