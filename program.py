@@ -624,19 +624,17 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
         selected_hand = dropdown_1_value
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
     difference = len(yaxis_variables) - len(list(variable_dict))
 
-    #print('component_id = ', component_id)
+    print('set yaxis checklist values - component_id = ', component_id)
+    print('set yaxis checklist values - changed_id = ', changed_id)
 
-    if app_mode == 'test':
-        pass
-
-
-    if app_mode == 'sniper':    
+    if app_mode in ('sniper',):    
         yaxis_variables.clear() 
         yaxis_variables.append(definitions.handMatrix[selected_hand]['code'])
 
-    if app_mode != 'sniper': 
+    if app_mode in ('nuclear', 'test'): 
         if component_id == 'select_yaxis':
             if difference == 0: 
                 yaxis_variables.clear()
