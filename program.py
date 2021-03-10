@@ -151,7 +151,7 @@ app.layout = html.Div([
     ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'65px'}), 
     
     html.Div([
-       
+        html.Span(id='legend_container', style={'display':'none'}),
         html.Div([
 
         ], id='test_info', style={'display':'none'}),
@@ -178,8 +178,6 @@ app.layout = html.Div([
             style={'display':'none'}
             #figure=fig
         ),
-
-        html.Span(id='legend_container', style={'display':'none'}),
 
         dcc.Store(id='trace_names'),
         dcc.Store(id='blank_test'),
