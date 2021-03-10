@@ -193,6 +193,26 @@ app.layout = html.Div([
 ])
 
 
+@app.callback(
+    Output('app_mode', 'options'),
+    Input('submit-button-state', 'n_clicks'),
+    Input('exit', 'n_clicks'),
+    State('submit-button-state', 'children'), 
+    State('app_mode', 'options'))
+def app_mode_radio_enablement(submit_button_clicks, exit_button_clicks, submit_text, app_mode_options):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if component_id == 'submit-button-state' and submit_text == 'Set column':
+        for option in app_mode_options:
+            option['disabled'] = True 
+    
+    if component_id == 'exit':
+        for option in app_mode_options:
+            option['disabled'] = False 
+    
+    return app_mode_options
+
 
 @app.callback(
     Output('test_results', 'style'),
