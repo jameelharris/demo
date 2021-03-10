@@ -276,8 +276,10 @@ def change_dropdown_visbility(app_mode, submit_text):
     Input('dropdown_1', 'value'),
     Input('trace_names', 'data'),
     Input('yaxis_variables', 'value'),
-    State('submit-button-state', 'children'))
-def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, selected_usecase, selected_x_value, data, yaxis_variables, button_text):
+    State('submit-button-state', 'children'), 
+    State('dropdown_2', 'options'),
+    State('dropdown_2', 'value'))
+def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, selected_usecase, selected_x_value, data, yaxis_variables, button_text, dropdown_2_options, dropdown_2_value):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
@@ -288,7 +290,12 @@ def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, sele
             return 'Set column', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
         else:
             if component_id == 'submit-button-state' and button_text == 'Set column':
-                return 'Shoot...', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
+                return 'Shoot...', dropdown_2_options, dropdown_2_value
+
+            elif component_id == 'exit':
+
+                return 'Set column', dropdown_2_options, dropdown_2_value
+
             else:
                 return 'Set x and y', [], ''
     else:
