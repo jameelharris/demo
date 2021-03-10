@@ -313,7 +313,6 @@ def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, sele
                 return 'Shoot...', dropdown_2_options, dropdown_2_value
 
             elif component_id == 'exit':
-
                 return 'Set column', dropdown_2_options, dropdown_2_value
 
             else:
@@ -429,8 +428,20 @@ def validate_update_chart_enabled_state(yaxis_variables, xaxis_variables, exit_b
     Output('select_yaxis', 'disabled'),
     Output('suited', 'disabled'), 
     Output('offsuit', 'disabled'),
-    Input('app_mode', 'value'))
-def set_button_enabled_state_sniper(app_mode): 
+    Input('app_mode', 'value'),
+    Input('exit', 'n_clicks'),
+    Input('submit-button-state', 'n_clicks'),
+    State('submit-button-state', 'children'))
+def set_button_enabled_state(app_mode, exit_button_clicks, submit_button_clicks, submit_text):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0] 
+
+    if component_id == 'submit-button-state' and submit_text == 'Set column':
+        return True, True, True, True
+
+    if component_id == 'exit':
+        return True, False, False, False
+    
     if app_mode == 'sniper':
         return False, True, True, True
 
