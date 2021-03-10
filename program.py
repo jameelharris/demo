@@ -245,7 +245,7 @@ def display_test_buttons(submit_clicks, submit_text):
 def display_test_results(submit_clicks, submit_text):
     if submit_text == 'Set column':
         
-        return {'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'609px', 'top':'100px', 'background':'black'}
+        return {'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black'}
 
     else:
         print('from display test results - prevent update')
@@ -260,7 +260,7 @@ def display_exit_button(submit_clicks, submit_text):
     
     if submit_text == 'Set column':
 
-        return {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1330px', 'top':'100px'} 
+        return {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'100px'} 
 
     else:
         print('from display exit button - prevent update')
