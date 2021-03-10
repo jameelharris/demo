@@ -300,7 +300,9 @@ def change_dropdown_visbility(app_mode, submit_text):
 def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, selected_usecase, selected_x_value, data, yaxis_variables, button_text, dropdown_2_options, dropdown_2_value):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 
+    print('change id = ', changed_id)
 
     if app_mode == 'test':
         if button_text == 'Set x and y' and component_id not in ('dropdown_1', 'yaxis_variables', 'usecases') and len(data) > 0:
@@ -559,12 +561,17 @@ def set_xaxis_checklist_values(variable_dict, select_button_clicks, usecase, app
 
 @app.callback(
     Output('yaxis_variables', 'options'),
-    Input('app_mode', 'value'))
-def set_yaxis_checklist_enabled_state(app_mode):
+    Input('app_mode', 'value'), 
+    State('yaxis_variables', 'options'))
+def set_yaxis_checklist_enabled_state(app_mode, yaxis_variables):
     if app_mode in ('nuclear', 'test'): 
-        return [{'label':handsubclass, 'value':handsubclass, 'disabled': False} for handsubclass in definitions.handVariants.keys()]
+        for var in yaxis_variables: 
+            var['disabled'] = False   
     else:
-        return [{'label':handsubclass, 'value':handsubclass, 'disabled': True} for handsubclass in definitions.handVariants.keys()]
+        for var in yaxis_variables: 
+            var['disabled'] = True
+
+    return yaxis_variables
 
 
 
