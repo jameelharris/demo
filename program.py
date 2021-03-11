@@ -56,12 +56,8 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
-                html.Button(id='show_legend', n_clicks=0, children= 'legend', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
-
-            html.Div([
                 html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'12%', 'visibility':'hidden'}),
+            ], style={'display':'inline-block', 'width':'19%', 'visibility':'hidden'}),
 
             html.Div([
                 html.Div(id='product_name_container', style={'width':'99%'})
@@ -91,7 +87,7 @@ app.layout = html.Div([
         html.Div([
             
             html.Div([
-                html.P('y-axis: '),
+                html.P(html.A('y-axis:', href='https://drive.google.com/file/d/1VigyJX1yKc8fjdVSU4GCIBedD8kY7fPG/view?usp=sharing', target='_blank', style={})),
             ], style={'display':'inline-block'}),
 
             html.Div([
@@ -232,22 +228,7 @@ def display_test_interface(submit_button_clicks, submit_text):
 
     else:
         return {'display':'none'}
-        
-'''
-@app.callback(
-    Output('legend_container', 'children'),
-    Output('legend_container', 'style'),
-    Input('show_legend', 'n_clicks'), 
-    State('legend_container', 'style'))
-def show_legend(legend_button, legend_style):
-    image_filename = 'legend.PNG' # replace with your own image
-    encoded_image = base64.b64encode(open(image_filename, 'rb').read())
-    #print('legend style = ', legend_style)
-    if legend_style['display'] == 'none' and legend_button > 0:
-        return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}), {'display':'block'}
-    else:
-        return '', {'display':'none'}
-'''
+
 
 @app.callback(
     Output('dropdown_1', 'style'),
