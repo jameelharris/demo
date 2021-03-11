@@ -177,14 +177,14 @@ app.layout = html.Div([
         
         ], id='test_interface_container', style={'display':'none'}),
 
-        html.Div([
-            dcc.Graph(
-                id='graph',
-                config={'displayModeBar': False, 'showTips': False},
-                style={'display':'none'}
-                #figure=fig
-            ),
-        ], id='graph_container', style={'display':'none'}),
+        
+        dcc.Graph(
+            id='graph',
+            config={'displayModeBar': False, 'showTips': False},
+            style={'display':'none'}
+            #figure=fig
+        ),
+       
 
         dcc.Store(id='trace_names'),
         dcc.Store(id='blank_test'),
@@ -221,19 +221,19 @@ def app_mode_radio_enablement(submit_button_clicks, exit_button_clicks, submit_t
 
 @app.callback(
     Output('test_interface_container', 'style'),    
-    Input('legend_container', 'style'),
     Input('submit-button-state', 'n_clicks'),
     State('submit-button-state', 'children'))
-def display_test_interface(legend_style, submit_button_clicks, submit_text):
+def display_test_interface(submit_button_clicks, submit_text):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    if submit_text == 'Set column' and legend_style == {'display':'none'}:
+    if submit_text == 'Set column':
         return {'display':'block'}
 
     else:
         return {'display':'none'}
-
+        
+'''
 @app.callback(
     Output('legend_container', 'children'),
     Output('legend_container', 'style'),
@@ -247,23 +247,7 @@ def show_legend(legend_button, legend_style):
         return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}), {'display':'block'}
     else:
         return '', {'display':'none'}
-
-
-@app.callback(
-    Output('graph_container', 'style'),
-    Input('legend_container', 'style'),
-    State('submit-button-state', 'children'))
-def show_graph(legend_style, submit_text):
-    ctx = dash.callback_context
-    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('from show graph - legend_style =', legend_style)
-    print('from show graph - component id = ', component_id)
-    print('from show graph - submit text = ', submit_text)
-    
-    if submit_text in ('Update Target', 'Set x and y', 'Set column') and legend_style == {'display':'block'}:
-        return {'display':'none'}
-    else:
-        return {'display':'block'}
+'''
 
 @app.callback(
     Output('dropdown_1', 'style'),
