@@ -150,34 +150,41 @@ app.layout = html.Div([
 
     ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'65px'}), 
     
+
     html.Div([
         html.Span(id='legend_container', style={'display':'none'}),
         html.Div([
+            html.Div([
 
-        ], id='test_info', style={'display':'none'}),
+            ], id='test_info', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black'}),
+
+        
+            html.Div([
+                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%'}),
+                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%'}),
+                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
+                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
+                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
+            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'550px', 'top':'100px'}), 
+
+            html.Div([
+
+            ], id='test_results', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black'}),
+
+            html.Div([
+                html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
+            ], id='exit_button', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'100px'}),
+        
+        ], id='test_interface_container', style={'display':'none'}),
 
         html.Div([
-            html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%'}),
-            html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%'}),
-            html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
-            html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
-            html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
-        ], id='test_buttons', style={'display':'none'}), 
-
-        html.Div([
-
-        ], id='test_results', style={'display':'none'}),
-
-        html.Div([
-            html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'}),
-        ], id='exit_button', style={'display':'none'}),
-
-        dcc.Graph(
-            id='graph',
-            config={'displayModeBar': False, 'showTips': False},
-            style={'display':'none'}
-            #figure=fig
-        ),
+            dcc.Graph(
+                id='graph',
+                config={'displayModeBar': False, 'showTips': False},
+                style={'display':'none'}
+                #figure=fig
+            ),
+        ], id='graph_container', style={'display':'none'}),
 
         dcc.Store(id='trace_names'),
         dcc.Store(id='blank_test'),
@@ -213,25 +220,49 @@ def app_mode_radio_enablement(submit_button_clicks, exit_button_clicks, submit_t
 
 
 @app.callback(
-    Output('test_results', 'style'),
-    Output('test_buttons', 'style'),
-    Output('test_info', 'style'),
-    Output('exit_button', 'style'),
-    Input('submit-button-state', 'n_clicks'), 
+    Output('test_interface_container', 'style'),    
+    Input('legend_container', 'style'),
     State('submit-button-state', 'children'))
-def display_interface(submit_clicks, submit_text):
-    print('from display test info - submit text = ', submit_text)
-    if submit_text == 'Set column':
-        
-        return [{'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black'},
-        {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'550px', 'top':'100px'},
-        {'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black'},
-        {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'100px'}]
+def display_test_interface(legend_style, submit_text):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if submit_text == 'Set column' and legend_style == {'display':'none'}:
+        return {'display':'block'}
 
     else:
-        print('from display interface - prevent update')
-        raise PreventUpdate
+        return {'display':'none'}
 
+@app.callback(
+    Output('legend_container', 'children'),
+    Output('legend_container', 'style'),
+    Input('show_legend', 'n_clicks'), 
+    State('legend_container', 'style'))
+def show_legend(legend_button, legend_style):
+    image_filename = 'legend.PNG' # replace with your own image
+    encoded_image = base64.b64encode(open(image_filename, 'rb').read())
+    #print('legend style = ', legend_style)
+    if legend_style['display'] == 'none' and legend_button > 0:
+        return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}), {'display':'block'}
+    else:
+        return '', {'display':'none'}
+
+
+@app.callback(
+    Output('graph_container', 'style'),
+    Input('legend_container', 'style'),
+    State('submit-button-state', 'children'))
+def show_graph(legend_style, submit_text):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    print('from show graph - legend_style =', legend_style)
+    print('from show graph - component id = ', component_id)
+    print('from show graph - submit text = ', submit_text)
+    
+    if submit_text in ('Update Target', 'Set x and y', 'Set column') and legend_style == {'display':'block'}:
+        return {'display':'none'}
+    else:
+        return {'display':'block'}
 
 @app.callback(
     Output('dropdown_1', 'style'),
@@ -346,20 +377,6 @@ def set_xaxis_dropdown(app_mode, selected_usecase, selected_dropdown_value):
         return [{'label': hand, 'value': hand} for hand in definitions.handMatrix.keys()], dropdown1_value
 
     
-
-@app.callback(
-    Output('legend_container', 'children'),
-    Output('legend_container', 'style'),
-    Input('show_legend', 'n_clicks'), 
-    State('legend_container', 'style'))
-def show_legend(legend_button, legend_style):
-    image_filename = 'legend.PNG' # replace with your own image
-    encoded_image = base64.b64encode(open(image_filename, 'rb').read())
-    #print('legend style = ', legend_style)
-    if legend_style['display'] == 'none' and legend_button > 0:
-        return html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height=650, style={'display':'block', 'margin-left':'auto', 'margin-right':'auto', 'width':'75%'}), {'display':'block'}
-    else:
-        return '', {'display':'none'}
                     
 @app.callback(
     Output('product_name_container', 'children'),
@@ -593,8 +610,8 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
     difference = len(yaxis_variables) - len(list(variable_dict))
 
-    print('set yaxis checklist values - component_id = ', component_id)
-    print('set yaxis checklist values - changed_id = ', changed_id)
+    #print('set yaxis checklist values - component_id = ', component_id)
+    #print('set yaxis checklist values - changed_id = ', changed_id)
 
     if app_mode in ('sniper',):    
         yaxis_variables.clear() 
