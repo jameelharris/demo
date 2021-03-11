@@ -280,7 +280,7 @@ def change_dropdown_visbility(app_mode, submit_text):
         return {'visibility':'visible','width': '99%'}, {'visibility':'hidden', 'width': '99%'}
     if app_mode == 'test' and submit_text in ('Set x and y',):
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'hidden', 'width': '99%'}
-    if app_mode == 'test' and submit_text in ('Set column', 'Shoot...'):
+    if app_mode == 'test' and submit_text in ('Set column'):
         return {'visibility':'visible', 'width': '99%'}, {'visibility':'visible', 'width': '99%'}
 
 @app.callback(
@@ -316,7 +316,7 @@ def change_button_title(app_mode, exit_button_clicks, submit_button_clicks, sele
             return 'Set column', [{'label': trace_var, 'value': trace_var} for trace_var in data], data[0]
         else:
             if component_id == 'submit-button-state' and button_text == 'Set column':
-                return 'Shoot...', dropdown_2_options, dropdown_2_value
+                return 'Set column', dropdown_2_options, dropdown_2_value
 
             elif component_id == 'exit':
                 return 'Set column', dropdown_2_options, dropdown_2_value
