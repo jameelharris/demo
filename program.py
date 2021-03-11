@@ -222,8 +222,9 @@ def app_mode_radio_enablement(submit_button_clicks, exit_button_clicks, submit_t
 @app.callback(
     Output('test_interface_container', 'style'),    
     Input('legend_container', 'style'),
+    Input('submit-button-state', 'n_clicks'),
     State('submit-button-state', 'children'))
-def display_test_interface(legend_style, submit_text):
+def display_test_interface(legend_style, submit_button_clicks, submit_text):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
