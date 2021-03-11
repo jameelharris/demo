@@ -214,56 +214,22 @@ def app_mode_radio_enablement(submit_button_clicks, exit_button_clicks, submit_t
 
 @app.callback(
     Output('test_results', 'style'),
-    Input('submit-button-state', 'n_clicks'), 
-    State('submit-button-state', 'children'))
-def display_test_info(submit_clicks, submit_text):
-    print('from display test info - submit text = ', submit_text)
-    if submit_text == 'Set column':
-        
-        return {'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black'}
-    else:
-        print('from display test info - prevent update')
-        raise PreventUpdate
-
-@app.callback(
     Output('test_buttons', 'style'),
-    Input('submit-button-state', 'n_clicks'), 
-    State('submit-button-state', 'children'))
-def display_test_buttons(submit_clicks, submit_text):
-    if submit_text == 'Set column':
-
-        return {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'550px', 'top':'100px'}
-
-    else:
-        print('from display test buttons - prevent update')
-        raise PreventUpdate
-
-@app.callback(
     Output('test_info', 'style'),
-    Input('submit-button-state', 'n_clicks'), 
-    State('submit-button-state', 'children'))
-def display_test_results(submit_clicks, submit_text):
-    if submit_text == 'Set column':
-        
-        return {'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black'}
-
-    else:
-        print('from display test results - prevent update')
-        raise PreventUpdate
-
-
-@app.callback(
     Output('exit_button', 'style'),
     Input('submit-button-state', 'n_clicks'), 
     State('submit-button-state', 'children'))
-def display_exit_button(submit_clicks, submit_text):
-    
+def display_interface(submit_clicks, submit_text):
+    print('from display test info - submit text = ', submit_text)
     if submit_text == 'Set column':
-
-        return {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'100px'} 
+        
+        return [{'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black'},
+        {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'550px', 'top':'100px'},
+        {'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black'},
+        {'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'100px'}]
 
     else:
-        print('from display exit button - prevent update')
+        print('from display interface - prevent update')
         raise PreventUpdate
 
 
