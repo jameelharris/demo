@@ -152,7 +152,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_info', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black'}),
+            ], id='test_info', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'20px'}),
 
         
             html.Div([
@@ -184,15 +184,42 @@ app.layout = html.Div([
 
         dcc.Store(id='trace_names'),
         dcc.Store(id='blank_test'),
+        dcc.Store(id='temp_blank_test'),
         dcc.Store(id='test_answers'),
         dcc.Store(id='test_scenario'),
-        dcc.Store(id='test_prompt')
+        dcc.Store(id='temp_data')
 
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
     ], style={'position':'absolute', 'width':'1500px', 'height':'650px', 'top':'104px'})
 ])
 
+@app.callback(
+    Output('temp_data', 'data'),
+    Output('temp_blank_test', 'data'),
+    Output('test_info', 'children'),
+    Input('blank_test', 'data'),
+    Input('submit-button-state', 'n_clicks'), 
+    State('submit-button-state', 'children'))
+def display_test_info(data, submit_button_clicks, submit_text):
+    print('data = ', data)
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if component_id == 'submit-button-state' and submit_text == 'Set column':
+        if len(list(data.values())[0]) > 0: 
+            subclass = list(data.keys())[0]
+            print('subclass = ', subclass)
+            hand = list(data.values())[0][0]
+            print('hand = ', hand)
+            hand_list = list(data.values())[0]
+            hand_list.remove(hand)
+            data.update({subclass : hand_list})
+            print('data = ', data)
+        return html.P(subclass + ': ' + hand), data, hand
+    
+    else:
+        raise PreventUpdate
 
 @app.callback(
     Output('app_mode', 'options'),
