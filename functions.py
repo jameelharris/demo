@@ -950,4 +950,4 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         ls = [hand.replace(' ', '') for hand in hand_list] 
         answerVariantMatrixCleaned.update({hand_class : ls})
 
-    return {}, {'display':'none'}, trace_data_state, list(definitions.handVariants.keys()), answerVariantMatrixCleaned, var_string
+    return {}, {'display':'none'}, trace_data_state, yaxis_variables, answerVariantMatrixCleaned, var_string
