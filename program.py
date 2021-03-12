@@ -187,7 +187,8 @@ app.layout = html.Div([
         dcc.Store(id='unanswered_test_questions'),
         dcc.Store(id='test_answers'),
         dcc.Store(id='test_scenario'),
-        dcc.Store(id='answered_test_questions')
+        dcc.Store(id='answered_test_questions'),
+        dcc.Store(id='current_test_question')
 
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
@@ -195,6 +196,7 @@ app.layout = html.Div([
 ])
 
 @app.callback(
+    Output('current_test_question', 'data'),
     Output('answered_test_questions', 'data'),
     Output('unanswered_test_questions', 'data'),
     Output('test_question_container', 'children'),
@@ -222,7 +224,8 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
         answered_test_questions = []
         answered_test_questions.append(first_question)
         print('answered_test_questions = ', answered_test_questions)
-        return answered_test_questions, test_questions, first_question
+        first_question_ui = definitions.handVariants[first_question] + ' (' + first_question + ')'
+        return first_question, answered_test_questions, test_questions, first_question_ui
     
     if component_id in ('pure', 'high', 'medium', 'low', 'fold'):
         if len(unanswered_test_questions) > 0: 
@@ -232,7 +235,8 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
             print('updated test_questions = ', unanswered_test_questions)
             answered_test_questions.append(current_test_question)
             print('answered_test_questions = ', answered_test_questions)
-            return answered_test_questions, unanswered_test_questions, current_test_question
+            current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
+            return current_test_question, answered_test_questions, unanswered_test_questions, current_test_question_ui
 
     raise PreventUpdate
 
