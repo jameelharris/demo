@@ -202,11 +202,12 @@ app.layout = html.Div([
     Input('submit-button-state', 'n_clicks'), 
     State('submit-button-state', 'children'), 
     State('unanswered_test_questions', 'data'))
-def display_test_info(test_questions, submit_button_clicks, submit_text, unanswered_test_questions):
+def display_test_question(test_questions, submit_button_clicks, submit_text, unanswered_test_questions):
     print('test_questions = ', test_questions)
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
+    #intial state
     if component_id == 'submit-button-state' and submit_text == 'Set column':
         if len(list(test_questions.values())[0]) > 0: 
             question_class = list(test_questions.keys())[0]
