@@ -940,10 +940,6 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         if hand_class not in yaxis_variables: 
             del handVariantMatrix[hand_class]
 
-    genericVariantMatrix = {}
-    for hand_class in yaxis_variables: 
-        hands = find_key_for(definitions.handMatrix, hand_class, 'code')
-        genericVariantMatrix.update({hand_class : hands})
 
     answerVariantMatrix = {}
     for hand_class, hand_class_dict in handVariantMatrix.items():
@@ -954,4 +950,4 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         ls = [hand.replace(' ', '') for hand in hand_list] 
         answerVariantMatrixCleaned.update({hand_class : ls})
 
-    return {}, {'display':'none'}, trace_data_state, genericVariantMatrix, answerVariantMatrixCleaned, var_string
+    return {}, {'display':'none'}, trace_data_state, list(definitions.handVariants.keys()), answerVariantMatrixCleaned, var_string
