@@ -152,7 +152,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_info', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'20px'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'left':'360px', 'top':'100px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'20px'}),
 
         
             html.Div([
@@ -183,11 +183,11 @@ app.layout = html.Div([
        
 
         dcc.Store(id='trace_names'),
-        dcc.Store(id='blank_test'),
-        dcc.Store(id='temp_blank_test'),
+        dcc.Store(id='test_questions'),
+        dcc.Store(id='unanswered_test_questions'),
         dcc.Store(id='test_answers'),
         dcc.Store(id='test_scenario'),
-        dcc.Store(id='temp_data')
+        dcc.Store(id='answered_test_questions')
 
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
@@ -195,28 +195,31 @@ app.layout = html.Div([
 ])
 
 @app.callback(
-    Output('temp_data', 'data'),
-    Output('temp_blank_test', 'data'),
-    Output('test_info', 'children'),
-    Input('blank_test', 'data'),
+    Output('answered_test_questions', 'data'),
+    Output('unanswered_test_questions', 'data'),
+    Output('test_question_container', 'children'),
+    Input('test_questions', 'data'),
     Input('submit-button-state', 'n_clicks'), 
-    State('submit-button-state', 'children'))
-def display_test_info(data, submit_button_clicks, submit_text):
-    print('data = ', data)
+    State('submit-button-state', 'children'), 
+    State('unanswered_test_questions', 'data'))
+def display_test_info(test_questions, submit_button_clicks, submit_text, unanswered_test_questions):
+    print('test_questions = ', test_questions)
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
     if component_id == 'submit-button-state' and submit_text == 'Set column':
-        if len(list(data.values())[0]) > 0: 
-            subclass = list(data.keys())[0]
-            print('subclass = ', subclass)
-            hand = list(data.values())[0][0]
-            print('hand = ', hand)
-            hand_list = list(data.values())[0]
-            hand_list.remove(hand)
-            data.update({subclass : hand_list})
-            print('data = ', data)
-        return html.P(subclass + ': ' + hand), data, hand
+        if len(list(test_questions.values())[0]) > 0: 
+            question_class = list(test_questions.keys())[0]
+            print('question_class = ', question_class)
+            current_test_question = list(test_questions.values())[0][0]
+            print('current_test_question = ', current_test_question)
+            updated_test_questions = list(test_questions.values())[0]
+            updated_test_questions.remove(current_test_question)
+            test_questions.update({question_class : updated_test_questions})
+            print('test_questions = ', test_questions)
+            answered_test_questions = {question_class : current_test_question}
+            print('answered_test_questions = ', answered_test_questions)
+        return answered_test_questions, test_questions, current_test_question
     
     else:
         raise PreventUpdate
@@ -637,7 +640,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     Output('graph', 'figure'),
     Output('graph', 'style'),
     Output('trace_names', 'data'),
-    Output('blank_test', 'data'),
+    Output('test_questions', 'data'),
     Output('test_answers', 'data'),
     Output('test_scenario', 'data'),
     Input('submit-button-state', 'n_clicks'),
