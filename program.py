@@ -200,9 +200,14 @@ app.layout = html.Div([
     Output('test_question_container', 'children'),
     Input('test_questions', 'data'),
     Input('submit-button-state', 'n_clicks'), 
+    Input('pure', 'n_clicks'),
+    Input('high', 'n_clicks'),
+    Input('medium', 'n_clicks'),
+    Input('low', 'n_clicks'),
+    Input('fold', 'n_clicks'),
     State('submit-button-state', 'children'), 
     State('unanswered_test_questions', 'data'))
-def display_test_question(test_questions, submit_button_clicks, submit_text, unanswered_test_questions):
+def display_test_question(test_questions, submit_button_clicks, pure, high, medium, low, fold, submit_text, unanswered_test_questions):
     print('test_questions = ', test_questions)
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -220,10 +225,28 @@ def display_test_question(test_questions, submit_button_clicks, submit_text, una
             print('test_questions = ', test_questions)
             answered_test_questions = {question_class : current_test_question}
             print('answered_test_questions = ', answered_test_questions)
-        return answered_test_questions, test_questions, current_test_question
+
+            return answered_test_questions, test_questions, current_test_question
     
-    else:
-        raise PreventUpdate
+    if component_id in ('pure', 'high', 'medium', 'low', 'fold'):
+        if len(list(unanswered_test_questions.values())[0]) > 0: 
+            question_class = list(unanswered_test_questions.keys())[0]
+            print('from second if - question_class = ', question_class)
+            current_test_question = list(unanswered_test_questions.values())[0][0]
+            print('from second if - current_test_question = ', current_test_question)
+            updated_test_questions = list(unanswered_test_questions.values())[0]
+            updated_test_questions.remove(current_test_question)
+            if len(updated_test_questions) == 0:
+                del unanswered_test_questions[question_class]
+            else:
+                unanswered_test_questions.update({question_class : updated_test_questions})
+            print('from second if - unanswered_test_questions = ', unanswered_test_questions)
+            answered_test_questions = {question_class : current_test_question}
+            print('from second if - answered_test_questions = ', answered_test_questions)
+            
+            return answered_test_questions, unanswered_test_questions, current_test_question
+
+    raise PreventUpdate
 
 @app.callback(
     Output('app_mode', 'options'),
