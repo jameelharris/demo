@@ -943,12 +943,20 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
 
     answerVariantMatrix = {}
     for hand_class, hand_class_dict in handVariantMatrix.items():
-        answerVariantMatrix.update({hand_class : hand_class_dict['hands'].split(definitions.delimiters['handListDelimiter'])})
+        answerVariantMatrix.update({hand_class : {'hands':  hand_class_dict['hands'].split(definitions.delimiters['handListDelimiter'])}})
 
     answerVariantMatrixCleaned = {}
-    for hand_class, hand_list in answerVariantMatrix.items():
-        ls = [hand.replace(' ', '') for hand in hand_list] 
-        answerVariantMatrixCleaned.update({hand_class : ls})
+    for hand_class, hand_class_dict in answerVariantMatrix.items():
+        ls = [hand.replace(' ', '') for hand in hand_class_dict['hands']] 
+        hand_frequency = 0.00
+        for hand in ls: 
+            if '-' in hand: 
+                hand_frequency = hand_frequency + float(hand.split('-',1)[1], definitions.formats['frequencyFormat'])
+            else: 
+                hand_frequency = hand_frequency + 1
+
+        class_frequency = hand_frequency / len(ls)
+        answerVariantMatrixCleaned.update({hand_class : {'hands': ls, 'frequency': class_frequency}})
 
     print('from get test answers - test answers = ', answerVariantMatrixCleaned)
     return {}, {'display':'none'}, trace_data_state, yaxis_variables, answerVariantMatrixCleaned, var_string
