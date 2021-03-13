@@ -671,7 +671,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     State('usecases', 'value'),
     State('yaxis_variables', 'value'),
     State('xaxis_variables', 'value'), 
-    State ('trace_names', 'data'), prevent_initial_call=True)
+    State('trace_names', 'data'), prevent_initial_call=True)
 def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdown_1_value, usecaseconfig, yaxis_variables, xaxis_variables, trace_data_state): 
     selected_hand = ''
     if len(yaxis_variables) == 0 or len(xaxis_variables) == 0:
