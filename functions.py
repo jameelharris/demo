@@ -348,8 +348,14 @@ def getHandMatrix(hands, selected_hand, app_mode):
     if app_mode == 'sniper': 
         for hand in hands:
             
-            if selected_hand[:-1] == hand: # The hands extracted from the txt files do not specify suit when all 16 combos apply, so this IF accounts for that
+            # The hands extracted from the txt files do not specify suit when offsuit and suited are of equal frequency, so this IF accounts for that
+            if definitions.delimiters['discountedHandDelimiter'] in hand and selected_hand[:-1] == hand.split(':',1)[0]:
+                hand = selected_hand + definitions.delimiters['discountedHandDelimiter'] + hand.split(':',1)[1]
+            
+            # The hands extracted from the txt files do not specify suit when all 16 combos apply, so this IF accounts for that
+            if selected_hand[:-1] == hand: 
                 hand = selected_hand
+
             if selected_hand in hand: 
                 if isHandDiscounted(hand):
                     if(getDiscountedHandRank(hand) in definitions.handMatrix):
