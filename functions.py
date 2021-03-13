@@ -969,8 +969,22 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         num_of_hands = len(find_key_for(definitions.handMatrix, hand_class, 'code'))
         num_of_hands = format(float(num_of_hands), definitions.formats['frequencyFormat'])
         num_of_hands = float(num_of_hands)
-
-        answerVariantMatrixCleaned.update({hand_class : {'hands': ls, 'frequency': format(hand_frequency/ num_of_hands, definitions.formats['frequencyFormat'])}})
+        frequency = format(hand_frequency/ num_of_hands, definitions.formats['frequencyFormat'])
+        frequency = float(frequency)
+        answerVariantMatrixCleaned.update({hand_class : {'hands': ls, 'frequency': frequency, 'frequency_ui': check(frequency)}})
 
     print('from get test answers - test answers = ', answerVariantMatrixCleaned)
     return {}, {'display':'none'}, trace_data_state, yaxis_variables, answerVariantMatrixCleaned, var_string
+
+def check(value):
+    value = float(value)
+    if value == 0.00:
+        return 'fold'
+    if 0.01 <= value <= 0.30:
+        return 'low'  
+    if 0.31 <= value <= 0.60:
+        return 'medium'
+    if 0.61 <= value <= 0.99:
+        return 'high'
+    if value == 1.00:
+        return 'pure'
