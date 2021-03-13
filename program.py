@@ -212,7 +212,6 @@ app.layout = html.Div([
     State('answered_test_questions', 'data'), 
     State('current_test_question', 'data'))
 def display_test_question(test_questions, submit_button_clicks, pure, high, medium, low, fold, submit_text, unanswered_test_questions, answered_test_questions, current_test_question):
-    print('test_questions = ', test_questions)
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 

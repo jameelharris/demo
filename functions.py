@@ -889,34 +889,34 @@ def mutecolumns(useCaseInventory, vertical_filter, usecaseconfig):
     return useCaseInventory
 
 def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_variables, usecaseconfig, trace_data_state):
-    print('from get test answers - selected column = ', selected_column)
-    print('from get test answers - selected x value = ', selected_x_value)
-    print('from get test answers - y axis variables = ', yaxis_variables)
-    print('from get test answers - usecaseconfig = ', usecaseconfig)
+    #print('from get test answers - selected column = ', selected_column)
+    #print('from get test answers - selected x value = ', selected_x_value)
+    #print('from get test answers - y axis variables = ', yaxis_variables)
+    #print('from get test answers - usecaseconfig = ', usecaseconfig)
     
     var_dict = {}
 
     var_string = selected_column + '-' + str(selected_x_value[0])
     if '40-50BB' in var_string:
         var_string = var_string.replace('40-50BB', '40$50BB')
-        print('var string 50 = ', var_string)
+        #print('var string 50 = ', var_string)
     if '60-100BB' in var_string:
         var_string = var_string.replace('60-100BB', '60$100BB')
-        print('var string 60 = ', var_string)
+        #print('var string 60 = ', var_string)
 
     var_list = var_string.split(definitions.delimiters['columnHeaderDelimiter'])
-    print('var list = ', var_list)
+    #print('var list = ', var_list)
 
     var_list = [var.replace('$', '-') for var in var_list]
 
 
-    print('from get test answers - var list = ', var_list)
+    #print('from get test answers - var list = ', var_list)
 
 
     for key in definitions.verticalfilter[usecaseconfig].keys(): 
         var_dict.update({key[:-1] : var_list[0]})
         var_list.pop(0)
-    print('from get test answers - var dict = ', var_dict)
+    #print('from get test answers - var dict = ', var_dict)
     
     
     correctUseCaseDict = {}
