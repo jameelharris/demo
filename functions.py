@@ -960,9 +960,9 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
             else:
                 hand_frequency = hand_frequency + 1.00
 
-            num_of_hands = len(find_key_for(definitions.handMatrix, hand_class, 'code'))
-            num_of_hands = format(float(num_of_hands), definitions.formats['frequencyFormat'])
-            num_of_hands = float(num_of_hands)
+        num_of_hands = len(find_key_for(definitions.handMatrix, hand_class, 'code'))
+        num_of_hands = format(float(num_of_hands), definitions.formats['frequencyFormat'])
+        num_of_hands = float(num_of_hands)
 
         answerVariantMatrixCleaned.update({hand_class : {'hands': ls, 'frequency': format(hand_frequency/ num_of_hands, definitions.formats['frequencyFormat'])}})
 
