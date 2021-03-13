@@ -235,10 +235,13 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
             current_test_question = unanswered_test_questions[0]
             print('current_test_question = ', current_test_question)
             unanswered_test_questions.pop(0)
-            print('updated test_questions = ', unanswered_test_questions)
+            print('unanswered test_questions = ', unanswered_test_questions)
             
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
             return current_test_question, answered_test_questions, unanswered_test_questions, current_test_question_ui
+        else:
+            answered_test_questions.append(current_test_question)
+            print('answered_test_questions = ', answered_test_questions)
 
     raise PreventUpdate
 
