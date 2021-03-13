@@ -241,6 +241,8 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
         else:
             answered_test_questions.append(current_test_question)
             print('answered_test_questions = ', answered_test_questions)
+            print('test questions = ', test_questions)
+            print('unanswered_test_questions = ', unanswered_test_questions)
 
     raise PreventUpdate
 
