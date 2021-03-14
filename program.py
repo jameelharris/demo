@@ -219,8 +219,10 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
     # when the blank figure is intiialized it sends back no test questions so need to check for None
-    if test_ended or test_questions is None:
+    if test_ended or test_questions in (None, {}) :
         raise PreventUpdate
+    else:
+        print('display test questions = ', test_questions)
 
 
     #intial state
