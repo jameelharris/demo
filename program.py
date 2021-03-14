@@ -198,6 +198,19 @@ app.layout = html.Div([
 
 
 @app.callback(
+    Output('pure', 'disabled'),
+    Output('high', 'disabled'),
+    Output('medium', 'disabled'),
+    Output('low', 'disabled'),
+    Output('fold', 'disabled'),
+    Input('test_ended', 'data'))
+def set_test_button_enablement(test_ended):
+    if test_ended is True: 
+        return True, True, True, True, True
+    if test_ended is False: 
+        return False, False, False, False, False
+
+@app.callback(
     Output('test_results_container', 'children'),
     Input('answered_test_questions', 'data'), 
     State('test_answers', 'data'), 
@@ -241,7 +254,7 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
 
     # when the blank figure is intialized or updated it sends back no test questions so need to check for None and {}
     print('test ended = ', test_ended)
-    if (test_ended and component_id != 'submit-button-state' and submit_text != 'Set column' ) or test_questions in (None, {}):
+    if test_questions in (None, {}):
         raise PreventUpdate
     else:
         print('display test questions = ', test_questions)
