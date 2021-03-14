@@ -188,8 +188,9 @@ app.layout = html.Div([
         dcc.Store(id='test_answers'),
         dcc.Store(id='test_scenario'),
         dcc.Store(id='answered_test_questions'),
-        dcc.Store(id='current_test_question')
-
+        dcc.Store(id='current_test_question'),
+        dcc.Store(id='test_ended')
+ 
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
     ], style={'position':'absolute', 'width':'1500px', 'height':'650px', 'top':'104px'})
@@ -200,6 +201,7 @@ app.layout = html.Div([
     Output('answered_test_questions', 'data'),
     Output('unanswered_test_questions', 'data'),
     Output('test_question_container', 'children'),
+    Output('test_ended', 'data'),
     Input('test_questions', 'data'),
     Input('submit-button-state', 'n_clicks'), 
     Input('pure', 'n_clicks'),
@@ -207,13 +209,19 @@ app.layout = html.Div([
     Input('medium', 'n_clicks'),
     Input('low', 'n_clicks'),
     Input('fold', 'n_clicks'),
+    State('test_ended', 'data'),
     State('submit-button-state', 'children'), 
     State('unanswered_test_questions', 'data'), 
     State('answered_test_questions', 'data'), 
     State('current_test_question', 'data'))
-def display_test_question(test_questions, submit_button_clicks, pure, high, medium, low, fold, submit_text, unanswered_test_questions, answered_test_questions, current_test_question):
+def display_test_question(test_questions, submit_button_clicks, pure, high, medium, low, fold, test_ended, submit_text, unanswered_test_questions, answered_test_questions, current_test_question):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    # when the blank figure is intiialized it sends back no test questions so need to check for None
+    if test_ended or test_questions is None:
+        raise PreventUpdate
+
 
     #intial state
     if component_id == 'submit-button-state' and submit_text == 'Set column':
@@ -224,7 +232,7 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
         test_questions.pop(0)
         print('updated test_questions = ', test_questions)
         first_question_ui = definitions.handVariants[first_question] + ' (' + first_question + ')'
-        return first_question, [], test_questions, first_question_ui
+        return first_question, [], test_questions, first_question_ui, False
     
     if component_id in ('pure', 'high', 'medium', 'low', 'fold'):
         if len(unanswered_test_questions) > 0: 
@@ -237,14 +245,14 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
             print('unanswered test_questions = ', unanswered_test_questions)
             
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            return current_test_question, answered_test_questions, unanswered_test_questions, current_test_question_ui
+            return current_test_question, answered_test_questions, unanswered_test_questions, current_test_question_ui, False
         else:
             answered_test_questions.append(current_test_question)
             print('answered_test_questions = ', answered_test_questions)
             print('test questions = ', test_questions)
             print('unanswered_test_questions = ', unanswered_test_questions)
-
-    raise PreventUpdate
+            current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
+            return current_test_question, answered_test_questions, unanswered_test_questions, current_test_question_ui, True
 
 @app.callback(
     Output('app_mode', 'options'),
