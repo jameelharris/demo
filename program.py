@@ -218,8 +218,8 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    # when the blank figure is intiialized it sends back no test questions so need to check for None
-    if test_ended or test_questions in (None, {}) :
+    # when the blank figure is intialized or updated it sends back no test questions so need to check for None and {}
+    if (test_ended and component_id != 'submit-button-state' and submit_text != 'Set column' ) or test_questions in (None, {}) :
         raise PreventUpdate
     else:
         print('display test questions = ', test_questions)
@@ -234,11 +234,11 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
         test_questions.pop(0)
         print('updated test_questions = ', test_questions)
         first_question_ui = definitions.handVariants[first_question] + ' (' + first_question + ')'
-        return first_question, [], test_questions, first_question_ui, False
+        return first_question, {}, test_questions, first_question_ui, False
     
     if component_id in ('pure', 'high', 'medium', 'low', 'fold'):
         if len(unanswered_test_questions) > 0: 
-            answered_test_questions.append(current_test_question)
+            answered_test_questions.update({current_test_question : component_id})
             print('answered_test_questions = ', answered_test_questions)
 
             current_test_question = unanswered_test_questions[0]
@@ -249,7 +249,7 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
             return current_test_question, answered_test_questions, unanswered_test_questions, current_test_question_ui, False
         else:
-            answered_test_questions.append(current_test_question)
+            answered_test_questions.update({current_test_question : component_id})
             print('answered_test_questions = ', answered_test_questions)
             print('test questions = ', test_questions)
             print('unanswered_test_questions = ', unanswered_test_questions)
