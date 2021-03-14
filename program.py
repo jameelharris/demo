@@ -165,7 +165,7 @@ app.layout = html.Div([
 
             html.Div([
 
-            ], id='test_results', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black'}),
+            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black'}),
 
             html.Div([
                 html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
@@ -189,12 +189,30 @@ app.layout = html.Div([
         dcc.Store(id='test_scenario'),
         dcc.Store(id='answered_test_questions'),
         dcc.Store(id='current_test_question'),
-        dcc.Store(id='test_ended')
+        dcc.Store(id='test_ended'),
+        dcc.Store(id='test_results')
  
         #html.Span('test', id='tooltip-target'),
         #dbc.Tooltip('hover text', target='tooltip-target')
     ], style={'position':'absolute', 'width':'1500px', 'height':'650px', 'top':'104px'})
 ])
+
+'''
+@app.callback(
+    Output('test_results_container', 'style'),
+    Output('test_results_container', 'children'),
+    Output('test_results', 'data'), 
+    Input('answered_test_questions', 'data'), 
+    State('test_answers', 'data'), 
+    State('test_results', 'data'))
+def display_test_results(answered_test_questions, test_answers, test_results): 
+    if answered_test_questions.values()[-1] == test_answers[answered_test_questions.keys()[-1]]['frequency_ui']:
+        my_string = ','.join(test_answers[answered_test_questions.keys()[-1]]['hands'])
+        test_results = test_results + my_string
+        return {'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black', 'color':'green', 'font-family':'Arial'}
+    else:
+        return {'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black', 'color':'red', 'font-family':'Arial'}
+'''
 
 @app.callback(
     Output('current_test_question', 'data'),
@@ -219,6 +237,7 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
     # when the blank figure is intialized or updated it sends back no test questions so need to check for None and {}
+    print('test ended = ', test_ended)
     if (test_ended and component_id != 'submit-button-state' and submit_text != 'Set column' ) or test_questions in (None, {}) :
         raise PreventUpdate
     else:
