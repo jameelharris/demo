@@ -212,19 +212,31 @@ def set_test_button_enablement(test_ended):
 
 @app.callback(
     Output('test_results_container', 'children'),
+    Input('exit', 'n_clicks'),
     Input('answered_test_questions', 'data'), 
     State('test_answers', 'data'), 
     State('test_results_container', 'children'), 
     State('test_ended', 'data'))
-def display_test_results(answered_test_questions, test_answers, test_results, test_ended): 
+def display_test_results(exit_button_clicks, answered_test_questions, test_answers, test_results, test_ended): 
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if component_id == 'exit': 
+        return ['']
+    
     print('display test results - answered test questions = ', answered_test_questions)
+
     if answered_test_questions not in (None, {}):
         if list(answered_test_questions.values())[-1] == test_answers[list(answered_test_questions.keys())[-1]]['frequency_ui']:
             my_string = ','.join(test_answers[list(answered_test_questions.keys())[-1]]['hands'])
-            return test_results + [html.Div(my_string, style={'color':'green', 'font-family':'Arial'})]
+            if my_string == '': 
+                my_string = '--'
+            return test_results + [html.Div(my_string, style={'color':'white', 'font-family':'Arial'})]
             
         else:
             my_string = ','.join(test_answers[list(answered_test_questions.keys())[-1]]['hands'])
+            if my_string == '': 
+                my_string = '--'
             return test_results + [html.Div(my_string, style={'color':'red', 'font-family':'Arial'})]
         
     else:
