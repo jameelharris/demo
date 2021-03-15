@@ -237,14 +237,14 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
                 if '-' in hand:
                     opacity =  hand.split('-',1)[1]
                     opacity = float(opacity)
-                    test_results = test_results + [html.Div(hand.split('-',1)[0], style={'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial'})]
+                    test_results = test_results + [html.Div(hand.split('-',1)[0] + ' ', style={'text-align': 'center', 'border':'1.5px solid white', 'padding':'2.5px 0', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial'})]
                 else:
-                    test_results = test_results + [html.Div(hand, style={'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial'})] 
+                    test_results = test_results + [html.Div(hand + ' ', style={'text-align': 'center', 'border':'1.5px solid white', 'padding':'2.5px 0', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial'})]
         else:
             print('passed outer')
-            test_results = test_results + [html.Div('--', style={'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial'})]
+            test_results = test_results + [html.Div('--', style={'text-align': 'center', 'border':'1.5px solid white', 'padding':'2.5px 0', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial'})]
         
-        return test_results
+        return test_results + [html.Br()]
         
     else:
         raise PreventUpdate
