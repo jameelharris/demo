@@ -165,7 +165,7 @@ app.layout = html.Div([
 
             html.Div([
 
-            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'black'}),
+            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'white'}),
 
             html.Div([
                 html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
@@ -226,18 +226,25 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
     
     print('display test results - answered test questions = ', answered_test_questions)
 
+    if test_results is None:
+        test_results = []
+
     if answered_test_questions not in (None, {}):
-        if list(answered_test_questions.values())[-1] == test_answers[list(answered_test_questions.keys())[-1]]['frequency_ui']:
-            my_string = ','.join(test_answers[list(answered_test_questions.keys())[-1]]['hands'])
-            if my_string == '': 
-                my_string = '--'
-            return test_results + [html.Div(my_string, style={'color':'white', 'font-family':'Arial'})]
-            
+        ls = test_answers[list(answered_test_questions.keys())[-1]]['hands']
+        print('ls = ', ls)
+        if ls != ['']:
+            for hand in ls: 
+                if '-' in hand:
+                    opacity =  hand.split('-',1)[1]
+                    opacity = float(opacity)
+                    test_results = test_results + [html.Div(hand.split('-',1)[0], style={'background-color':'green', 'font-family':'Arial', 'opacity': opacity})]
+                else:
+                    test_results = test_results + [html.Div(hand, style={'background-color':'green', 'font-family':'Arial', 'opacity': 1})] 
         else:
-            my_string = ','.join(test_answers[list(answered_test_questions.keys())[-1]]['hands'])
-            if my_string == '': 
-                my_string = '--'
-            return test_results + [html.Div(my_string, style={'color':'red', 'font-family':'Arial'})]
+            print('passed outer')
+            test_results = test_results + [html.Div('--', style={'background-color':'green', 'font-family':'Arial', 'opacity': 0})]
+        
+        return test_results
         
     else:
         raise PreventUpdate
