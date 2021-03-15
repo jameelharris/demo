@@ -237,12 +237,12 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
                 if '-' in hand:
                     opacity =  hand.split('-',1)[1]
                     opacity = float(opacity)
-                    test_results = test_results + [html.Div(hand.split('-',1)[0], style={'background-color':'green', 'font-family':'Arial', 'opacity': opacity})]
+                    test_results = test_results + [html.Div(hand.split('-',1)[0], style={'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial'})]
                 else:
-                    test_results = test_results + [html.Div(hand, style={'background-color':'green', 'font-family':'Arial', 'opacity': 1})] 
+                    test_results = test_results + [html.Div(hand, style={'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial'})] 
         else:
             print('passed outer')
-            test_results = test_results + [html.Div('--', style={'background-color':'green', 'font-family':'Arial', 'opacity': 0})]
+            test_results = test_results + [html.Div('--', style={'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial'})]
         
         return test_results
         
