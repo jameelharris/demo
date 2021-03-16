@@ -165,7 +165,7 @@ app.layout = html.Div([
 
             html.Div([
 
-            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'550px', 'width':'921.5px', 'left':'509px', 'top':'50px', 'background':'white'}),
+            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'550px', 'width':'1071.5px', 'left':'359px', 'top':'50px', 'background':'white'}),
 
             html.Div([
                 html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
@@ -221,8 +221,8 @@ def set_test_button_enablement(test_ended):
 def display_test_results(exit_button_clicks, answered_test_questions, test_answers, test_results, test_ended): 
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    test_result_ui = ''
-
+    user_answer = ''
+    system_answer = ''
     if component_id == 'exit': 
         return ['']
     
@@ -234,11 +234,13 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
     if answered_test_questions not in (None, {}):
         ls = test_answers[list(answered_test_questions.keys())[-1]]['hands']
         if list(answered_test_questions.values())[-1] == test_answers[list(answered_test_questions.keys())[-1]]['frequency_ui']:
-            pass
+            user_answer = ''
         else: 
-            pass
+            user_answer = list(answered_test_questions.values())[-1]
+        system_answer = test_answers[list(answered_test_questions.keys())[-1]]['frequency_ui']
 
-        #test_results = test_results + [html.Div(test_result_ui, style={'display':'inline-block', 'text-align':'left','width':'7%'})]
+        test_results = test_results + [html.Div(user_answer, style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
+        test_results = test_results + [html.Div(system_answer, style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
         test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1] + ' ', style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
         print('ls = ', ls)
         if ls != ['']:
