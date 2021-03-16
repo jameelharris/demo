@@ -234,23 +234,22 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
     if answered_test_questions not in (None, {}):
         ls = test_answers[list(answered_test_questions.keys())[-1]]['hands']
         if list(answered_test_questions.values())[-1] == test_answers[list(answered_test_questions.keys())[-1]]['frequency_ui']:
-            user_answer = ''
+            user_answer_color = 'black'
         else: 
-            user_answer = list(answered_test_questions.values())[-1]
-        system_answer = test_answers[list(answered_test_questions.keys())[-1]]['frequency_ui']
+            user_answer_color = 'red'
+        user_answer = list(answered_test_questions.values())[-1]
 
-        test_results = test_results + [html.Div(user_answer, style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
-        test_results = test_results + [html.Div(system_answer, style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
-        test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1] + ' ', style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
+        test_results = test_results + [html.Div(user_answer, style={'border':'1.25px solid white','font-family':'Arial', 'color': user_answer_color, 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
+        test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1], style={'border':'1.25px solid white','font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
         print('ls = ', ls)
         if ls != ['']:
             for hand in ls: 
                 if '-' in hand:
                     opacity =  hand.split('-',1)[1]
                     opacity = float(opacity)
-                    test_results = test_results + [html.Div(hand.split('-',1)[0] + ' ', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
+                    test_results = test_results + [html.Div(hand.split('-',1)[0], style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
                 else:
-                    test_results = test_results + [html.Div(hand + ' ', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
+                    test_results = test_results + [html.Div(hand, style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
         else:
             print('passed outer')
             test_results = test_results + [html.Div(style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
