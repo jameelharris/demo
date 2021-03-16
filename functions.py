@@ -979,7 +979,7 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
 def check(value):
     value = float(value)
     if value == 0.00:
-        return 'fold'
+        return 'na'
     if 0.01 <= value <= 0.30:
         return 'low'  
     if 0.31 <= value <= 0.60:

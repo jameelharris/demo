@@ -160,7 +160,7 @@ app.layout = html.Div([
                 html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%'}),
                 html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
                 html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
-                html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
+                html.Button(id='na', n_clicks=0, children= 'na', style={'display':'block', 'width':'100%'}),
             ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'230px', 'top':'50px'}), 
 
             html.Div([
@@ -203,7 +203,7 @@ app.layout = html.Div([
     Output('high', 'disabled'),
     Output('medium', 'disabled'),
     Output('low', 'disabled'),
-    Output('fold', 'disabled'),
+    Output('na', 'disabled'),
     Input('test_ended', 'data'))
 def set_test_button_enablement(test_ended):
     if test_ended is True: 
@@ -272,13 +272,13 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
     Input('high', 'n_clicks'),
     Input('medium', 'n_clicks'),
     Input('low', 'n_clicks'),
-    Input('fold', 'n_clicks'),
+    Input('na', 'n_clicks'),
     State('test_ended', 'data'),
     State('submit-button-state', 'children'), 
     State('unanswered_test_questions', 'data'), 
     State('answered_test_questions', 'data'), 
     State('current_test_question', 'data'))
-def display_test_question(test_questions, submit_button_clicks, pure, high, medium, low, fold, test_ended, submit_text, unanswered_test_questions, answered_test_questions, current_test_question):
+def display_test_question(test_questions, submit_button_clicks, pure, high, medium, low, na, test_ended, submit_text, unanswered_test_questions, answered_test_questions, current_test_question):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
@@ -301,7 +301,7 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
         first_question_ui = definitions.handVariants[first_question] + ' (' + first_question + ')'
         return first_question, {}, test_questions, first_question_ui, False
     
-    if component_id in ('pure', 'high', 'medium', 'low', 'fold'):
+    if component_id in ('pure', 'high', 'medium', 'low', 'na'):
         if len(unanswered_test_questions) > 0: 
             answered_test_questions.update({current_test_question : component_id})
             print('answered_test_questions = ', answered_test_questions)
