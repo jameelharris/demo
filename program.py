@@ -204,12 +204,22 @@ app.layout = html.Div([
     Output('medium', 'disabled'),
     Output('low', 'disabled'),
     Output('na', 'disabled'),
+    Input('exit', 'n_clicks'),
     Input('test_ended', 'data'))
-def set_test_button_enablement(test_ended):
-    if test_ended is True: 
-        return True, True, True, True, True
-    if test_ended is False: 
-        return False, False, False, False, False
+def set_test_button_enablement(exit_button_clicks, test_ended):
+    ctx = dash.callback_context
+    component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    if component_id == 'exit': 
+        return True, True, True, True, True 
+
+    if test_ended is not None:
+        if test_ended is True:  
+            return True, True, True, True, True
+        if test_ended is False: 
+            return False, False, False, False, False
+    else:
+        raise PreventUpdate
 
 @app.callback(
     Output('test_results_container', 'children'),
