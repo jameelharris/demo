@@ -232,6 +232,7 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
 
     if answered_test_questions not in (None, {}):
         ls = test_answers[list(answered_test_questions.keys())[-1]]['hands']
+        test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1] + ' ', style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
         print('ls = ', ls)
         if ls != ['']:
             for hand in ls: 
