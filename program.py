@@ -221,6 +221,7 @@ def set_test_button_enablement(test_ended):
 def display_test_results(exit_button_clicks, answered_test_questions, test_answers, test_results, test_ended): 
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    test_result_ui = ''
 
     if component_id == 'exit': 
         return ['']
@@ -232,6 +233,12 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
 
     if answered_test_questions not in (None, {}):
         ls = test_answers[list(answered_test_questions.keys())[-1]]['hands']
+        if list(answered_test_questions.values())[-1] == test_answers[list(answered_test_questions.keys())[-1]]['frequency_ui']:
+            pass
+        else: 
+            pass
+
+        #test_results = test_results + [html.Div(test_result_ui, style={'display':'inline-block', 'text-align':'left','width':'7%'})]
         test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1] + ' ', style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%'})]
         print('ls = ', ls)
         if ls != ['']:
