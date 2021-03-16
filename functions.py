@@ -974,7 +974,13 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         answerVariantMatrixCleaned.update({hand_class : {'hands': ls, 'frequency': frequency, 'frequency_ui': check(frequency)}})
 
     print('from get test answers - test answers = ', answerVariantMatrixCleaned)
-    return {}, {'display':'none'}, trace_data_state, yaxis_variables, answerVariantMatrixCleaned, var_string
+
+    sorted_yaxis_variables = []
+    for key in definitions.handVariants.keys():
+        if key in yaxis_variables: 
+            sorted_yaxis_variables.append(key)
+
+    return {}, {'display':'none'}, trace_data_state, sorted_yaxis_variables, answerVariantMatrixCleaned, var_string
 
 def check(value):
     value = float(value)

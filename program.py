@@ -262,7 +262,7 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
                     test_results = test_results + [html.Div(hand, style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
         else:
             print('passed outer')
-            test_results = test_results + [html.Div(style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
+            test_results = test_results + [html.Div('--', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
         
         return test_results + [html.Br()]
         
@@ -276,7 +276,8 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
     Output('test_question_container', 'children'),
     Output('test_ended', 'data'),
     Input('test_questions', 'data'),
-    Input('submit-button-state', 'n_clicks'), 
+    Input('submit-button-state', 'n_clicks'),
+    Input('exit', 'n_clicks'), 
     Input('pure', 'n_clicks'),
     Input('high', 'n_clicks'),
     Input('medium', 'n_clicks'),
@@ -287,7 +288,7 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
     State('unanswered_test_questions', 'data'), 
     State('answered_test_questions', 'data'), 
     State('current_test_question', 'data'))
-def display_test_question(test_questions, submit_button_clicks, pure, high, medium, low, na, test_ended, submit_text, unanswered_test_questions, answered_test_questions, current_test_question):
+def display_test_question(test_questions, submit_button_clicks, exit_button_clicks, pure, high, medium, low, na, test_ended, submit_text, unanswered_test_questions, answered_test_questions, current_test_question):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
@@ -298,6 +299,9 @@ def display_test_question(test_questions, submit_button_clicks, pure, high, medi
     else:
         print('display test questions = ', test_questions)
 
+    if component_id == 'exit': 
+        print('exited test')
+        return '', [], [], '', True 
 
     #intial state
     if component_id == 'submit-button-state' and submit_text == 'Set column':
