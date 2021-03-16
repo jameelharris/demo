@@ -152,7 +152,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'top':'30px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
 
         
             html.Div([
@@ -161,15 +161,15 @@ app.layout = html.Div([
                 html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
                 html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
                 html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
-            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'190px', 'top':'50px'}), 
+            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'190px', 'top':'30px'}), 
 
             html.Div([
 
-            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'50px', 'background':'white'}),
+            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'30px', 'background':'white'}),
 
             html.Div([
                 html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
-            ], id='exit_button', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'50px'}),
+            ], id='exit_button', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'30px'}),
         
         ], id='test_interface_container', style={'display':'none'}),
 
