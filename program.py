@@ -165,7 +165,7 @@ app.layout = html.Div([
 
             html.Div([
 
-            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'30px', 'background':'white'}),
+            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'921.5px', 'left':'509px', 'top':'30px', 'background':'white'}),
 
             html.Div([
                 html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
@@ -239,12 +239,12 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
                 if '-' in hand:
                     opacity =  hand.split('-',1)[1]
                     opacity = float(opacity)
-                    test_results = test_results + [html.Div(hand.split('-',1)[0] + ' ', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
+                    test_results = test_results + [html.Div(hand.split('-',1)[0] + ' ', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
                 else:
-                    test_results = test_results + [html.Div(hand + ' ', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
+                    test_results = test_results + [html.Div(hand + ' ', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
         else:
             print('passed outer')
-            test_results = test_results + [html.Div(style={'text-align': 'center', 'border':'1.25px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
+            test_results = test_results + [html.Div(style={'text-align': 'center', 'border':'1.25px solid white', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
         
         return test_results + [html.Br()]
         
