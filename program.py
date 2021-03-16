@@ -152,7 +152,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'230px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
 
         
             html.Div([
@@ -161,11 +161,11 @@ app.layout = html.Div([
                 html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
                 html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
                 html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
-            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'190px', 'top':'50px'}), 
+            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'230px', 'top':'50px'}), 
 
             html.Div([
 
-            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'921.5px', 'left':'509px', 'top':'50px', 'background':'white'}),
+            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'550px', 'width':'921.5px', 'left':'509px', 'top':'50px', 'background':'white'}),
 
             html.Div([
                 html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
