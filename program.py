@@ -152,7 +152,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'top':'100px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
 
         
             html.Div([
@@ -161,15 +161,15 @@ app.layout = html.Div([
                 html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
                 html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
                 html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
-            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'190px', 'top':'100px'}), 
+            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'190px', 'top':'50px'}), 
 
             html.Div([
 
-            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'100px', 'background':'white'}),
+            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'450px', 'width':'721.5px', 'left':'709px', 'top':'50px', 'background':'white'}),
 
             html.Div([
                 html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
-            ], id='exit_button', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'100px'}),
+            ], id='exit_button', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'50px'}),
         
         ], id='test_interface_container', style={'display':'none'}),
 
@@ -238,12 +238,12 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
                 if '-' in hand:
                     opacity =  hand.split('-',1)[1]
                     opacity = float(opacity)
-                    test_results = test_results + [html.Div(hand.split('-',1)[0] + ' ', style={'text-align': 'center', 'border':'1.5px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial'})]
+                    test_results = test_results + [html.Div(hand.split('-',1)[0] + ' ', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
                 else:
-                    test_results = test_results + [html.Div(hand + ' ', style={'text-align': 'center', 'border':'1.5px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial'})]
+                    test_results = test_results + [html.Div(hand + ' ', style={'text-align': 'center', 'border':'1.25px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
         else:
             print('passed outer')
-            test_results = test_results + [html.Div(style={'text-align': 'center', 'border':'1.5px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial'})]
+            test_results = test_results + [html.Div(style={'text-align': 'center', 'border':'1.25px solid white', 'width':'7%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold'})]
         
         return test_results + [html.Br()]
         
