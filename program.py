@@ -152,7 +152,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'top':'100px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'20px'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'190px', 'top':'100px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
 
         
             html.Div([
@@ -161,7 +161,7 @@ app.layout = html.Div([
                 html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
                 html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
                 html.Button(id='fold', n_clicks=0, children= 'fold', style={'display':'block', 'width':'100%'}),
-            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'110px', 'left':'190px', 'top':'100px'}), 
+            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'190px', 'top':'100px'}), 
 
             html.Div([
 
@@ -191,7 +191,9 @@ app.layout = html.Div([
         dcc.Store(id='current_test_question'),
         dcc.Store(id='test_ended'),
  
-        dbc.Tooltip(' 61 - 99%', target='high', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right')
+        dbc.Tooltip('61 - 99%', target='high', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right'),
+        dbc.Tooltip('31 - 60%', target='medium', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right'),
+        dbc.Tooltip('01 - 30%', target='low', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right')
     ], style={'position':'absolute', 'width':'1500px', 'height':'650px', 'top':'104px'})
 ])
 
