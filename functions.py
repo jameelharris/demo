@@ -994,3 +994,9 @@ def check(value):
         return 'high'
     if value == 1.00:
         return 'pure'
+
+def index_containing_substring(the_list, substring):
+    for i, s in enumerate(the_list):
+        if substring in s:
+              return i
+    return -1

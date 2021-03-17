@@ -252,17 +252,25 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
         test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1], style={'font-family':'Arial', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'3.5%', 'height':'23px', 'line-height':'23px'})]
         test_results = test_results + [html.Div(str(test_answers[list(answered_test_questions.keys())[-1]]['frequency']), style={'font-family':'Arial', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
         print('ls = ', ls)
+        
+        base_ls = functions.find_key_for(definitions.handMatrix, list(answered_test_questions.keys())[-1], 'code')
+        print('subclass ls = ', base_ls)
+
         if ls != ['']:
-            for hand in ls: 
-                if '-' in hand:
-                    opacity =  hand.split('-',1)[1]
-                    opacity = float(opacity)
-                    test_results = test_results + [html.Div(hand.split('-',1)[0], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
-                else:
-                    test_results = test_results + [html.Div(hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
+            for base_hand in base_ls:
+                index = functions.index_containing_substring(ls, base_hand)
+                if index != -1: 
+                    if '-' in ls[index]:
+                        opacity =  ls[index].split('-',1)[1]
+                        opacity = float(opacity)
+                        test_results = test_results + [html.Div(ls[index].split('-',1)[0], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
+                    else:
+                        test_results = test_results + [html.Div(ls[index], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
+                else: 
+                    test_results = test_results + [html.Div(base_hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]                    
         else:
-            print('passed outer')
-            test_results = test_results + [html.Div('--', style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px', 'color':'white'})]
+            for base_hand in base_ls:
+                test_results = test_results + [html.Div(base_hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
         
         return test_results + [html.Br()]
         
