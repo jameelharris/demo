@@ -153,6 +153,10 @@ app.layout = html.Div([
 
             ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'44.4px', 'vertical-align':'middle', 'width':'230px', 'top':'29px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
 
+            html.Div([
+
+            ], id='test_score_container', style={'display':'inline-block', 'position':'absolute', 'height':'66.6px', 'line-height':'66.6px', 'vertical-align':'middle', 'width':'230px', 'top':'73px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
+
         
             html.Div([
                 html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%'}),
@@ -190,13 +194,13 @@ app.layout = html.Div([
         dcc.Store(id='current_test_question'),
         dcc.Store(id='test_ended'),
         dcc.Store(id='action'),
+        dcc.Store(id='num_correct'),
  
         dbc.Tooltip('61 - 99%', target='high', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right'),
         dbc.Tooltip('31 - 60%', target='medium', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right'),
         dbc.Tooltip('01 - 30%', target='low', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right')
     ], style={'position':'absolute', 'width':'1500px', 'height':'650px', 'top':'104px'})
 ])
-
 
 @app.callback(
     Output('pure', 'disabled'),
@@ -223,13 +227,16 @@ def set_test_button_enablement(exit_button_clicks, test_ended):
 
 @app.callback(
     Output('test_results_container', 'children'),
+    Output('test_score_container', 'children'),
+    Output('num_correct', 'data'),
     Input('exit', 'n_clicks'),
     Input('answered_test_questions', 'data'), 
     State('test_answers', 'data'), 
     State('test_results_container', 'children'), 
     State('test_ended', 'data'),
-    State('action', 'data'))
-def display_test_results(exit_button_clicks, answered_test_questions, test_answers, test_results, test_ended, action): 
+    State('action', 'data'),
+    State('num_correct', 'data'))
+def display_test_results(exit_button_clicks, answered_test_questions, test_answers, test_results, test_ended, action, num_correct): 
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     user_answer = ''
@@ -247,6 +254,10 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
         ls = test_answers[list(answered_test_questions.keys())[-1]]['hands']
         if list(answered_test_questions.values())[-1] == test_answers[list(answered_test_questions.keys())[-1]]['frequency_ui']:
             user_answer_correct = True
+            if num_correct is None:
+                num_correct = 1
+            else:
+                num_correct = num_correct + 1
         else: 
             user_answer_correct = False
     
@@ -282,7 +293,7 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
             for base_hand in base_ls:
                 test_results = test_results + [html.Div(base_hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba('+ definitions.test_result_colors[action] +', 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
         
-        return test_results + [html.Br()]
+        return test_results + [html.Br()], num_correct, num_correct
         
     else:
         raise PreventUpdate
