@@ -1,5 +1,5 @@
 test_result_colors = { 
-    'jam': '240, 52, 52',
+    'jam': '246, 71, 71',
     'call': '108, 122, 137',
     'limpcheckcall': '108, 122, 137',
     'open': '44, 130, 201', 
