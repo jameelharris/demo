@@ -189,6 +189,7 @@ app.layout = html.Div([
         dcc.Store(id='answered_test_questions'),
         dcc.Store(id='current_test_question'),
         dcc.Store(id='test_ended'),
+        dcc.Store(id='action'),
  
         dbc.Tooltip('61 - 99%', target='high', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right'),
         dbc.Tooltip('31 - 60%', target='medium', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right'),
@@ -226,8 +227,9 @@ def set_test_button_enablement(exit_button_clicks, test_ended):
     Input('answered_test_questions', 'data'), 
     State('test_answers', 'data'), 
     State('test_results_container', 'children'), 
-    State('test_ended', 'data'))
-def display_test_results(exit_button_clicks, answered_test_questions, test_answers, test_results, test_ended): 
+    State('test_ended', 'data'),
+    State('action', 'data'))
+def display_test_results(exit_button_clicks, answered_test_questions, test_answers, test_results, test_ended, action): 
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
     user_answer = ''
@@ -265,14 +267,14 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
                     if '-' in ls[index]:
                         opacity =  ls[index].split('-',1)[1]
                         opacity = float(opacity)
-                        test_results = test_results + [html.Div(ls[index].split('-',1)[0], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
+                        test_results = test_results + [html.Div(ls[index].split('-',1)[0], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba('+ definitions.test_result_colors[action] + ',' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
                     else:
-                        test_results = test_results + [html.Div(ls[index], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
+                        test_results = test_results + [html.Div(ls[index], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba('+ definitions.test_result_colors[action] +', 1)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
                 else: 
-                    test_results = test_results + [html.Div(base_hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]                    
+                    test_results = test_results + [html.Div(base_hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba('+ definitions.test_result_colors[action] +', 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]                    
         else:
             for base_hand in base_ls:
-                test_results = test_results + [html.Div(base_hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
+                test_results = test_results + [html.Div(base_hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba('+ definitions.test_result_colors[action] +', 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
         
         return test_results + [html.Br()]
         
@@ -766,6 +768,7 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
     Output('test_questions', 'data'),
     Output('test_answers', 'data'),
     Output('test_scenario', 'data'),
+    Output('action', 'data'),
     Input('submit-button-state', 'n_clicks'),
     State('dropdown_2', 'value'), 
     State('app_mode', 'value'),

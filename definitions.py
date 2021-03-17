@@ -1,3 +1,14 @@
+test_result_colors = { 
+    'jam': '240, 52, 52',
+    'call': '108, 122, 137',
+    'limpcheckcall': '108, 122, 137',
+    'open': '44, 130, 201', 
+    'sqz': '3, 201, 169',
+    '3bet': '3, 201, 169',
+    '4bet': '145, 61, 136',
+    'limp': '108, 122, 137',
+    'reraise': '3, 201, 169', 
+    }
 
 variableUINames = { 
     'heroStackDepths': 'Hero Stack Depths',

@@ -625,7 +625,7 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
    
     #fig.show(config={'displayModeBar': False, 'showTips': False})
     
-    return fig, {'visibility':'visible'}, tracename_list, {}, {}, {}
+    return fig, {'visibility':'visible'}, tracename_list, {}, {}, {}, {}
 
 
 def modifyhoverlabel():
@@ -924,7 +924,7 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         var_list.pop(0)
     #print('from get test answers - var dict = ', var_dict)
     
-    
+    correct_action = ''
     correctUseCaseDict = {}
     red_flag = False
     for useCase_dict in useCaseInventory.values(): 
@@ -935,11 +935,16 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
                 break
             else: 
                 red_flag = False
+                if var_key == 'heroAction':
+                    correct_action = useCase_dict[var_key]
                 continue
         if red_flag is False:
             print('red_flag is False')
+            #print('correctUseCaseDict = ', correctUseCaseDict)
             correctUseCaseDict = useCase_dict.copy()
             break 
+
+    print('correct action = ', correct_action)
 
     handVariantMatrix = correctUseCaseDict['handVariantMatrix'].copy()
     for hand_class in correctUseCaseDict['handVariantMatrix'].keys(): 
@@ -980,7 +985,7 @@ def get_test_answers(useCaseInventory, selected_column, selected_x_value, yaxis_
         if key in yaxis_variables: 
             sorted_yaxis_variables.append(key)
 
-    return {}, {'display':'none'}, trace_data_state, sorted_yaxis_variables, answerVariantMatrixCleaned, var_string
+    return {}, {'display':'none'}, trace_data_state, sorted_yaxis_variables, answerVariantMatrixCleaned, var_string, correct_action
 
 def check(value):
     value = float(value)
