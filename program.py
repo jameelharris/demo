@@ -152,7 +152,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'111px', 'width':'230px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'55.5px', 'width':'230px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
 
         
             html.Div([
@@ -291,7 +291,7 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
 def display_test_question(test_questions, submit_button_clicks, exit_button_clicks, pure, high, medium, low, na, test_ended, submit_text, unanswered_test_questions, answered_test_questions, current_test_question):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
-
+    question_child = []
     # when the blank figure is intialized or updated it sends back no test questions so need to check for None and {}
     print('test ended = ', test_ended)
     if test_questions in (None, {}):
@@ -312,7 +312,9 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
         test_questions.pop(0)
         print('updated test_questions = ', test_questions)
         first_question_ui = definitions.handVariants[first_question] + ' (' + first_question + ')'
-        return first_question, {}, test_questions, first_question_ui, False
+        question_child = question_child + [html.Div('What is the frequency of')]
+        question_child = question_child + [html.Div(first_question_ui + '?')]
+        return first_question, {}, test_questions, question_child, False
     
     if component_id in ('pure', 'high', 'medium', 'low', 'na'):
         if len(unanswered_test_questions) > 0: 
@@ -325,14 +327,18 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
             print('unanswered test_questions = ', unanswered_test_questions)
             
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            return current_test_question, answered_test_questions, unanswered_test_questions, current_test_question_ui, False
+            question_child = question_child + [html.Div('What is the frequency of')]
+            question_child = question_child + [html.Div(current_test_question_ui + '?')]
+            return current_test_question, answered_test_questions, unanswered_test_questions, question_child, False
         else:
             answered_test_questions.update({current_test_question : component_id})
             print('answered_test_questions = ', answered_test_questions)
             print('test questions = ', test_questions)
             print('unanswered_test_questions = ', unanswered_test_questions)
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            return current_test_question, answered_test_questions, unanswered_test_questions, current_test_question_ui, True
+            question_child = question_child + [html.Div('What is the frequency of')]
+            question_child = question_child + [html.Div(current_test_question_ui + '?')]
+            return current_test_question, answered_test_questions, unanswered_test_questions, question_child, True
 
 @app.callback(
     Output('app_mode', 'options'),
