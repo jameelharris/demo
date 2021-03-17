@@ -151,7 +151,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'width':'230px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'16px', 'font-weight':'bold'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'22.2px', 'vertical-align':'middle', 'width':'230px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
 
         
             html.Div([
