@@ -247,10 +247,12 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
         else: 
             user_answer_color = 'red'
         user_answer = list(answered_test_questions.values())[-1]
+        hand_class_frequency = test_answers[list(answered_test_questions.keys())[-1]]['frequency']
+        hand_class_frequency = format(float(hand_class_frequency), definitions.formats['frequencyFormat'])
 
         test_results = test_results + [html.Div(user_answer, style={'font-family':'Arial', 'color': user_answer_color, 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
         test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1], style={'font-family':'Arial', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'3.5%', 'height':'23px', 'line-height':'23px'})]
-        test_results = test_results + [html.Div(str(test_answers[list(answered_test_questions.keys())[-1]]['frequency']), style={'font-family':'Arial', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
+        test_results = test_results + [html.Div(str(hand_class_frequency), style={'font-family':'Arial', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
         print('ls = ', ls)
         
         base_ls = functions.find_key_for(definitions.handMatrix, list(answered_test_questions.keys())[-1], 'code')
