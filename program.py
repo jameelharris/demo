@@ -151,7 +151,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'44.4px', 'vertical-align':'middle', 'width':'230px', 'top':'30px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'44.4px', 'vertical-align':'middle', 'width':'230px', 'top':'29px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
 
         
             html.Div([
@@ -160,15 +160,15 @@ app.layout = html.Div([
                 html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
                 html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
                 html.Button(id='na', n_clicks=0, children= 'na', style={'display':'block', 'width':'100%'}),
-            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'230px', 'top':'30px'}), 
+            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'230px', 'top':'29px'}), 
 
             html.Div([
 
-            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'550px', 'width':'1071.5px', 'left':'359px', 'top':'30px', 'background':'white'}),
+            ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'550px', 'width':'1071.5px', 'left':'359px', 'top':'29px', 'background':'white'}),
 
             html.Div([
                 html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
-            ], id='exit_button', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'30px'}),
+            ], id='exit_button', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'29px'}),
         
         ], id='test_interface_container', style={'display':'none'}),
 
@@ -248,20 +248,20 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
             user_answer_color = 'red'
         user_answer = list(answered_test_questions.values())[-1]
 
-        test_results = test_results + [html.Div(user_answer, style={'font-family':'Arial', 'color': user_answer_color, 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
-        test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1], style={'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
+        test_results = test_results + [html.Div(user_answer, style={'font-family':'Arial', 'color': user_answer_color, 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
+        test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1], style={'font-family':'Arial', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
         print('ls = ', ls)
         if ls != ['']:
             for hand in ls: 
                 if '-' in hand:
                     opacity =  hand.split('-',1)[1]
                     opacity = float(opacity)
-                    test_results = test_results + [html.Div(hand.split('-',1)[0], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'height':'23px', 'line-height':'23px'})]
+                    test_results = test_results + [html.Div(hand.split('-',1)[0], style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169,' + str(opacity) + ')', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
                 else:
-                    test_results = test_results + [html.Div(hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'height':'23px', 'line-height':'23px'})]
+                    test_results = test_results + [html.Div(hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 1)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
         else:
             print('passed outer')
-            test_results = test_results + [html.Div('--', style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'height':'23px', 'line-height':'23px', 'color':'white'})]
+            test_results = test_results + [html.Div('--', style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba(3, 201, 169, 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px', 'color':'white'})]
         
         return test_results + [html.Br()]
         
