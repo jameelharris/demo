@@ -151,7 +151,7 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'22.2px', 'vertical-align':'middle', 'width':'230px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'44.4px', 'vertical-align':'middle', 'width':'230px', 'top':'50px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
 
         
             html.Div([
@@ -311,8 +311,7 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
         test_questions.pop(0)
         print('updated test_questions = ', test_questions)
         first_question_ui = definitions.handVariants[first_question] + ' (' + first_question + ')'
-        question_child = question_child + [html.Div('What is the frequency of')]
-        question_child = question_child + [html.Div(first_question_ui + '?')]
+        question_child = [html.Div(first_question_ui + '?')]
         return first_question, {}, test_questions, question_child, False
     
     if component_id in ('pure', 'high', 'medium', 'low', 'na'):
@@ -326,8 +325,7 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
             print('unanswered test_questions = ', unanswered_test_questions)
             
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            question_child = question_child + [html.Div('What is the frequency of')]
-            question_child = question_child + [html.Div(current_test_question_ui + '?')]
+            question_child = [html.Div(current_test_question_ui + '?')]
             return current_test_question, answered_test_questions, unanswered_test_questions, question_child, False
         else:
             answered_test_questions.update({current_test_question : component_id})
@@ -335,8 +333,7 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
             print('test questions = ', test_questions)
             print('unanswered_test_questions = ', unanswered_test_questions)
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            question_child = question_child + [html.Div('What is the frequency of')]
-            question_child = question_child + [html.Div(current_test_question_ui + '?')]
+            question_child = [html.Div(current_test_question_ui + '?')]
             return current_test_question, answered_test_questions, unanswered_test_questions, question_child, True
 
 @app.callback(
