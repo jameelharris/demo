@@ -151,11 +151,11 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'44.4px', 'vertical-align':'middle', 'width':'230px', 'top':'29px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'44.4px', 'vertical-align':'middle', 'width':'230px', 'top':'29px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-weight':'bold', 'text-align':'center'}),
 
             html.Div([
 
-            ], id='test_score_container', style={'display':'inline-block', 'position':'absolute', 'height':'66.6px', 'line-height':'66.6px', 'vertical-align':'middle', 'width':'230px', 'top':'73px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'}),
+            ], id='test_score_container', style={'display':'inline-block', 'position':'absolute', 'height':'66.6px', 'line-height':'33.3px', 'vertical-align':'middle', 'width':'230px', 'top':'73px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-weight':'bold', 'text-align':'center'}),
 
         
             html.Div([
@@ -242,8 +242,11 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
     user_answer = ''
     system_answer = ''
     user_answer_correct = False
+    if num_correct is None:
+        num_correct = 0
+
     if component_id == 'exit': 
-        return ['']
+        return [''], [''], 0 
     
     print('display test results - answered test questions = ', answered_test_questions)
 
@@ -293,7 +296,7 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
             for base_hand in base_ls:
                 test_results = test_results + [html.Div(base_hand, style={'text-align': 'center', 'width':'5%', 'display':'inline-block', 'background': 'rgba('+ definitions.test_result_colors[action] +', 0)', 'font-family':'Arial', 'font-size':'14px', 'height':'23px', 'line-height':'23px'})]
         
-        return test_results + [html.Br()], num_correct, num_correct
+        return test_results + [html.Br()], [html.Div('accuracy: ', style={'display':'block'})] + [html.Div(str(format((num_correct / len(answered_test_questions) * 100), definitions.formats['comboFormat'])) + '%', style={'font-size':'24px', 'display':'block'})], num_correct 
         
     else:
         raise PreventUpdate
