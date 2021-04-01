@@ -907,4 +907,4 @@ def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdow
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
+    app.run_server(host='0.0.0.0', port=8080, debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
