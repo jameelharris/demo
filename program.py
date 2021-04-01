@@ -523,6 +523,7 @@ def set_xaxis_dropdown(app_mode, selected_usecase, selected_dropdown_value):
     Output('product_name_container', 'children'),
     Input('app_mode', 'value'))
 def show_product_name(app_mode): 
+    raise PreventUpdate
     image_filename = 'product_name.PNG' # replace with your own image
     encoded_image = base64.b64encode(open(image_filename, 'rb').read())
 
@@ -907,4 +908,4 @@ def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdow
 
 
 if __name__ == "__main__":
-    app.run_server(host='0.0.0.0', port=8080, debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
+    app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
