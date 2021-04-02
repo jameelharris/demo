@@ -9,3 +9,7 @@
   * pip install seaborn
   * pip install dash-bootstrap-components
 
+
+*Deploy Steps*
+* gcloud app create --project=[PROJECT NAME]
+* gcloud app deploy --project=[PROJECT NAME]
