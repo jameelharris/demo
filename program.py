@@ -267,12 +267,14 @@ def display_test_results(exit_button_clicks, answered_test_questions, test_answe
         user_answer = list(answered_test_questions.values())[-1]
         
         if user_answer_correct is False: 
-            user_answer = html.Del(user_answer)
+            user_answer_color = 'red'
+        else:
+            user_answer_color = 'black'
 
         hand_class_frequency = test_answers[list(answered_test_questions.keys())[-1]]['frequency']
         hand_class_frequency = format(float(hand_class_frequency), definitions.formats['frequencyFormat'])
 
-        test_results = test_results + [html.Div(user_answer, style={'font-family':'Arial', 'color':'black', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
+        test_results = test_results + [html.Div(user_answer, style={'font-family':'Arial', 'color':user_answer_color, 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
         test_results = test_results + [html.Div(list(answered_test_questions.keys())[-1], style={'font-family':'Arial', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'3.5%', 'height':'23px', 'line-height':'23px'})]
         test_results = test_results + [html.Div(str(hand_class_frequency), style={'font-family':'Arial', 'font-size':'14px', 'display':'inline-block', 'text-align':'left','width':'7%', 'height':'23px', 'line-height':'23px'})]
         print('ls = ', ls)
@@ -909,3 +911,4 @@ def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdow
 
 if __name__ == "__main__":
     app.run_server(port=8080, host='0.0.0.0',  debug=False, use_reloader=False)  # Turn off reloader if inside Jupyter
+    #app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
