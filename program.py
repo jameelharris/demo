@@ -33,7 +33,7 @@ app.layout = html.Div([
                     value='nuclear',
                     labelStyle={'display': 'inline-block'},
                  )
-            ], style={'display':'inline-block', 'width':'22%'}),
+            ], style={'display':'inline-block', 'width':'24%'}),
 
             html.Div([
                 html.Button(id='submit-button-state', n_clicks=0, children= 'Update Target', style={'width': '99%'}),
@@ -81,7 +81,7 @@ app.layout = html.Div([
 
         html.Div([
             html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'2%', 'visibility':'hidden'}),
+        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
 
 
         html.Div([
@@ -128,7 +128,7 @@ app.layout = html.Div([
 
         html.Div([
             html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'2%', 'visibility':'hidden'}),
+        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
 
         html.Div([
             html.Div([
