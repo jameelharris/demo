@@ -97,7 +97,7 @@ app.layout = html.Div([
                     value=list(definitions.handVariants.keys()),
         
                 ),
-            ], style={'display': 'inline-block'})
+            ], style={'display': 'inline-block', 'position':'relative', 'overflow-x':'hidden'})
 
         ], style={'display': 'inline-block'}),
 
