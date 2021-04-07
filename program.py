@@ -60,7 +60,7 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'7%', 'visibility':'hidden'}),
 
             html.Div([
-                html.Div(id='product_name_container', style={'width':'100%'})
+                html.Div(id='product_name_container', style={'width':'0%'})
             ], style={'display':'inline-block'}),
      
         ]),
