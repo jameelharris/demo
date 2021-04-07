@@ -33,7 +33,7 @@ app.layout = html.Div([
                     value='nuclear',
                     labelStyle={'display': 'inline-block'},
                  )
-            ], style={'display':'inline-block', 'width':'24%'}),
+            ], style={'display':'inline-block', 'width':'22%'}),
 
             html.Div([
                 html.Button(id='submit-button-state', n_clicks=0, children= 'Update Target', style={'width': '99%'}),
@@ -60,7 +60,7 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'7%', 'visibility':'hidden'}),
 
             html.Div([
-                html.Div(id='product_name_container', style={'width':'0%'})
+                html.Div(id='product_name_container', style={'width':'100%'})
             ], style={'display':'inline-block'}),
      
         ]),
@@ -81,25 +81,25 @@ app.layout = html.Div([
 
         html.Div([
             html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
+        ], style={'display':'inline-block', 'width':'2%', 'visibility':'hidden'}),
 
 
-     
+        html.Div([
             
-        html.Div([
-            html.P(html.A('y-axis:', href='https://drive.google.com/file/d/1VigyJX1yKc8fjdVSU4GCIBedD8kY7fPG/view?usp=sharing', target='_blank', style={})),
-        ], style={'display':'inline-block'}),
+            html.Div([
+                html.P(html.A('y-axis:', href='https://drive.google.com/file/d/1VigyJX1yKc8fjdVSU4GCIBedD8kY7fPG/view?usp=sharing', target='_blank', style={})),
+            ], style={'display':'inline-block'}),
 
-        html.Div([
-            dcc.Checklist(
-                id='yaxis_variables',
-                options=[{'label': handsubclass, 'value': handsubclass} for handsubclass in definitions.handVariants.keys()],
-                value=list(definitions.handVariants.keys()),
-    
-            ),
-        ], style={'display': 'inline-block'})
-
+            html.Div([
+                dcc.Checklist(
+                    id='yaxis_variables',
+                    options=[{'label': handsubclass, 'value': handsubclass} for handsubclass in definitions.handVariants.keys()],
+                    value=list(definitions.handVariants.keys()),
         
+                ),
+            ], style={'display': 'inline-block'})
+
+        ], style={'display': 'inline-block'}),
 
     ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '4px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'25px'}),
 
@@ -128,7 +128,7 @@ app.layout = html.Div([
 
         html.Div([
             html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
+        ], style={'display':'inline-block', 'width':'2%', 'visibility':'hidden'}),
 
         html.Div([
             html.Div([
