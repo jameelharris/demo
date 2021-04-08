@@ -23,7 +23,35 @@ app.layout = html.Div([
         html.Div([
 
             html.Div([
-                dcc.RadioItems(
+                html.Button(id='submit-button-state', n_clicks=0, children= 'Update Target', style={'width': '99%', 'height': '35px'}),
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
+                html.Button(id='select_xaxis', n_clicks=0, children= 'deselect all x', style={'width':'99%', 'height': '35px'})
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
+                html.Button(id='select_yaxis', n_clicks=0, children= 'deselect all y', style={'width':'99%', 'height': '35px'})
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
+                html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%', 'height': '35px'})
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
+                html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%', 'height': '35px'})
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
+                html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
+            ], style={'display':'inline-block', 'width':'.2%', 'visibility':'hidden'}),
+
+            html.Div([
+                html.Div(id='product_name_container', style={'width':'100%'})
+            ], style={'display':'inline-block'}),
+
+            html.Div([
+                dcc.Dropdown(
                     id='app_mode', 
                     options=[
                         {'label': 'nuclear option', 'value': 'nuclear'},
@@ -31,58 +59,46 @@ app.layout = html.Div([
                         {'label': 'target practice', 'value': 'test'}
                     ],
                     value='nuclear',
-                    labelStyle={'display': 'inline-block'},
+                    clearable=False,
+                    style={'width':'99%'},
                  )
-            ], style={'display':'inline-block', 'width':'24%'}),
+            ], style={'display':'inline-block', 'width':'10%', 'vertical-align': 'bottom'}),
 
             html.Div([
-                html.Button(id='submit-button-state', n_clicks=0, children= 'Update Target', style={'width': '99%'}),
-            ], style={'display':'inline-block', 'width':'7%'}),
+                dcc.Dropdown(
+                    id='usecases',
+                    options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
+                    value='RFI-polar',
+                    clearable=False,
+                    style={'width': '99%'}
+                ),
+            ], style={'display': 'inline-block', 'width':'15%', 'vertical-align': 'bottom'}),
 
             html.Div([
-                html.Button(id='select_xaxis', n_clicks=0, children= 'deselect all x', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
+                html.Div([
+                    dcc.Dropdown(
+                        id='dropdown_1', 
+                        clearable=False,  
+                        style={'width':'99%', 'visibility':'hidden'},
+                    ),
+                ], style={'display':'inline-block', 'width':'25%', 'vertical-align': 'bottom'}),
 
-            html.Div([
-                html.Button(id='select_yaxis', n_clicks=0, children= 'deselect all y', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
 
-            html.Div([
-                html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
+                html.Div([
+                    dcc.Dropdown(
+                        id='dropdown_2', 
+                        clearable=False,
+                        style = {'width':'99%', 'visibility':'hidden'},
+                    )
+                ], style={'display':'inline-block', 'width':'45%', 'vertical-align': 'bottom'})
 
-            html.Div([
-                html.Button(id='offsuit', n_clicks=0, children= 'offsuit', style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%'}),
-
-            html.Div([
-                html.Button(id='spacer_0', n_clicks=0, style={'width':'99%'})
-            ], style={'display':'inline-block', 'width':'7%', 'visibility':'hidden'}),
-
-            html.Div([
-                html.Div(id='product_name_container', style={'width':'100%'})
-            ], style={'display':'inline-block'}),
+            ], style={'width':'30%', 'display':'inline-block', 'vertical-align':'bottom'}),
      
         ]),
 
     ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'2px'}),
 
     html.Div([
-
-        html.Div([
-            dcc.Dropdown(
-                id='usecases',
-                options=[{'label': usecase, 'value': usecase} for usecase in definitions.verticalfilter.keys()],
-                value='RFI-polar',
-                clearable=False,
-                style={'width': '99%'}
-            ),
-        ], style={'display': 'inline-block', 'width':'20%', 'vertical-align': 'bottom'}),
-
-        html.Div([
-            html.Button(id='spacer_1', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
-
 
         html.Div([
             
@@ -101,34 +117,10 @@ app.layout = html.Div([
 
         ], style={'display': 'inline-block'}),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '4px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'25px'}),
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'45px'}),
 
 
     html.Div([
-
-         html.Div([
-            html.Div([
-                dcc.Dropdown(
-                    id='dropdown_1', 
-                    clearable=False,  
-                    style={'width':'99%', 'visibility':'hidden'},
-                ),
-            ], style={'display':'inline-block', 'width':'49%'}),
-
-
-            html.Div([
-                dcc.Dropdown(
-                    id='dropdown_2', 
-                    clearable=False,
-                    style = {'width':'99%', 'visibility':'hidden'},
-                )
-            ], style={'display':'inline-block', 'width':'50%'})
-
-        ], style={'width':'20%', 'display':'inline-block', 'vertical-align':'bottom'}),
-
-        html.Div([
-            html.Button(id='spacer_2', n_clicks=0, style={'width':'99%'})
-        ], style={'display':'inline-block', 'width':'4%', 'visibility':'hidden'}),
 
         html.Div([
             html.Div([
@@ -144,7 +136,7 @@ app.layout = html.Div([
         
         ], style={'display':'inline-block'}),
 
-    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'padding-top': '2px', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'65px'}), 
+    ], style={'font-weight':'bold', 'font-size':'12px', 'font-family':'Arial', 'position':'absolute', 'width':'1500px', 'height':'10px', 'top':'80px'}), 
     
 
     html.Div([
@@ -372,24 +364,20 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
             return current_test_question, answered_test_questions, unanswered_test_questions, question_child, True
 
 @app.callback(
-    Output('app_mode', 'options'),
+    Output('app_mode', 'disabled'),
     Input('submit-button-state', 'n_clicks'),
     Input('exit', 'n_clicks'),
     State('submit-button-state', 'children'), 
-    State('app_mode', 'options'))
-def app_mode_radio_enablement(submit_button_clicks, exit_button_clicks, submit_text, app_mode_options):
+    State('app_mode', 'disabled'))
+def app_mode_enablement(submit_button_clicks, exit_button_clicks, submit_text, app_mode_disabled):
     ctx = dash.callback_context
     component_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
     if component_id == 'submit-button-state' and submit_text == 'Set column':
-        for option in app_mode_options:
-            option['disabled'] = True 
+        return True 
     
     if component_id == 'exit':
-        for option in app_mode_options:
-            option['disabled'] = False 
-    
-    return app_mode_options
+        return False 
 
 
 @app.callback(
