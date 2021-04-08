@@ -175,7 +175,7 @@ app.layout = html.Div([
             ], id='test_results_container', style={'display':'inline-block', 'position':'absolute', 'height':'550px', 'width':'1071.5px', 'left':'359px', 'top':'29px', 'background':'white'}),
 
             html.Div([
-                html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%'})
+                html.Button(id='exit', n_clicks=0, children= 'exit', style={'display':'block', 'width': '100%', 'height':'35px'})
             ], id='exit_button', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'1430px', 'top':'29px'}),
         
         ], id='test_interface_container', style={'display':'none'}),
@@ -910,5 +910,5 @@ def render_heatmap(update_chart, selected_column, app_mode, button_text, dropdow
 
 
 if __name__ == "__main__":
-    app.run_server(port=8080, host='0.0.0.0',  debug=False, use_reloader=False)  # Turn off reloader if inside Jupyter
-    #app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
+    #app.run_server(port=8080, host='0.0.0.0',  debug=False, use_reloader=False)  # Turn off reloader if inside Jupyter
+    app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
