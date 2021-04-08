@@ -143,20 +143,32 @@ app.layout = html.Div([
         html.Div([
             html.Div([
 
-            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'44.4px', 'vertical-align':'middle', 'width':'230px', 'top':'29px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-weight':'bold', 'text-align':'center'}),
+            ], id='test_question_container', style={'display':'inline-block', 'position':'absolute', 'height':'44.4px', 'line-height':'44.4px', 'vertical-align':'middle', 'width':'300px', 'top':'29px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-weight':'bold', 'text-align':'center'}),
 
             html.Div([
 
-            ], id='test_score_container', style={'display':'inline-block', 'position':'absolute', 'height':'66.6px', 'line-height':'33.3px', 'vertical-align':'middle', 'width':'230px', 'top':'73px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-weight':'bold', 'text-align':'center'}),
+            ], id='test_score_container', style={'display':'inline-block', 'position':'absolute', 'height':'66.6px', 'line-height':'33.3px', 'vertical-align':'middle', 'width':'300px', 'top':'73px', 'background':'black', 'color':'white', 'font-family':'Arial', 'font-weight':'bold', 'text-align':'center'}),
 
         
             html.Div([
-                html.Button(id='pure', n_clicks=0, children= 'pure', style={'display':'block', 'width': '100%'}),
-                html.Button(id='high', n_clicks=0, children= 'high', style={'display':'block', 'width': '100%'}),
-                html.Button(id='medium', n_clicks=0, children= 'medium', style={'display':'block', 'width': '100%'}),
-                html.Button(id='low', n_clicks=0, children= 'low', style={'display':'block', 'width': '100%'}),
-                html.Button(id='na', n_clicks=0, children= 'na', style={'display':'block', 'width':'100%'}),
-            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'width':'59px', 'left':'230px', 'top':'29px'}), 
+                html.Div([
+                    html.Button(id='pure', n_clicks=0, children= 'pure', style={'width': '99%', 'height': '35px'}),
+                ], style={'display':'inline-block', 'width':'20%'}),
+                html.Div([
+                    html.Button(id='high', n_clicks=0, children= 'high', style={'width': '99%', 'height': '35px'}),
+                ], style={'display':'inline-block', 'width':'20%'}),
+                html.Div([
+                    html.Button(id='medium', n_clicks=0, children= 'med', style={'width': '99%', 'height': '35px'}),
+                ], style={'display':'inline-block', 'width':'20%'}),
+                html.Div([
+                    html.Button(id='low', n_clicks=0, children= 'low', style={'width': '99%', 'height': '35px'}),
+                ], style={'display':'inline-block', 'width':'20%'}),
+                html.Div([
+                    html.Button(id='na', n_clicks=0, children= 'na', style={'width': '100%', 'height': '35px'}),
+                ], style={'display':'inline-block', 'width':'20%'}),
+
+            
+            ], id='test_buttons', style={'display':'inline-block', 'position':'absolute', 'top':'140px', 'width':'300px'}), 
 
             html.Div([
 
@@ -188,9 +200,9 @@ app.layout = html.Div([
         dcc.Store(id='action'),
         dcc.Store(id='num_correct'),
  
-        dbc.Tooltip('61 - 99%', target='high', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right'),
-        dbc.Tooltip('31 - 60%', target='medium', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right'),
-        dbc.Tooltip('01 - 30%', target='low', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='right')
+        dbc.Tooltip('61 - 99%', target='high', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='bottom'),
+        dbc.Tooltip('31 - 60%', target='medium', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='bottom'),
+        dbc.Tooltip('01 - 30%', target='low', style={'font-weight':'bold', 'font-family':'Arial', 'font-size':'13px'}, placement='bottom')
     ], style={'position':'absolute', 'width':'1500px', 'height':'650px', 'top':'104px'})
 ])
 
@@ -338,7 +350,7 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
         test_questions.pop(0)
         print('updated test_questions = ', test_questions)
         first_question_ui = definitions.handVariants[first_question] + ' (' + first_question + ')'
-        question_child = [html.Div(first_question_ui + '?')]
+        question_child = [html.Div(first_question_ui + ' frequency?')]
         return first_question, {}, test_questions, question_child, False
     
     if component_id in ('pure', 'high', 'medium', 'low', 'na'):
@@ -352,7 +364,7 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
             print('unanswered test_questions = ', unanswered_test_questions)
             
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            question_child = [html.Div(current_test_question_ui + '?')]
+            question_child = [html.Div(current_test_question_ui + ' frequency?')]
             return current_test_question, answered_test_questions, unanswered_test_questions, question_child, False
         else:
             answered_test_questions.update({current_test_question : component_id})
@@ -360,7 +372,7 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
             print('test questions = ', test_questions)
             print('unanswered_test_questions = ', unanswered_test_questions)
             current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            question_child = [html.Div(current_test_question_ui + '?')]
+            question_child = [html.Div(current_test_question_ui + ' frequency?')]
             return current_test_question, answered_test_questions, unanswered_test_questions, question_child, True
 
 @app.callback(
