@@ -90,7 +90,7 @@ app.layout = html.Div([
                         clearable=False,
                         style = {'width':'99%', 'visibility':'hidden'},
                     )
-                ], style={'display':'inline-block', 'width':'45%', 'vertical-align': 'bottom'})
+                ], style={'display':'inline-block', 'width':'50%', 'vertical-align': 'bottom'})
 
             ], style={'width':'30%', 'display':'inline-block', 'vertical-align':'bottom'}),
      
