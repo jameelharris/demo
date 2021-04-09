@@ -617,8 +617,8 @@ def visualizedatadash(dfList, useCase, mostOuterVariable, xtickDict, usecaseconf
 
     #fig.update_layout(hovermode='x', autosize=True, title_text=title, plot_bgcolor='white', font_color='black', font_size=10, yaxis={'title': ''}, xaxis={'title': ''})
     fig.update_layout(hoverlabel=modifyhoverlabel(), title_x=0.5, hovermode='x',autosize=False, height=650, width=1500, title_text= '<b>' + title + '</b>', plot_bgcolor='white', font_color='black', font_size=layoutfontsize, yaxis={'title': ''}, xaxis={'title': ''})
-    fig.update_yaxes(autorange='reversed', automargin=True, showspikes=True, spikemode='toaxis', spikethickness=.5, spikedash='dot', spikecolor='black')
-    fig.update_xaxes(tickangle=-45, showspikes=True, spikemode='toaxis', spikethickness=.5, spikedash='dot', spikecolor='black')
+    fig.update_yaxes(autorange='reversed', automargin=True, showspikes=True, spikemode='toaxis', spikethickness=.5, spikedash='dot', spikecolor='black', fixedrange=True)
+    fig.update_xaxes(tickangle=-45, showspikes=True, spikemode='toaxis', spikethickness=.5, spikedash='dot', spikecolor='black', fixedrange=True)
     fig.update_traces(yaxis='y1', showscale=False, hoverinfo='text + x', xgap=0, ygap=0, showlegend=True)
     #fig.update_traces(showscale=False, hoverinfo='text + x', xgap=0, ygap=0, showlegend=True) 
     
