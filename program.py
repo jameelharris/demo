@@ -35,6 +35,10 @@ app.layout = html.Div([
             ], style={'display':'inline-block', 'width':'7%'}),
 
             html.Div([
+                html.Button(id='pair', n_clicks=0, children= 'pair', style={'width':'99%', 'height': '35px'})
+            ], style={'display':'inline-block', 'width':'7%'}),
+
+            html.Div([
                 html.Button(id='suited', n_clicks=0, children= 'suited', style={'width':'99%', 'height': '35px'})
             ], style={'display':'inline-block', 'width':'7%'}),
 
@@ -349,8 +353,8 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
         print('first_question = ', first_question)
         test_questions.pop(0)
         print('updated test_questions = ', test_questions)
-        first_question_ui = definitions.handVariants[first_question] + ' (' + first_question + ')'
-        question_child = [html.Div(first_question_ui + ' frequency?')]
+        first_question_ui = 'What is the frequency of ' + first_question + '?'
+        question_child = [html.Div(first_question_ui)]
         return first_question, {}, test_questions, question_child, False
     
     if component_id in ('pure', 'high', 'medium', 'low', 'na'):
@@ -363,16 +367,16 @@ def display_test_question(test_questions, submit_button_clicks, exit_button_clic
             unanswered_test_questions.pop(0)
             print('unanswered test_questions = ', unanswered_test_questions)
             
-            current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            question_child = [html.Div(current_test_question_ui + ' frequency?')]
+            current_test_question_ui = 'What is the frequency of ' + current_test_question + '?'
+            question_child = [html.Div(current_test_question_ui)]
             return current_test_question, answered_test_questions, unanswered_test_questions, question_child, False
         else:
             answered_test_questions.update({current_test_question : component_id})
             print('answered_test_questions = ', answered_test_questions)
             print('test questions = ', test_questions)
             print('unanswered_test_questions = ', unanswered_test_questions)
-            current_test_question_ui = definitions.handVariants[current_test_question] + ' (' + current_test_question + ')'
-            question_child = [html.Div(current_test_question_ui + ' frequency?')]
+            current_test_question_ui = 'What is the frequency of ' + current_test_question + '?'
+            question_child = [html.Div(current_test_question_ui)]
             return current_test_question, answered_test_questions, unanswered_test_questions, question_child, True
 
 @app.callback(
@@ -740,12 +744,13 @@ def set_yaxis_checklist_enabled_state(app_mode, submit_button_clicks, exit_butto
     Output('yaxis_variables', 'value'),
     Input('yaxis_variables', 'options'),
     Input('select_yaxis', 'n_clicks'),
+    Input('pair', 'n_clicks'),
     Input('suited', 'n_clicks'),
     Input('offsuit', 'n_clicks'), 
     Input('dropdown_1', 'value'),
     Input('app_mode', 'value'),
     State('yaxis_variables', 'value'))
-def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dropdown_1_value, app_mode, yaxis_variables):
+def set_yaxis_checklist_values(variable_dict, select_yaxis, pair, suited, offsuit, dropdown_1_value, app_mode, yaxis_variables):
     selected_hand = ''
     if app_mode == 'sniper':
         selected_hand = dropdown_1_value
@@ -767,6 +772,14 @@ def set_yaxis_checklist_values(variable_dict, select_yaxis, suited, offsuit, dro
                 yaxis_variables.clear()
             else:
                 yaxis_variables = list(definitions.handVariants.keys())
+
+        if component_id == 'pair':
+            yaxis_variables.clear()
+            for key in definitions.handVariants.keys():
+                if key[-1] == 'o' or key[-1] == 's':
+                    continue
+                else:
+                    yaxis_variables.append(key)
 
         if component_id == 'suited':
             yaxis_variables.clear()
