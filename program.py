@@ -58,11 +58,11 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     id='app_mode', 
                     options=[
-                        {'label': 'nuclear option', 'value': 'nuclear'},
                         {'label': 'sniper mode', 'value': 'sniper'},
+                        {'label': 'nuclear option', 'value': 'nuclear'},
                         {'label': 'target practice', 'value': 'test'}
                     ],
-                    value='nuclear',
+                    value='sniper',
                     clearable=False,
                     style={'width':'99%'},
                  )
@@ -134,7 +134,7 @@ app.layout = html.Div([
             html.Div([
                 dcc.Checklist(
                     id='xaxis_variables',
-                    value=[]
+                    value=list(definitions.preFlopUseCases['RFI-polar']['heroPositions'])
                 ),
             ], style={'display': 'inline-block'}),
         
@@ -570,6 +570,7 @@ def validate_update_chart_enabled_state(yaxis_variables, yaxis_variables_options
 @app.callback(
     Output('select_xaxis', 'disabled'),
     Output('select_yaxis', 'disabled'),
+    Output('pair', 'disabled'),
     Output('suited', 'disabled'), 
     Output('offsuit', 'disabled'),
     Input('app_mode', 'value'),
@@ -581,19 +582,19 @@ def set_button_enabled_state(app_mode, exit_button_clicks, submit_button_clicks,
     component_id = ctx.triggered[0]['prop_id'].split('.')[0] 
 
     if component_id == 'submit-button-state' and submit_text == 'Set column':
-        return True, True, True, True
+        return True, True, True, True, True
 
     if component_id == 'exit':
-        return True, False, False, False
+        return True, False, False, False, False
     
     if app_mode == 'sniper':
-        return False, True, True, True
+        return False, True, True, True, True
 
     if app_mode == 'test':
-        return True, False, False, False
+        return True, False, False, False, False
 
     if app_mode == 'nuclear':
-        return False, False, False, False
+        return False, False, False, False, False
 
 @app.callback(
     Output('xaxis_variables', 'options'),
